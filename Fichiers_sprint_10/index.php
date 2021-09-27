@@ -22,4 +22,5 @@
 	//{
 		$monControleur->affichePiedPage();
 	//}
+//hello world
 ?>
