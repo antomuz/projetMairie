@@ -37,13 +37,13 @@ class accesBD
 		switch ($role)
 		{
 			case "1" :
-				$requete='SELECT idAdmin FROM administrateur where loginAdmin = "'.$login.'" and pwdAdmin = "'.$pwd.'" ;';
+				$requete='SELECT idAdmin FROM administrateur where loginAdmin = "'.$login.'" and pwdAdmin = "'.md5($pwd).'" ;';
 				break;
 			case "2" :
-				$requete='SELECT idAdherent FROM adherent where loginAdherent =  "'.$login.'" and pwdAdherent = "'.$pwd.'" ;';
+				$requete='SELECT idAdherent FROM adherent where loginAdherent =  "'.$login.'" and pwdAdherent = "'.md5($pwd).'" ;';
 				break;
 			case "3" :
-				$requete='SELECT idEntraineur FROM entraineur where loginEntraineur =  "'.$login.'" and pwdEntraineur = "'.$pwd.'" ;';
+				$requete='SELECT idEntraineur FROM entraineur where loginEntraineur =  "'.$login.'" and pwdEntraineur = "'.md5($pwd).'" ;';
 				break;
 		}
 		
@@ -130,7 +130,7 @@ class accesBD
 		$requete->bindValue(1,$sonId);
 		$requete->bindValue(2,$unNomEntraineur);
 		$requete->bindValue(3,$unLoginEntraineur);
-		$requete->bindValue(4,$unPwdEntraineur);
+		$requete->bindValue(4,md5($unPwdEntraineur));
 		if(!$requete->execute())
 		{
 			die("Erreur dans insert Entraineur : ".$requete->errorCode());
@@ -153,7 +153,7 @@ class accesBD
 		$requete->bindValue(1,$sonId);
 		$requete->bindValue(2,$unNomEntraineur);
 		$requete->bindValue(3,$unLoginEntraineur);
-		$requete->bindValue(4,$unPwdEntraineur);
+		$requete->bindValue(4,md5($unPwdEntraineur));
 		if(!$requete->execute())
 		{
 			die("Erreur dans insert Entraineur : ".$requete->errorCode());
@@ -200,7 +200,7 @@ class accesBD
 		$requete->bindValue(4,$unAgeAdherent);
 		$requete->bindValue(5,$unSexeAdherent);
 		$requete->bindValue(6,$unLoginAdherent);
-		$requete->bindValue(7,$unPwdAdherent);
+		$requete->bindValue(7,md5($unPwdAdherent));
 		$requete->bindValue(8,$unIdEquipe);
 		if(!$requete->execute())
 		{
