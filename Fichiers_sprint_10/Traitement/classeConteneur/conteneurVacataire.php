@@ -43,7 +43,22 @@ class conteneurVacataire
 			}
 		$liste = $liste."</SELECT>";
 		return $liste;
-		}		
+		}	
+
+		public function modifierUnVacataire($unIdVacataire, $unNomEntraineur, $unLoginEntraineur, $unPwdEntraineur, $unTelephone)
+		{
+				
+			foreach ($this->lesVacataires as $unVacataire)
+			{
+				if ($unVacataire->getIdEntraineur() == $unIdVacataire)
+				{
+					$unVacataire->setNomEquipe = $unNomEntraineur;
+					$unVacataire->setNbrPlaceEquipe = $unLoginEntraineur;
+					$unVacataire->setAgeMinEquipe = $unPwdEntraineur;
+					$unVacataire->setTelephone = $unTelephone;
+				}
+			}
+		}	
 	
 	public function donneObjetVacataireDepuisNumero($unIdVacataire)
 		{
