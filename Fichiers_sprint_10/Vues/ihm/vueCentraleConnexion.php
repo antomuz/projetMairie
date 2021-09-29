@@ -50,7 +50,7 @@
 					<span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu" aria-labelledby="menuEquipe">
-					<li><a class="dropdown-item" href=index.php?vue=Equipe&action=visualiser>Visualiser une équipe</a></li>
+					<li><a class="dropdown-item" href=index.php?vue=Equipe&action=visualiser>Visualiser les équipes</a></li>
 				</ul>
 			</div>
 			<div class="dropdown col">
@@ -94,7 +94,8 @@
 				</button>
 				<ul class="dropdown-menu" aria-labelledby="menuAdherent">
 					<li><a class="dropdown-item" href=index.php?vue=Adherent&action=modifierSonProfil>Modifier son profil</a></li>
-					<li><a class="dropdown-item" href=index.php?vue=Adherent&action=visualiserSonProfil>Visualiser son profil</a></li>
+					<li><a class="dropdown-item" href=index.php?vue=Adherent&action=voirProfil>Voir son profil</a></i>
+					<li><a class="dropdown-item" href=index.php?vue=Adherent&action=changerMDP>Changer MDP</a></i>
 				</ul>
 			</div>
 			<div class="dropdown col">

@@ -112,8 +112,9 @@
 					  </div>
 					  <!-- Grid container -->
 
-					  <!-- Copyright -->
-					  <div class="text-center p-3" style="background-color: #66A9B1;">
+					  <!-- Copyright 66A9B1-->
+					  <div class="text-center p-3" style="background-color: #009688;">
+					  
 						© 2021 Copyright:
 						<a class="text-white" href="https://mdbootstrap.com/">catherine Delmas</a>
 					  </div>

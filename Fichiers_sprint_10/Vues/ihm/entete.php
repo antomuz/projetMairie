@@ -16,7 +16,7 @@
 	<body>
 		
 		
-		<div class="container-fluid bleu">
+		<div class="container-fluid bleu" style='background-color :#009688'>
 			<h1> Les sportifs d'Aussonne </h1>
 			Une ville dynamique
 		</div>
