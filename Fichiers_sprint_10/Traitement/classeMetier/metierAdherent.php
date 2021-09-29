@@ -99,10 +99,9 @@ Class metierAdherent
 	// méthode permettant d'afficher tous les attributs d'un seul coup
 	public function afficheAdherent()
 	{
-		$liste=$this->getNomAdherent().' | '.$this->getPrenomAdherent().' | '.$this->getAgeAdherent().' | '.$this->getSexeAdherent().' | '.$this->getLEquipeDeLAdherent()->getNomEquipe().' | '.$this->getLEquipeDeLAdherent()->getLEntraineur()->getNomEntraineur().' | ';
+		$liste=$this->getNomAdherent().' | '.$this->getPrenomAdherent().' | '.$this->getAgeAdherent().' | '.$this->getSexeAdherent().' | '.$this->getLoginAdherent().' | '.$this->getLEquipeDeLAdherent()->getNomEquipe().' | '.$this->getLEquipeDeLAdherent()->getLEntraineur()->getNomEntraineur().' | ';
 		return $liste;
 	}	
-
 	public function setLEquipeDeLAdherent($uneEquipe)
 	{
 		$this->lEquipe = $uneEquipe;
