@@ -94,7 +94,8 @@
 				</button>
 				<ul class="dropdown-menu" aria-labelledby="menuAdherent">
 					<li><a class="dropdown-item" href=index.php?vue=Adherent&action=modifierSonProfil>Modifier son profil</a></li>
-					<li><a class="dropdown-item" href=index.php?vue=Adherent&action=visualiserSonProfil>Visualiser son profil</a></li>
+					<li><a class="dropdown-item" href=index.php?vue=Adherent&action=voirProfil>Voir son profil</a></i>
+					<li><a class="dropdown-item" href=index.php?vue=Adherent&action=changerMDP>Changer MDP</a></i>
 				</ul>
 			</div>
 			<div class="dropdown col">
