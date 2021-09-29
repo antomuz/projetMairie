@@ -11,7 +11,7 @@
 		{
 			echo '<form action=index.php?vue=Entraineur&action=SaisirEntraineur method=POST align=center>
 							<fieldset>
-							<legend>L entraineur est un : </legend>
+							<legend>L\'entraineur est un : </legend>
 							<input type="radio" name="typeEntraineur" value="Vacataire" id="vacataire">
 							<label for="vacataire">Vacataire</label> <br/>
 
