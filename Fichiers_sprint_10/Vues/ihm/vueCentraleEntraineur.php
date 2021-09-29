@@ -25,6 +25,68 @@
 						  </form>';
 					
 		}
+		public function typeEntraineur()
+		{
+			echo '<form action=index.php?vue=Entraineur&action=modifier method=POST align=center>
+							<fieldset>
+							<legend>L entraineur est un : </legend>
+							<input type="radio" name="typeEntraineur" value="Vacataire" id="vacataire">
+							<label for="vacataire">Vacataire</label> <br/>
+
+							<input type="radio" name="typeEntraineur" value="Titulaire" id="titulaire">
+							<label for="titulaire">Titulaire</label> <br/>
+
+							
+							
+							<button type="submit" class="btn btn-primary">Valider</button>
+							</fieldset>	
+						  </form>';
+					
+		}
+
+		public function modifierEntraineur($message, $typeEntraineur)
+		{
+			echo '<form action=index.php?vue=Entraineur&action=choixFaitPourModif method = GET>';
+			echo $message; 
+			echo ' <input type=hidden name=vue value=Entraineur></input>
+				   <input type=hidden name=action value=choixFaitPourModif></input>
+				   <input type=hidden name=typeEntraineur value='.$typeEntraineur.'>
+				   <button type="submit" class="btn btn-primary">Valider</button>
+				  </form>
+			';
+		}
+
+		public function choixFaitPourModifTitulaire($nom, $date, $login, $pswd, $choix, $typeEntraineur)
+	{
+		echo '<form action=index.php?vue=Equipe&action=EnregModif method = GET>
+						<input type=text name=nomEntraineur value='.$nom.'></input>
+						<input type=text name=dateEmbEntraineur value='.$date.'></input>
+						<input type=text name=loginEntraineur value='.$login.'></input>
+						<input type=password name=pwdEntraineur value='.$pswd.'></input>'
+						;
+						echo '<input type=hidden name=idEntraineur value='.$choix.'></input>	
+						<input type=hidden name=vue value=Entraineur></input>
+						<input type=hidden name=action value=EnregModif></input>
+						<input type=hidden name=typeEntraineur value='.$typeEntraineur.'>
+						<button type="submit" class="btn btn-primary">Valider</button>
+			 </form>';
+	}
+		public function choixFaitPourModifVacataire($nom, $tel, $login, $pswd, $choix, $typeEntraineur)
+	{
+		echo '<form action=index.php?vue=Equipe&action=EnregModif method = GET>
+						<input type=text name=nomEntraineur value='.$nom.'></input>
+						<input type=text name=telephoneVacataire value='.$tel.'></input>
+						<input type=text name=loginEntraineur value='.$login.'></input>
+						<input type=password name=pwdEntraineur value='.$pswd.'></input>'
+						;
+						echo '<input type=hidden name=idEntraineur value='.$choix.'></input>	
+						<input type=hidden name=vue value=Entraineur></input>
+						<input type=hidden name=action value=EnregModif></input>
+						<input type=hidden name=typeEntraineur value='.$typeEntraineur.'>
+						<button type="submit" class="btn btn-primary">Valider</button>
+			 </form>';
+	}
+
 		public function visualiserEntraineur($liste)
 		{
 			$listeEntraineur=explode("|",$liste);

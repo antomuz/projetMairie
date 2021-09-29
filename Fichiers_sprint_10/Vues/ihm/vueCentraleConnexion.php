@@ -157,7 +157,7 @@
 				</button>
 				<ul class="dropdown-menu" aria-labelledby="menuEntraineur">
 					<li><a class="dropdown-item" href=index.php?vue=Entraineur&action=ajouter>Ajouter un Entraineur</a></li>
-					<li><a class="dropdown-item" href=index.php?vue=Entraineur&action=modifier>Modifier un entraineur</a></li>
+					<li><a class="dropdown-item" href=index.php?vue=Entraineur&action=typeEntraineurModifier>Modifier un entraineur</a></li>
 				</ul>
 			</div>
 			<div class="dropdown col">
