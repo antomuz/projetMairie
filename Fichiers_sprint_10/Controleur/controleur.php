@@ -206,14 +206,76 @@
 					$liste = $liste.$this->tousLesVacataires->listeDesVacataires();
 					$vue = new vueCentraleEntraineur();
 					$vue->VisualiserEntraineur($liste);
-
+					break;
+				case "typeEntraineurModifier" :
+					$vue=new vueCentraleConnexion();
+					$vue->afficheMenuAdmin();
+					require 'vues/ihm/nouvelle.php';
+					$vue = new vueCentraleEntraineur();
+					$vue->typeEntraineur();
 					break;
 				case "modifier" :
 					$vue=new vueCentraleConnexion();
 					$vue->afficheMenuAdmin();
 					require 'vues/ihm/nouvelle.php';
-					//reste à faire
+					$typeEntraineur = $_POST['typeEntraineur'];
+
+					if ($typeEntraineur == "Titulaire") 
+					{
+						$message= $this->tousLesTitulaires->lesTitulairesAuFormatHTML();
+						$vue = new vueCentraleEntraineur();
+						$vue->modifierEntraineur($message, $typeEntraineur);
+					}
+					else
+					{
+						$message= $this->tousLesVacataires->lesVacatairesAuFormatHTML();
+						$vue = new vueCentraleEntraineur();
+						$vue->modifierEntraineur($message, $typeEntraineur);
+					}
 					break;
+				case "choixFaitPourModif":
+					$vue=new vueCentraleConnexion();
+					$vue->afficheMenuAdmin();
+					require 'vues/ihm/nouvelle.php';
+					$typeEntraineur = $_GET['typeEntraineur'];
+					echo $typeEntraineur;
+					if ($typeEntraineur == "Titulaire") 
+					{
+						$choix=$_GET['idTitulaire'];
+						$lEntraineur=$this->tousLesTitulaires->donneObjetTitulaireDepuisNumero($choix);
+						$vue = new vueCentraleEntraineur();
+						$vue->choixFaitPourModifTitulaire($lEntraineur->getNomEntraineur(),$lEntraineur->getDateEmbauche(),$lEntraineur->getLoginEntraineur(),$lEntraineur->getPwdEntraineur(),$choix, $typeEntraineur);	
+					}
+					else
+					{
+						$choix=$_GET['idVacataire'];
+						$lEntraineur=$this->tousLesVacataires->donneObjetVacataireDepuisNumero($choix);
+						$vue = new vueCentraleEntraineur();
+						$vue->choixFaitPourModifVacataire($lEntraineur->getNomEntraineur(),$lEntraineur->getTelephone(),$lEntraineur->getLoginEntraineur(),$lEntraineur->getPwdEntraineur(),$choix, $typeEntraineur);	
+					} 
+					break;
+				case "EnregModif":
+					$vue=new vueCentraleConnexion();
+					$vue->afficheMenuAdmin();
+					require 'vues/ihm/nouvelle.php';
+					$typeEntraineur = $_GET['typeEntraineur'];
+					$nomEntraineur=$_GET['nomEntraineur'];
+					$loginEntraineur=$_GET['loginEntraineur'];
+					$pwdEntraineur=$_GET['pwdEntraineur'];
+					$idEntraineur = $_GET['idEntraineur'];
+					if ($typeEntraineur == "Titulaire") 
+					{
+						$dateEmbEntraineur=$_GET['dateEmbEntraineur'];
+						$this->maBD->modifTitulaire($nomEntraineur,$loginEntraineur,$pwdEntraineur,$dateEmbEntraineur,$idEntraineur);
+						$this->tousLesTitulaires->modifierUnTitulaire($idEntraineur, $nomEntraineur, $loginEntraineur, $pwdEntraineur, $dateEmbEntraineur);
+					}
+					else 
+					{
+						$telEntraineur=$_GET['telephoneVacataire'];
+						$this->maBD->modifVacataire($nomEntraineur,$loginEntraineur,$pwdEntraineur,$telEntraineur,$idEntraineur);
+						$this->tousLesVacataires->modifierUnVacataire($idEntraineur, $nomEntraineur, $loginEntraineur, $pwdEntraineur, $telEntraineur);
+					}
+				break;		
 				case "visualiserSesEquipes" :
 					$vue=new vueCentraleConnexion();
 					$vue->afficheMenuEntraineur();
