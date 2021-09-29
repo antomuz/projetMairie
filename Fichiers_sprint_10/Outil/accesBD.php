@@ -231,6 +231,61 @@ class accesBD
 		}
 		return $idEquipe;
 	}
+
+	public function modifTitulaire($unNomEntraineur,$unLoginEntraineur, $unPwdEntraineur,$uneDateEmbauche,$IdEntraineur)
+	{	$requete = $this->conn->prepare("UPDATE entraineur SET nomEntraineur = ?, loginEntraineur = ?, pwdEntraineur = ? where idEntraineur = ?");
+		
+		$requete->bindValue(1,$unNomEntraineur);
+		$requete->bindValue(2,$unLoginEntraineur);
+		$requete->bindValue(3,$unPwdEntraineur);
+		$requete->bindValue(4,$IdEntraineur);
+		
+		if(!$requete->execute())
+		{
+			die("Erreur dans modif Entraineur : ".$requete->errorCode());
+		}
+		$requete = $this->conn->prepare("UPDATE titulaire SET dateEmbauche = ? where idEntraineur = ?");
+		
+		$requete->bindValue(1,$uneDateEmbauche);
+		$requete->bindValue(2,$IdEntraineur);
+
+		if(!$requete->execute())
+		{
+			die("Erreur dans modif Titulaire : ".$requete->errorCode());
+		}
+		
+		echo "La modification est effectuée.";
+		
+		return $IdEntraineur;
+
+	}
+	public function modifVacataire($unNomEntraineur,$unLoginEntraineur, $unPwdEntraineur,$unTelephone,$IdEntraineur)
+	{	$requete = $this->conn->prepare("UPDATE entraineur SET nomEntraineur = ?, loginEntraineur = ?, pwdEntraineur = ? where idEntraineur = ?");
+		
+		$requete->bindValue(1,$unNomEntraineur);
+		$requete->bindValue(2,$unLoginEntraineur);
+		$requete->bindValue(3,$unPwdEntraineur);
+		$requete->bindValue(4,$IdEntraineur);
+		
+		if(!$requete->execute())
+		{
+			die("Erreur dans modif Entraineur : ".$requete->errorCode());
+		}
+		$requete = $this->conn->prepare("UPDATE vacataire SET telephoneVacataire = ? where idEntraineur = ?");
+		
+		$requete->bindValue(1,$unTelephone);
+		$requete->bindValue(2,$IdEntraineur);
+
+		if(!$requete->execute())
+		{
+			die("Erreur dans modif Vacataire : ".$requete->errorCode());
+		}
+		
+		echo "La modification est effectuée.";
+		
+		return $IdEntraineur;
+
+	}
 	
 	/***********************************************************************************************
 	C'est la fonction qui permet de charger les tables et de les mettre dans un tableau 2 dimensions. La petite fontions specialCase permet juste de psser des minuscules aux majuscules pour les noms des tables de la base de données
