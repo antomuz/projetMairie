@@ -38,7 +38,7 @@
 											<input type=text name=login value="Login"></input>
 									</td>
 									<td>
-											<input type=text name=pwd value="Pwd"></input>
+											<input type=password name=pwd value="Pwd"></input>
 									</td>
 									<td>
 									<button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
