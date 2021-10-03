@@ -49,6 +49,101 @@
 				
 		}
 		
+	public function voirProfil($adherent){
+
+			echo "
+			PLACEHOLDER POUR LA PHOTO
+			<table>
+			<tr>
+			<td>Nom</td>
+			<td>".$adherent->getNomAdherent()."</td>
+			</tr>
+			<tr>
+			<td>Prénom</td>
+			<td>".$adherent->getPrenomAdherent()."</td>
+			</tr>
+			<tr>
+			<td>Âge</td>
+			<td>".$adherent->getAgeAdherent()."</td>
+			</tr>
+			<tr>
+			<td>Sexe</td>
+			<td>".$adherent->getSexeAdherent()."</td>
+			</tr>
+			<tr>
+			<td>Login</td>
+			<td>".$adherent->getLoginAdherent()."</td>
+			</tr>
+			</table>";
+		}
+
+	public function modifierAdherent(){
+
+	}
+
+	public function modifierProfil($adherent){
+		//incorpore ça idiot <form action=index.php?vue=Entraineur&action=SaisirEntraineur method=POST align=center>
+
+		echo "PLACEHOLDER POUR LA PHOTO
+			<form action=index.php?vue=Adherent&action=EnregistrerProfil method=POST align=center>
+			<table>
+			<tr>
+			<td>Nom</td>
+			<td><input type='text' name='nomAdherent' value=".$adherent->getNomAdherent()." required='true'>
+			</tr>
+			<tr>
+			<td>Prénom</td>
+			<td><input type='text' name='prenomAdherent' value=".$adherent->getPrenomAdherent()." required='true'>
+			</tr>
+			<tr>
+			<td>Âge</td>
+			<td><input type='text' name='ageAdherent' value=".$adherent->getAgeAdherent()." required='true'>
+			</tr>
+			<tr>
+			<td>Sexe</td>
+			<td><select name='sexeAdherent' required='true'>
+			<option value=".$adherent->getSexeAdherent().">
+			<option value='F'>Femme</option>
+			<option value='H'>Homme</option>
+			</select>
+			</td>
+			</tr>
+			<tr>
+			<td>Login</td>
+			<td><input type='text' name='loginAdherent' value=".$adherent->getLoginAdherent()." required='true'>
+			</tr>
+			<input type='hidden' name='idAdherent' value=".$adherent->getIdAdherent().">
+			</table>
+			<button type='submit' class='btn btn-primary'>Valider</button>
+			</form>";
+	}
+
+	public function changerMDP($erreur=false){
+		if($erreur){
+			echo "<p style='color:red'>Le mot de passe ne respecte pas les règles de construction de mot de passe !</p>";
+		}
+		echo "<form action=index.php?vue=Adherent&action=verifMDP method=POST align=center>
+		<table style='margin-top:1em'>
+		<tr>
+		<td>Veuillez saisir le nouveau mot de passe :</td>
+		<td><input type='password' name='MDP' value='' required='true'></td>
+		<td><button style='margin-left:1em' type='submit' class='btn btn-primary'>Valider</button>
+		</tr>
+		</table>
+		<h5 style='text-align:left;font-size:1em;margin-top:1em;'>Le mot de passe doit contenir :</h5>
+		<ul style='text-align:left;font-size:0.95em'>
+		<li>Au moins 12 caractères</li>
+		<li>Au moins 1 lettre minuscule</li>
+		<li>Au moins 1 lettre majuscule</li>
+		<li>Au moins 1 chiffre</li>
+		<li>Au moins 1 caractère spécial</li>
+		</ul>"
+		;
+	}
+
+	public function confirmationChangement(){
+		echo "Le changement a été effectué.";
+	}	
 	
 }
 ?>

@@ -42,7 +42,23 @@ class conteneurTitulaire
 			}
 		$liste = $liste."</SELECT>";
 		return $liste;
-		}		
+		}	
+		
+	public function modifierUnTitulaire($unIdTitulaire, $unNomEntraineur, $unLoginEntraineur, $unPwdEntraineur, $uneDateEmbauche)
+		{
+				
+			foreach ($this->lesTitulaires as $unTitulaire)
+			{
+				if ($unTitulaire->getIdTitulaire() == $unIdTitulaire)
+				{
+					$unTitulaire->setNomEquipe = $unNomEntraineur;
+					$unTitulaire->setNbrPlaceEquipe = $unLoginEntraineur;
+					$unTitulaire->setAgeMinEquipe = $unPwdEntraineur;
+					$unTitulaire->setAgeMaxEquipe = $uneDateEmbauche;
+				}
+			}
+		}
+	
 	
 	public function donneObjetTitulaireDepuisNumero($unIdTitulaire)
 		{

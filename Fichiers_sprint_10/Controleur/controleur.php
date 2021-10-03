@@ -5,6 +5,7 @@
 		private $tousLesAdherents;
 		private $tousLesVacataires;
 		private $tousLesTitulaires;
+		private $tousLesEntraineurs;
 		private $maBD;
 		
 /*********************************************************************************************************************
@@ -18,12 +19,14 @@
 			$this->tousLesTitulaires = new conteneurTitulaire();
 			$this->toutesLesEquipes = new conteneurEquipe();
 			$this->tousLesAdherents = new conteneurAdherent();
+			$this->tousLesEntraineurs = new conteneurEntraineur();
 			
 	
 			$this->chargeLesVacataires();
 			$this->chargeLesTitulaires();
 			$this->chargeLesEquipes();
 			$this->chargeLesAdherents();
+			$this->chargeLesEntraineurs();
 			
 			
 		}
@@ -206,14 +209,76 @@
 					$liste = $liste.$this->tousLesVacataires->listeDesVacataires();
 					$vue = new vueCentraleEntraineur();
 					$vue->VisualiserEntraineur($liste);
-
+					break;
+				case "typeEntraineurModifier" :
+					$vue=new vueCentraleConnexion();
+					$vue->afficheMenuAdmin();
+					require 'vues/ihm/nouvelle.php';
+					$vue = new vueCentraleEntraineur();
+					$vue->typeEntraineur();
 					break;
 				case "modifier" :
 					$vue=new vueCentraleConnexion();
 					$vue->afficheMenuAdmin();
 					require 'vues/ihm/nouvelle.php';
-					//reste à faire
+					$typeEntraineur = $_POST['typeEntraineur'];
+
+					if ($typeEntraineur == "Titulaire") 
+					{
+						$message= $this->tousLesTitulaires->lesTitulairesAuFormatHTML();
+						$vue = new vueCentraleEntraineur();
+						$vue->modifierEntraineur($message, $typeEntraineur);
+					}
+					else
+					{
+						$message= $this->tousLesVacataires->lesVacatairesAuFormatHTML();
+						$vue = new vueCentraleEntraineur();
+						$vue->modifierEntraineur($message, $typeEntraineur);
+					}
 					break;
+				case "choixFaitPourModif":
+					$vue=new vueCentraleConnexion();
+					$vue->afficheMenuAdmin();
+					require 'vues/ihm/nouvelle.php';
+					$typeEntraineur = $_GET['typeEntraineur'];
+					echo $typeEntraineur;
+					if ($typeEntraineur == "Titulaire") 
+					{
+						$choix=$_GET['idTitulaire'];
+						$lEntraineur=$this->tousLesTitulaires->donneObjetTitulaireDepuisNumero($choix);
+						$vue = new vueCentraleEntraineur();
+						$vue->choixFaitPourModifTitulaire($lEntraineur->getNomEntraineur(),$lEntraineur->getDateEmbauche(),$lEntraineur->getLoginEntraineur(),$lEntraineur->getPwdEntraineur(),$choix, $typeEntraineur);	
+					}
+					else
+					{
+						$choix=$_GET['idVacataire'];
+						$lEntraineur=$this->tousLesVacataires->donneObjetVacataireDepuisNumero($choix);
+						$vue = new vueCentraleEntraineur();
+						$vue->choixFaitPourModifVacataire($lEntraineur->getNomEntraineur(),$lEntraineur->getTelephone(),$lEntraineur->getLoginEntraineur(),$lEntraineur->getPwdEntraineur(),$choix, $typeEntraineur);	
+					} 
+					break;
+				case "EnregModif":
+					$vue=new vueCentraleConnexion();
+					$vue->afficheMenuAdmin();
+					require 'vues/ihm/nouvelle.php';
+					$typeEntraineur = $_GET['typeEntraineur'];
+					$nomEntraineur=$_GET['nomEntraineur'];
+					$loginEntraineur=$_GET['loginEntraineur'];
+					$pwdEntraineur=$_GET['pwdEntraineur'];
+					$idEntraineur = $_GET['idEntraineur'];
+					if ($typeEntraineur == "Titulaire") 
+					{
+						$dateEmbEntraineur=$_GET['dateEmbEntraineur'];
+						$this->maBD->modifTitulaire($nomEntraineur,$loginEntraineur,$pwdEntraineur,$dateEmbEntraineur,$idEntraineur);
+						$this->tousLesTitulaires->modifierUnTitulaire($idEntraineur, $nomEntraineur, $loginEntraineur, $pwdEntraineur, $dateEmbEntraineur);
+					}
+					else 
+					{
+						$telEntraineur=$_GET['telephoneVacataire'];
+						$this->maBD->modifVacataire($nomEntraineur,$loginEntraineur,$pwdEntraineur,$telEntraineur,$idEntraineur);
+						$this->tousLesVacataires->modifierUnVacataire($idEntraineur, $nomEntraineur, $loginEntraineur, $pwdEntraineur, $telEntraineur);
+					}
+				break;		
 				case "visualiserSesEquipes" :
 					$vue=new vueCentraleConnexion();
 					$vue->afficheMenuEntraineur();
@@ -230,6 +295,19 @@
 		}
 		
 // On a une fonction outil de chargement de notre conteneur
+		
+		public function chargeLesEntraineurs()
+		{   $resultatEntraineur=$this->maBD->chargement('entraineur');
+			$nbE=0;
+			while ($nbE<sizeof($resultatEntraineur))
+			{
+				$this->tousLesEntraineurs->ajouterUnEntraineur($resultatEntraineur[$nbE][0],$resultatEntraineur[$nbE][1],$resultatEntraineur[$nbE][2],$resultatEntraineur[$nbE][3]);
+
+				$nbE++;
+			}
+
+		}
+		
 		public function chargeLesVacataires()
 		{   $resultatEntraineur=$this->maBD->chargement('entraineur');
 			$resultatVacataire=$this->maBD->chargement('vacataire');
@@ -288,9 +366,28 @@
 					$vue=new vueCentraleConnexion();
 					$vue->afficheMenuAdmin();//J'ajoute une nouvelle équipe juste pour voir si cela fonctionne
 					require 'vues/ihm/nouvelle.php';
-					//mais la fonctionnalité reste à faire en réalité
-					$this->toutesLesEquipes->ajouterUneEquipe($this->maBD->donneNumeroMaxEquipe(),'equipe essai',10,5,8,'F',$this->tousLesTitulaires->donneObjetTitulaireDepuisNumero(1));
-					$this->maBD->insertEquipe('equipe essai',10,5,8,'F',1);			
+					$vue = new vueCentraleEquipe();
+					$vue->ajouterEquipe();		
+					break;
+				case 'SaisirEquipe':
+					$vue=new vueCentraleConnexion();
+					$vue->afficheMenuAdmin();
+					require 'vues/ihm/nouvelle.php';
+					$vue = new vueCentraleEquipe();
+					$vue->saisirEquipe($this->tousLesEntraineurs->lesEntraineursAuFormatHTML());
+					break;
+				case 'enregistrer':
+					$nomEquipe = $_POST['nomEquipe'];
+					$nbrPlaceEquipe = $_POST['nbrPlaceEquipe'];
+					$ageMinEquipe = $_POST['ageMinEquipe'];
+					$ageMaxEquipe = $_POST['ageMaxEquipe'];
+					$sexeEquipe = $_POST['sexeEquipe'];
+					$idEntraineur = $_POST['idEntraineur'];
+					$this->toutesLesEquipes->ajouterUneEquipe($this->maBD->donneNumeroMaxEquipe(),$nomEquipe,$nbrPlaceEquipe,$ageMinEquipe,$ageMaxEquipe,$sexeEquipe,$this->tousLesTitulaires->donneObjetTitulaireDepuisNumero($idEntraineur));
+					$this->maBD->insertEquipe($nomEquipe,$nbrPlaceEquipe,$ageMinEquipe,$ageMaxEquipe,$sexeEquipe,$idEntraineur);
+					$vue=new vueCentraleConnexion();
+					$vue->afficheMenuAdmin();
+					require 'vues/ihm/nouvelle.php';
 					break;
 				case "visualiser" :
 					$vue=new vueCentraleConnexion();
@@ -398,19 +495,61 @@
 					$vue=new vueCentraleConnexion();
 					$vue->afficheMenuAdmin();
 					require 'vues/ihm/nouvelle.php';
-					//a faire;
+					$vue = new vueCentraleAdherent();
+					$vue->modifierAdherent();
 					break;
 				case "modifierSonProfil" :
 					$vue=new vueCentraleConnexion();
 					$vue->afficheMenuAdherent();
+					$vue = new vueCentraleAdherent(); 
 					require 'vues/ihm/nouvelle.php';
-					//a faire;
+					$adherent = $this->tousLesAdherents->donneObjetAdherentDepuisLogin($_SESSION['login']);
+					$vue->modifierProfil($adherent);
 					break;
-				case "visualiserSonProfil" :
+
+				case "changerMDP" :
 					$vue=new vueCentraleConnexion();
 					$vue->afficheMenuAdherent();
+					$vue = new vueCentraleAdherent(); 
 					require 'vues/ihm/nouvelle.php';
-					//a faire;
+					$vue->changerMDP();
+					break;
+				case "verifMDP" :
+					$vue=new vueCentraleConnexion();
+					$vue->afficheMenuAdherent();
+					$vue = new vueCentraleAdherent(); 
+					require 'vues/ihm/nouvelle.php';
+
+					$MDP = $_POST['MDP'];
+					if(preg_match("#^\S*(?=\S{12,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])(?=\S*[\W])\S*$#",$MDP)){
+
+						try{
+							$adherent = $this->tousLesAdherents->donneObjetAdherentDepuisLogin($_SESSION['login']);
+							$this->tousLesAdherents->modifierMDP($adherent, $MDP);
+							$this->maBD->modifMDP($adherent,$MDP);
+						}
+						catch(Exception $e){
+
+						}
+
+
+					}
+					else{
+						$vue->changerMDP(true);
+					}
+					break;
+				case "EnregistrerProfil" : 
+					$vue= new vueCentraleConnexion();
+					$vue->afficheMenuAdherent();
+					require 'vues/ihm/nouvelle.php';
+					$idAdherent = $_POST['idAdherent'];
+					$nomAdherent = $_POST['nomAdherent'];
+					$prenomAdherent = $_POST['prenomAdherent'];
+					$ageAdherent = $_POST['ageAdherent'];
+					$sexeAdherent = $_POST['sexeAdherent'];
+					$loginAdherent = $_POST['loginAdherent'];
+					$this->tousLesAdherents->modifierUnAdherent($idAdherent,$nomAdherent,$prenomAdherent,$ageAdherent,$sexeAdherent,$loginAdherent);
+					$this->maBD->modifProfil($idAdherent,$nomAdherent,$prenomAdherent,$ageAdherent,$sexeAdherent,$loginAdherent);
 					break;
 				case "voyager" :
 					$vue=new vueCentraleConnexion();
@@ -419,6 +558,13 @@
 					require 'vues/ihm/nouvelle.php';
 					$vue->voyagerAdherent();
 					break;
+				case "voirProfil" :
+					$vue= new vueCentraleConnexion();
+					$vue->afficheMenuAdherent();
+					$vue = new vueCentraleAdherent(); 
+					require 'vues/ihm/nouvelle.php';
+					$adherent = $this->tousLesAdherents->donneObjetAdherentDepuisLogin($_SESSION['login']);
+					$vue->voirProfil($adherent);
 			}
 		}
 

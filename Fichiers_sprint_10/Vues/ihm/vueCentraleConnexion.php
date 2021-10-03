@@ -94,7 +94,8 @@
 				</button>
 				<ul class="dropdown-menu" aria-labelledby="menuAdherent">
 					<li><a class="dropdown-item" href=index.php?vue=Adherent&action=modifierSonProfil>Modifier son profil</a></li>
-					<li><a class="dropdown-item" href=index.php?vue=Adherent&action=visualiserSonProfil>Visualiser son profil</a></li>
+					<li><a class="dropdown-item" href=index.php?vue=Adherent&action=voirProfil>Voir son profil</a></i>
+					<li><a class="dropdown-item" href=index.php?vue=Adherent&action=changerMDP>Changer MDP</a></i>
 				</ul>
 			</div>
 			<div class="dropdown col">
@@ -157,7 +158,7 @@
 				</button>
 				<ul class="dropdown-menu" aria-labelledby="menuEntraineur">
 					<li><a class="dropdown-item" href=index.php?vue=Entraineur&action=ajouter>Ajouter un Entraineur</a></li>
-					<li><a class="dropdown-item" href=index.php?vue=Entraineur&action=modifier>Modifier un entraineur</a></li>
+					<li><a class="dropdown-item" href=index.php?vue=Entraineur&action=typeEntraineurModifier>Modifier un entraineur</a></li>
 				</ul>
 			</div>
 			<div class="dropdown col">
