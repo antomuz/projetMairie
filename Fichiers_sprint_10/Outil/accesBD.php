@@ -325,6 +325,46 @@ class accesBD
 
 	}
 	
+	public function modifProfil($unIdAdherent,$unNomAdherent,$unPrenomAdherent,$unAgeAdherent,$unSexeAdherent,$unLoginAdherent)
+	{	
+	
+				$requete = $this->conn->prepare("UPDATE adherent SET  nomAdherent = ?, prenomAdherent = ?, ageAdherent = ?, sexeAdherent = ?, loginAdherent = ? where idAdherent = ?");
+			$requete->bindValue(1,$unNomAdherent);
+			$requete->bindValue(2,$unPrenomAdherent);
+			$requete->bindValue(3,$unAgeAdherent);
+			$requete->bindValue(4,$unSexeAdherent);
+			$requete->bindValue(5,$unLoginAdherent);
+			$requete->bindValue(6,$unIdAdherent);
+		
+			echo "La modification est effectuée.";
+		
+		if(!$requete->execute())
+		{
+			die("Erreur dans modif Equipe : ".$requete->errorCode());
+		}
+		return $unIdAdherent;	
+	}
+	
+	/***********************************************************************************************
+	méthode qui va permettre de modifier le MDP.
+	***********************************************************************************************/
+	public function modifMDP($adherent, $MDP)
+	{	
+	
+			$requete = $this->conn->prepare("UPDATE adherent SET pwdAdherent = ? where idAdherent = ?");
+			$requete->bindValue(1,$MDP);
+			$requete->bindValue(2,$adherent->getIdAdherent());
+			
+		
+			echo "La modification est effectuée.";
+		
+		if(!$requete->execute())
+		{
+			die("Erreur dans modif Equipe : ".$requete->errorCode());
+		}
+		return $adherent->getIdAdherent();	
+	}
+	
 	/***********************************************************************************************
 	C'est la fonction qui permet de charger les tables et de les mettre dans un tableau 2 dimensions. La petite fontions specialCase permet juste de psser des minuscules aux majuscules pour les noms des tables de la base de données
 	************************************************************************************************/
