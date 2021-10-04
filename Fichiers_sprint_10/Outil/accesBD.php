@@ -32,90 +32,128 @@ class accesBD
 	}
 	
 	public function verifExistance($role,$login,$pwd)
-	{   
-	
-		switch ($role)
-		{
-			case "1" :
-				$requete='SELECT idAdmin FROM administrateur where loginAdmin = "'.$login.'" and pwdAdmin = "'.md5($pwd).'" ;';
-				break;
-			case "2" :
-				$requete='SELECT idAdherent FROM adherent where loginAdherent =  "'.$login.'" and pwdAdherent = "'.md5($pwd).'" ;';
-				break;
-			case "3" :
-				$requete='SELECT idEntraineur FROM entraineur where loginEntraineur =  "'.$login.'" and pwdEntraineur = "'.md5($pwd).'" ;';
-				break;
-		}
-		
-		$result=$this->conn->query($requete);
-		
-		if ($result)
-    	{
-			if ($result->rowCount()==1)
+	{ 
+		if (strstr($login,"LIMIT") || strstr($login,"\"") || strstr($login,"\'")|| strstr($login,"-"))//mysql_real_escape_stream()
+        {
+            echo "<h2 style=color:red;>arrete de pirater batard-</h2>";
+        }
+		else
+		{  
+			switch ($role)
 			{
-				return(1);
+				case "1" :
+					$requete = $this->conn->prepare("SELECT idAdmin FROM administrateur where loginAdmin = ? and pwdAdmin = ?;");
+					$requete->bindValue(1,$login);
+        	        $requete->bindValue(2,md5($pwd));
+					break;
+				case "2" :
+					$requete = $this->conn->prepare("SELECT idAdherent FROM adherent where loginAdherent = ? and pwdadherent = ?;");
+					$requete->bindValue(1,$login);
+            	    $requete->bindValue(2,md5($pwd));
+					break;
+				case "3" :
+					$requete = $this->conn->prepare("SELECT idEntraineur FROM entraineur where loginEntraineur = ? and pwdentraineur= ?;");
+					$requete->bindValue(1,$login);
+            	    $requete->bindValue(2,md5($pwd));
+					break;
 			}
-			else
-			{
-				return(0);
-			}
+
+			if ($requete->execute())
+            {
+				//$row = $requete->fetch ( PDO::FETCH_NUM );
+				//echo $row[0];
+				if ($requete->rowCount()==1)
+				{
+					return(1);
+				}
+				else {
+					return(0);
+				}
+            }
+            else
+            {
+				die("Erreur dans la requête : ".$requete->errorCode());    
+            }
 		}
+
+		// $result=$this->conn->query($requete);
+        
+        // if ($result)
+        // {
+        //     if ($result->rowCount()==1)
+        //     {
+        //         return(1);
+        //     }
+        //     else
+        //     {
+        //         return(0);
+        //     }
+        // }
 	}	
 	
 	public function enregMessage($emailContact,$messageContact)
 	{   
-		$requete='INSERT INTO message (emailContact, messageContact) VALUES ("'.$emailContact.'","'.$messageContact.'");';
-		$result=$this->conn->query($requete);
-		
-		
+		$requete=$this->conn->prepare('INSERT INTO message (emailContact, messageContact) VALUES (?,?);');
+		$requete->bindValue(1,$emailContact);
+		$requete->bindValue(2,$messageContact);
+		$requete->execute();
 	}
 
 	public function listeDesMessages()
-	{
-		$requete='select * from message;';
-		$retour = '';
-		$result=$this->conn ->query($requete);
-		while ( $row = $result->fetch ( PDO::FETCH_OBJ ) )
+	{	
+		$requete=$this->conn->prepare('SELECT * from message;');
+		if ($requete->execute())
 		{
-			$retour = $retour . $row->idMessage . '|' . $row->emailContact . '|'. $row->messageContact . '<br>';
-		};
+			$retour = '';
+			while ( $row = $requete->fetch ( PDO::FETCH_OBJ ) )
+			{
+				$retour = $retour . $row->idMessage . '|' . $row->emailContact . '|'. $row->messageContact . '<br>';
+			};
 		
-		return $retour;
-			
+			return $retour;
+		}	
+		if(!$requete->execute())
+		{
+			die("Erreur dans la requête : ".$requete->errorCode());
+		}
 	}		
 	
 	public function listeDesNouvellesFormatHTML()
 	{
-		$requete='select * from typeNouvelle;';
-		$retour = '<select name=typeNouvelle>';
-		$result=$this->conn ->query($requete);
-		while ( $row = $result->fetch ( PDO::FETCH_OBJ ) )
+		$requete=$this->conn->prepare('SELECT * from typeNouvelle;');
+		if ($requete->execute()) 
 		{
-			$retour = $retour . '<option value="' . $row->idTypeNouvelle . '">' . $row->libelleTypeNouvelle . '</option>';
+			$retour = '<select name=typeNouvelle>';
+			while ( $row = $requete->fetch ( PDO::FETCH_OBJ ) )
+			{
+				$retour = $retour . '<option value="' . $row->idTypeNouvelle . '">' . $row->libelleTypeNouvelle . '</option>';
+			}
+			$retour = $retour .'</select>';
+			echo $retour;
 		}
-		$retour = $retour .'</select>';
-		echo $retour;
-			
+		if(!$requete->execute())
+		{
+			die("Erreur dans la requête : ".$requete->errorCode());
+		}
 	}	
 	
 	public function listeDesNouvellesPourUnType($idTypeNouvelleChoisi)
 	{
-		try{
-			$requete='SELECT idNouvelle, dateParutionNouvelle, descriptionNouvelle FROM nouvelle where idTypeNouvelle =  '.$idTypeNouvelleChoisi.' ;';
-			$result=$this->conn ->query($requete);
+		$requete = $this->conn->prepare('SELECT idNouvelle, dateParutionNouvelle, descriptionNouvelle FROM nouvelle where idTypeNouvelle =  '.$idTypeNouvelleChoisi.' ;');
+		if($requete->execute()) 
+		{
 			$retour='';
-			while ( $row = $result->fetch(PDO::FETCH_OBJ ) )
+			while ( $row = $requete->fetch(PDO::FETCH_OBJ ) )
 			{
 				$retour = $retour.'|'.$row->idNouvelle.'|'.$row->dateParutionNouvelle.'|'.$row->descriptionNouvelle;
 			}
 			return $retour;
 		}
-		catch(PDOException $e)
-        {
-            die("erreur dans la requête".$e->getMessage());
-        }
-
 		
+		if(!$requete->execute())
+		{
+			die("Erreur dans la requête : ".$requete->errorCode());
+		}
 			
 	}	
 
