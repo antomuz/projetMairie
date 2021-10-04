@@ -237,7 +237,7 @@ class accesBD
 		
 		$requete->bindValue(1,$unNomEntraineur);
 		$requete->bindValue(2,$unLoginEntraineur);
-		$requete->bindValue(3,$unPwdEntraineur);
+		$requete->bindValue(3,md5($unPwdEntraineur));
 		$requete->bindValue(4,$IdEntraineur);
 		
 		if(!$requete->execute())
@@ -264,7 +264,7 @@ class accesBD
 		
 		$requete->bindValue(1,$unNomEntraineur);
 		$requete->bindValue(2,$unLoginEntraineur);
-		$requete->bindValue(3,$unPwdEntraineur);
+		$requete->bindValue(3,md5($unPwdEntraineur));
 		$requete->bindValue(4,$IdEntraineur);
 		
 		if(!$requete->execute())
