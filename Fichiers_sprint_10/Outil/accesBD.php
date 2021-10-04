@@ -31,120 +31,129 @@ class accesBD
         }
 	}
 	
-
-	//à virer (probablement) 
 	public function verifExistance($role,$login,$pwd)
-	{   
-	
-		switch ($role)
-		{
-			case "1" :
-				$requete='SELECT idAdmin FROM administrateur where loginAdmin = "'.$login.'" and pwdAdmin = "'.$pwd.'" ;';
-				break;
-			case "2" :
-				$requete='SELECT idAdherent FROM adherent where loginAdherent =  "'.$login.'" and pwdAdherent = "'.$pwd.'" ;';
-				break;
-			case "3" :
-				$requete='SELECT idEntraineur FROM entraineur where loginEntraineur =  "'.$login.'" and pwdEntraineur = "'.$pwd.'" ;';
-				break;
-		}
-		
-		$result=$this->conn->query($requete);
-		
-		if ($result)
-    	{
-			if ($result->rowCount()==1)
+	{ 
+		if (strstr($login,"LIMIT") || strstr($login,"\"") || strstr($login,"\'")|| strstr($login,"-"))//mysql_real_escape_stream()
+        {
+            echo "<h2 style=color:red;>arrete de pirater batard-</h2>";
+        }
+		else
+		{  
+			switch ($role)
 			{
-				return(1);
+				case "1" :
+					$requete = $this->conn->prepare("SELECT idAdmin FROM administrateur where loginAdmin = ? and pwdAdmin = ?;");
+					$requete->bindValue(1,$login);
+        	        $requete->bindValue(2,md5($pwd));
+					break;
+				case "2" :
+					$requete = $this->conn->prepare("SELECT idAdherent FROM adherent where loginAdherent = ? and pwdadherent = ?;");
+					$requete->bindValue(1,$login);
+            	    $requete->bindValue(2,md5($pwd));
+					break;
+				case "3" :
+					$requete = $this->conn->prepare("SELECT idEntraineur FROM entraineur where loginEntraineur = ? and pwdentraineur= ?;");
+					$requete->bindValue(1,$login);
+            	    $requete->bindValue(2,md5($pwd));
+					break;
 			}
-			else
-			{
-				return(0);
-			}
-		}
-	}
-	
-	public function getIdAdherent($role,$login,$pwd)
-	{
-		if ($role == "2")
-		{
-			$requete='SELECT idAdherent FROM adherent where loginAdherent =  "'.$login.'" and pwdAdherent = "'.$pwd.'" ;';
-			$result=$this->conn->query($requete);
-		if ($result != null)
-    	{
-			if ($result->rowCount()==1)
-			{
-				return($result);
-			}
-			else
-			{
-				return(0);
-			}
+
+			if ($requete->execute())
+            {
+				//$row = $requete->fetch ( PDO::FETCH_NUM );
+				//echo $row[0];
+				if ($requete->rowCount()==1)
+				{
+					return(1);
+				}
+				else {
+					return(0);
+				}
+            }
+            else
+            {
+				die("Erreur dans la requête : ".$requete->errorCode());    
+            }
 		}
 
-		}
-		else{
-			return(0);
-		}
-
-		
-
-	}
+		// $result=$this->conn->query($requete);
+        
+        // if ($result)
+        // {
+        //     if ($result->rowCount()==1)
+        //     {
+        //         return(1);
+        //     }
+        //     else
+        //     {
+        //         return(0);
+        //     }
+        // }
+	}	
 	
 	public function enregMessage($emailContact,$messageContact)
 	{   
-		$requete='INSERT INTO message (emailContact, messageContact) VALUES ("'.$emailContact.'","'.$messageContact.'");';
-		$result=$this->conn->query($requete);
-		
-		
+		$requete=$this->conn->prepare('INSERT INTO message (emailContact, messageContact) VALUES (?,?);');
+		$requete->bindValue(1,$emailContact);
+		$requete->bindValue(2,$messageContact);
+		$requete->execute();
 	}
 
 	public function listeDesMessages()
-	{
-		$requete='select * from message;';
-		$retour = '';
-		$result=$this->conn ->query($requete);
-		while ( $row = $result->fetch ( PDO::FETCH_OBJ ) )
+	{	
+		$requete=$this->conn->prepare('SELECT * from message;');
+		if ($requete->execute())
 		{
-			$retour = $retour . $row->idMessage . '|' . $row->emailContact . '|'. $row->messageContact . '<br>';
-		};
+			$retour = '';
+			while ( $row = $requete->fetch ( PDO::FETCH_OBJ ) )
+			{
+				$retour = $retour . $row->idMessage . '|' . $row->emailContact . '|'. $row->messageContact . '<br>';
+			};
 		
-		return $retour;
-			
+			return $retour;
+		}	
+		if(!$requete->execute())
+		{
+			die("Erreur dans la requête : ".$requete->errorCode());
+		}
 	}		
 	
 	public function listeDesNouvellesFormatHTML()
 	{
-		$requete='select * from typeNouvelle;';
-		$retour = '<select name=typeNouvelle>';
-		$result=$this->conn ->query($requete);
-		while ( $row = $result->fetch ( PDO::FETCH_OBJ ) )
+		$requete=$this->conn->prepare('SELECT * from typeNouvelle;');
+		if ($requete->execute()) 
 		{
-			$retour = $retour . '<option value="' . $row->idTypeNouvelle . '">' . $row->libelleTypeNouvelle . '</option>';
+			$retour = '<select name=typeNouvelle>';
+			while ( $row = $requete->fetch ( PDO::FETCH_OBJ ) )
+			{
+				$retour = $retour . '<option value="' . $row->idTypeNouvelle . '">' . $row->libelleTypeNouvelle . '</option>';
+			}
+			$retour = $retour .'</select>';
+			echo $retour;
 		}
-		$retour = $retour .'</select>';
-		echo $retour;
-			
+		if(!$requete->execute())
+		{
+			die("Erreur dans la requête : ".$requete->errorCode());
+		}
 	}	
 	
 	public function listeDesNouvellesPourUnType($idTypeNouvelleChoisi)
 	{
-		try{
-			$requete='SELECT idNouvelle, dateParutionNouvelle, descriptionNouvelle FROM nouvelle where idTypeNouvelle =  '.$idTypeNouvelleChoisi.' ;';
-			$result=$this->conn ->query($requete);
+		$requete = $this->conn->prepare('SELECT idNouvelle, dateParutionNouvelle, descriptionNouvelle FROM nouvelle where idTypeNouvelle =  '.$idTypeNouvelleChoisi.' ;');
+		if($requete->execute()) 
+		{
 			$retour='';
-			while ( $row = $result->fetch(PDO::FETCH_OBJ ) )
+			while ( $row = $requete->fetch(PDO::FETCH_OBJ ) )
 			{
 				$retour = $retour.'|'.$row->idNouvelle.'|'.$row->dateParutionNouvelle.'|'.$row->descriptionNouvelle;
 			}
 			return $retour;
 		}
-		catch(PDOException $e)
-        {
-            die("erreur dans la requête".$e->getMessage());
-        }
-
 		
+		if(!$requete->execute())
+		{
+			die("Erreur dans la requête : ".$requete->errorCode());
+		}
 			
 	}	
 
@@ -159,7 +168,7 @@ class accesBD
 		$requete->bindValue(1,$sonId);
 		$requete->bindValue(2,$unNomEntraineur);
 		$requete->bindValue(3,$unLoginEntraineur);
-		$requete->bindValue(4,$unPwdEntraineur);
+		$requete->bindValue(4,md5($unPwdEntraineur));
 		if(!$requete->execute())
 		{
 			die("Erreur dans insert Entraineur : ".$requete->errorCode());
@@ -182,7 +191,7 @@ class accesBD
 		$requete->bindValue(1,$sonId);
 		$requete->bindValue(2,$unNomEntraineur);
 		$requete->bindValue(3,$unLoginEntraineur);
-		$requete->bindValue(4,$unPwdEntraineur);
+		$requete->bindValue(4,md5($unPwdEntraineur));
 		if(!$requete->execute())
 		{
 			die("Erreur dans insert Entraineur : ".$requete->errorCode());
@@ -229,7 +238,7 @@ class accesBD
 		$requete->bindValue(4,$unAgeAdherent);
 		$requete->bindValue(5,$unSexeAdherent);
 		$requete->bindValue(6,$unLoginAdherent);
-		$requete->bindValue(7,$unPwdAdherent);
+		$requete->bindValue(7,md5($unPwdAdherent));
 		$requete->bindValue(8,$unIdEquipe);
 		if(!$requete->execute())
 		{
@@ -261,50 +270,61 @@ class accesBD
 		return $idEquipe;
 	}
 
-	/***********************************************************************************************
-	méthode qui va permettre de modifier les éléments d'un adherent.
-	***********************************************************************************************/
-	public function modifProfil($unIdAdherent,$unNomAdherent,$unPrenomAdherent,$unAgeAdherent,$unSexeAdherent,$unLoginAdherent)
-	{	
-	
-				$requete = $this->conn->prepare("UPDATE adherent SET  nomAdherent = ?, prenomAdherent = ?, ageAdherent = ?, sexeAdherent = ?, loginAdherent = ? where idAdherent = ?");
-			$requete->bindValue(1,$unNomAdherent);
-			$requete->bindValue(2,$unPrenomAdherent);
-			$requete->bindValue(3,$unAgeAdherent);
-			$requete->bindValue(4,$unSexeAdherent);
-			$requete->bindValue(5,$unLoginAdherent);
-			$requete->bindValue(6,$unIdAdherent);
+	public function modifTitulaire($unNomEntraineur,$unLoginEntraineur, $unPwdEntraineur,$uneDateEmbauche,$IdEntraineur)
+	{	$requete = $this->conn->prepare("UPDATE entraineur SET nomEntraineur = ?, loginEntraineur = ?, pwdEntraineur = ? where idEntraineur = ?");
 		
-			echo "La modification est effectuée.";
+		$requete->bindValue(1,$unNomEntraineur);
+		$requete->bindValue(2,$unLoginEntraineur);
+		$requete->bindValue(3,md5($unPwdEntraineur));
+		$requete->bindValue(4,$IdEntraineur);
 		
 		if(!$requete->execute())
 		{
-			die("Erreur dans modif Equipe : ".$requete->errorCode());
+			die("Erreur dans modif Entraineur : ".$requete->errorCode());
 		}
-		return $unIdAdherent;	
-	}
-	
-	/***********************************************************************************************
-	méthode qui va permettre de modifier le MDP.
-	***********************************************************************************************/
-	public function modifMDP($adherent, $MDP)
-	{	
-	
-			$requete = $this->conn->prepare("UPDATE adherent SET pwdAdherent = ? where idAdherent = ?");
-			$requete->bindValue(1,$MDP);
-			$requete->bindValue(2,$adherent->getIdAdherent());
-			
+		$requete = $this->conn->prepare("UPDATE titulaire SET dateEmbauche = ? where idEntraineur = ?");
 		
-			echo "La modification est effectuée.";
-		
-		if(!$requete->execute())
-		{
-			die("Erreur dans modif Equipe : ".$requete->errorCode());
-		}
-		return $adherent->getIdAdherent();	
-	}
-	
+		$requete->bindValue(1,$uneDateEmbauche);
+		$requete->bindValue(2,$IdEntraineur);
 
+		if(!$requete->execute())
+		{
+			die("Erreur dans modif Titulaire : ".$requete->errorCode());
+		}
+		
+		echo "La modification est effectuée.";
+		
+		return $IdEntraineur;
+
+	}
+	public function modifVacataire($unNomEntraineur,$unLoginEntraineur, $unPwdEntraineur,$unTelephone,$IdEntraineur)
+	{	$requete = $this->conn->prepare("UPDATE entraineur SET nomEntraineur = ?, loginEntraineur = ?, pwdEntraineur = ? where idEntraineur = ?");
+		
+		$requete->bindValue(1,$unNomEntraineur);
+		$requete->bindValue(2,$unLoginEntraineur);
+		$requete->bindValue(3,md5($unPwdEntraineur));
+		$requete->bindValue(4,$IdEntraineur);
+		
+		if(!$requete->execute())
+		{
+			die("Erreur dans modif Entraineur : ".$requete->errorCode());
+		}
+		$requete = $this->conn->prepare("UPDATE vacataire SET telephoneVacataire = ? where idEntraineur = ?");
+		
+		$requete->bindValue(1,$unTelephone);
+		$requete->bindValue(2,$IdEntraineur);
+
+		if(!$requete->execute())
+		{
+			die("Erreur dans modif Vacataire : ".$requete->errorCode());
+		}
+		
+		echo "La modification est effectuée.";
+		
+		return $IdEntraineur;
+
+	}
+	
 	/***********************************************************************************************
 	C'est la fonction qui permet de charger les tables et de les mettre dans un tableau 2 dimensions. La petite fontions specialCase permet juste de psser des minuscules aux majuscules pour les noms des tables de la base de données
 	************************************************************************************************/
