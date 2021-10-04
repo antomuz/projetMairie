@@ -139,7 +139,8 @@ class accesBD
 	
 	public function listeDesNouvellesPourUnType($idTypeNouvelleChoisi)
 	{
-		$requete = $this->conn->prepare('SELECT idNouvelle, dateParutionNouvelle, descriptionNouvelle FROM nouvelle where idTypeNouvelle =  '.$idTypeNouvelleChoisi.' ;');
+		$requete = $this->conn->prepare('SELECT idNouvelle, dateParutionNouvelle, descriptionNouvelle FROM nouvelle where idTypeNouvelle = ? ;');
+		$requet->bindValue(1,$idTypeNouvelleChoisi);
 		if($requete->execute()) 
 		{
 			$retour='';
