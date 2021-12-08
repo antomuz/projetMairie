@@ -125,7 +125,7 @@
 		}
 		public function saisirEntraineur()
 		{
-			$typeEntraineur = $_POST['typeEntraineur'];
+			$typeEntraineur = htmlspecialchars($_POST['typeEntraineur']);
 						
 				echo '<form action=index.php?vue=Entraineur&action=enregistrer method=POST>';
 					

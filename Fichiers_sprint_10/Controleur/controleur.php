@@ -54,8 +54,8 @@
 		{
 			if (isset($_GET['action']) && isset($_GET['vue']))
 			{
-				$action = $_GET['action'];
-				$vue = $_GET['vue'];
+				$action = htmlspecialchars($_GET['action']);
+				$vue = htmlspecialchars($_GET['vue']);
 
 				switch ($vue)
 				{
@@ -85,9 +85,9 @@
 			switch ($action)
 			{
 				case "Verification":
-					$_SESSION['role'] = $_POST['role'];
-					$_SESSION['login'] = $_POST['login'];
-					$_SESSION['pwd']= $_POST['pwd'];
+					$_SESSION['role'] = htmlspecialchars($_POST['role']);
+					$_SESSION['login'] = htmlspecialchars($_POST['login']);
+					$_SESSION['pwd']= htmlspecialchars($_POST['pwd']);
 					$vue = new vueCentraleConnexion();
 					$existe=$this->maBD->verifExistance($_SESSION['role'],$_SESSION['login'],$_SESSION['pwd']);
 					$vue->AfficherMenuContextuel($_SESSION['role'],$existe);
@@ -97,7 +97,7 @@
 					echo $ListeDesTypesNouvelles=$this->maBD->listeDesNouvellesFormatHTML();
 					break;
 				case "typeChoixNouvelle":
-					$typeNouvelleChoisi=$_GET['typeNouvelle'];
+					$typeNouvelleChoisi=htmlspecialchars($_GET['typeNouvelle']);
 					$vue=new vueCentraleConnexion();
 					if (isset($_SESSION['login']))
 					{
@@ -121,8 +121,8 @@
 				case "enregMessage":
 					$vue=new vueCentraleConnexion();
 					$vue->afficheMenuInternaute();
-					$emailContact = $_POST['emailContact'];
-					$messageContact = $_POST['messageContact'];
+					$emailContact = htmlspecialchars($_POST['emailContact']);
+					$messageContact = htmlspecialchars($_POST['messageContact']);
 					$this->maBD->enregMessage($emailContact,$messageContact);
 					require 'vues/ihm/actionOk.php';
 					break;
@@ -170,19 +170,19 @@
 					$vue=new vueCentraleConnexion();
 					$vue->afficheMenuAdmin();
 					require 'vues/ihm/nouvelle.php';
-					$typeEntraineur = $_POST['typeEntraineur'];
+					$typeEntraineur = htmlspecialchars($_POST['typeEntraineur']);
 					$vue = new vueCentraleEntraineur();
 					$vue->saisirEntraineur();
 					break;
 				case 'enregistrer':
-					$typeEntraineur = $_POST['typeEntraineur'];
+					$typeEntraineur = htmlspecialchars($_POST['typeEntraineur']);
 					$telEntraineur = null;
 					$nomEntraineur=null;
 					if ($typeEntraineur == "Vacataire") {
-						$nomEntraineur = $_POST['nomEntraineur'];
-						$loginEntraineur = $_POST['loginEntraineur'];
-						$pwdEntraineur = $_POST['pwdEntraineur'];
-						$telEntraineur = $_POST['numTelVacataire'];
+						$nomEntraineur = htmlspecialchars($_POST['nomEntraineur']);
+						$loginEntraineur = htmlspecialchars($_POST['loginEntraineur']);
+						$pwdEntraineur = htmlspecialchars($_POST['pwdEntraineur']);
+						$telEntraineur = htmlspecialchars($_POST['numTelVacataire']);
 						$this->tousLesVacataires->ajouterUnVacataire($this->maBD->donneProchainIdentifiant("ENTRAINEUR")+1, $nomEntraineur, $loginEntraineur,$pwdEntraineur,$telEntraineur);
 						$this->maBD->insertVacataire($nomEntraineur,$loginEntraineur,$pwdEntraineur,$telEntraineur);
 						$vue=new vueCentraleConnexion();
@@ -190,10 +190,10 @@
 						require 'vues/ihm/nouvelle.php';
 					}
 					else
-					{	$nomEntraineur = $_POST['nomEntraineur'];
-						$loginEntraineur = $_POST['loginEntraineur'];
-						$pwdEntraineur = $_POST['pwdEntraineur'];
-						$dateEmbEntraineur = $_POST['dateEmbaucheTitulaire'];
+					{	$nomEntraineur = htmlspecialchars($_POST['nomEntraineur']);
+						$loginEntraineur = htmlspecialchars($_POST['loginEntraineur']);
+						$pwdEntraineur = htmlspecialchars($_POST['pwdEntraineur']);
+						$dateEmbEntraineur = htmlspecialchars($_POST['dateEmbaucheTitulaire']);
 						$this->tousLesTitulaires->ajouterUnTitulaire($this->maBD->donneProchainIdentifiant("ENTRAINEUR")+1, $nomEntraineur,  $loginEntraineur,$pwdEntraineur,$dateEmbEntraineur);
 						$this->maBD->insertTitulaire($nomEntraineur, $loginEntraineur,$pwdEntraineur,$dateEmbEntraineur);
 						$vue=new vueCentraleConnexion();
@@ -221,7 +221,7 @@
 					$vue=new vueCentraleConnexion();
 					$vue->afficheMenuAdmin();
 					require 'vues/ihm/nouvelle.php';
-					$typeEntraineur = $_POST['typeEntraineur'];
+					$typeEntraineur = htmlspecialchars($_POST['typeEntraineur']);
 
 					if ($typeEntraineur == "Titulaire") 
 					{
@@ -240,18 +240,18 @@
 					$vue=new vueCentraleConnexion();
 					$vue->afficheMenuAdmin();
 					require 'vues/ihm/nouvelle.php';
-					$typeEntraineur = $_GET['typeEntraineur'];
+					$typeEntraineur = htmlspecialchars($_GET['typeEntraineur']);
 					echo $typeEntraineur;
 					if ($typeEntraineur == "Titulaire") 
 					{
-						$choix=$_GET['idTitulaire'];
+						$choix=htmlspecialchars($_GET['idTitulaire']);
 						$lEntraineur=$this->tousLesTitulaires->donneObjetTitulaireDepuisNumero($choix);
 						$vue = new vueCentraleEntraineur();
 						$vue->choixFaitPourModifTitulaire($lEntraineur->getNomEntraineur(),$lEntraineur->getDateEmbauche(),$lEntraineur->getLoginEntraineur(),$lEntraineur->getPwdEntraineur(),$choix, $typeEntraineur);	
 					}
 					else
 					{
-						$choix=$_GET['idVacataire'];
+						$choix=htmlspecialchars($_GET['idVacataire']);
 						$lEntraineur=$this->tousLesVacataires->donneObjetVacataireDepuisNumero($choix);
 						$vue = new vueCentraleEntraineur();
 						$vue->choixFaitPourModifVacataire($lEntraineur->getNomEntraineur(),$lEntraineur->getTelephone(),$lEntraineur->getLoginEntraineur(),$lEntraineur->getPwdEntraineur(),$choix, $typeEntraineur);	
@@ -261,20 +261,20 @@
 					$vue=new vueCentraleConnexion();
 					$vue->afficheMenuAdmin();
 					require 'vues/ihm/nouvelle.php';
-					$typeEntraineur = $_GET['typeEntraineur'];
-					$nomEntraineur=$_GET['nomEntraineur'];
-					$loginEntraineur=$_GET['loginEntraineur'];
-					$pwdEntraineur=$_GET['pwdEntraineur'];
-					$idEntraineur = $_GET['idEntraineur'];
+					$typeEntraineur = htmlspecialchars($_GET['typeEntraineur']);
+					$nomEntraineur=htmlspecialchars($_GET['nomEntraineur']);
+					$loginEntraineur=htmlspecialchars($_GET['loginEntraineur']);
+					$pwdEntraineur=htmlspecialchars($_GET['pwdEntraineur']);
+					$idEntraineur = htmlspecialchars($_GET['idEntraineur']);
 					if ($typeEntraineur == "Titulaire") 
 					{
-						$dateEmbEntraineur=$_GET['dateEmbEntraineur'];
+						$dateEmbEntraineur=htmlspecialchars($_GET['dateEmbEntraineur']);
 						$this->maBD->modifTitulaire($nomEntraineur,$loginEntraineur,$pwdEntraineur,$dateEmbEntraineur,$idEntraineur);
 						$this->tousLesTitulaires->modifierUnTitulaire($idEntraineur, $nomEntraineur, $loginEntraineur, $pwdEntraineur, $dateEmbEntraineur);
 					}
 					else 
 					{
-						$telEntraineur=$_GET['telephoneVacataire'];
+						$telEntraineur=htmlspecialchars($_GET['telephoneVacataire']);
 						$this->maBD->modifVacataire($nomEntraineur,$loginEntraineur,$pwdEntraineur,$telEntraineur,$idEntraineur);
 						$this->tousLesVacataires->modifierUnVacataire($idEntraineur, $nomEntraineur, $loginEntraineur, $pwdEntraineur, $telEntraineur);
 					}
@@ -377,12 +377,12 @@
 					$vue->saisirEquipe($this->tousLesEntraineurs->lesEntraineursAuFormatHTML());
 					break;
 				case 'enregistrer':
-					$nomEquipe = $_POST['nomEquipe'];
-					$nbrPlaceEquipe = $_POST['nbrPlaceEquipe'];
-					$ageMinEquipe = $_POST['ageMinEquipe'];
-					$ageMaxEquipe = $_POST['ageMaxEquipe'];
-					$sexeEquipe = $_POST['sexeEquipe'];
-					$idEntraineur = $_POST['idEntraineur'];
+					$nomEquipe = htmlspecialchars($_POST['nomEquipe']);
+					$nbrPlaceEquipe = htmlspecialchars($_POST['nbrPlaceEquipe']);
+					$ageMinEquipe = htmlspecialchars($_POST['ageMinEquipe']);
+					$ageMaxEquipe = htmlspecialchars($_POST['ageMaxEquipe']);
+					$sexeEquipe = htmlspecialchars($_POST['sexeEquipe']);
+					$idEntraineur = htmlspecialchars($_POST['idEntraineur']);
 					$this->toutesLesEquipes->ajouterUneEquipe($this->maBD->donneNumeroMaxEquipe(),$nomEquipe,$nbrPlaceEquipe,$ageMinEquipe,$ageMaxEquipe,$sexeEquipe,$this->tousLesTitulaires->donneObjetTitulaireDepuisNumero($idEntraineur));
 					$this->maBD->insertEquipe($nomEquipe,$nbrPlaceEquipe,$ageMinEquipe,$ageMaxEquipe,$sexeEquipe,$idEntraineur);
 					$vue=new vueCentraleConnexion();
@@ -401,7 +401,7 @@
 					$vue=new vueCentraleConnexion();
 					$vue->afficheMenuInternaute();
 					require 'vues/ihm/nouvelle.php';
-					$choix=$_GET['idEquipe'];
+					$choix=htmlspecialchars($_GET['idEquipe']);
 					$lEquipe=$this->toutesLesEquipes->donneObjetEquipeDepuisNumero($choix);
 					$vue = new vueCentraleEquipe();
 					$vue->choixFaitPourVisuEquipe($lEquipe->getNomEquipe(),$lEquipe->getNbrPlaceEquipe(),$lEquipe->getAgeMinEquipe(),$lEquipe->getAgeMaxEquipe(),$lEquipe->getSexeEquipe(),$choix,$this->tousLesTitulaires->lesTitulairesAuFormatHTML());	
@@ -418,7 +418,7 @@
 					$vue=new vueCentraleConnexion();
 					$vue->afficheMenuAdmin();
 					require 'vues/ihm/nouvelle.php';
-					$choix=$_GET['idEquipe'];
+					$choix=htmlspecialchars($_GET['idEquipe']);
 					$lEquipe=$this->toutesLesEquipes->donneObjetEquipeDepuisNumero($choix);
 					$vue = new vueCentraleEquipe();
 					$vue->choixFaitPourModifEquipe($lEquipe->getNomEquipe(),$lEquipe->getNbrPlaceEquipe(),$lEquipe->getAgeMinEquipe(),$lEquipe->getAgeMaxEquipe(),$lEquipe->getSexeEquipe(),$choix,$this->tousLesTitulaires->lesTitulairesAuFormatHTML());	
@@ -427,13 +427,13 @@
 					$vue=new vueCentraleConnexion();
 					$vue->afficheMenuAdmin();
 					require 'vues/ihm/nouvelle.php';
-					$idEquipe=$_GET['idEquipe'];
-					$nomEquipe=$_GET['nomEquipe'];
-					$nbrPlaceEquipe=$_GET['nbrPlaceEquipe'];
-					$ageMinEquipe=$_GET['ageMinEquipe'];
-					$ageMaxEquipe=$_GET['ageMaxEquipe'];
-					$sexeEquipe=$_GET['sexeEquipe'];
-					$idTitulaire = $_GET['idTitulaire'];
+					$idEquipe=htmlspecialchars($_GET['idEquipe']);
+					$nomEquipe=htmlspecialchars($_GET['nomEquipe']);
+					$nbrPlaceEquipe=htmlspecialchars($_GET['nbrPlaceEquipe']);
+					$ageMinEquipe=htmlspecialchars($_GET['ageMinEquipe']);
+					$ageMaxEquipe=htmlspecialchars($_GET['ageMaxEquipe']);
+					$sexeEquipe=htmlspecialchars($_GET['sexeEquipe']);
+					$idTitulaire = htmlspecialchars($_GET['idTitulaire']);
 					$leTitulaire = $this->tousLesTitulaires->donneObjetTitulaireDepuisNumero($idTitulaire);
 					$this->maBD->modifEquipe($idEquipe,$nomEquipe,$nbrPlaceEquipe,$ageMinEquipe,$ageMaxEquipe,$sexeEquipe,$idTitulaire);
 					$this->toutesLesEquipes->modifierUneEquipe($idEquipe, $nomEquipe, $nbrPlaceEquipe, $ageMinEquipe, $ageMaxEquipe, $sexeEquipe, $leTitulaire);
@@ -542,12 +542,12 @@
 					$vue= new vueCentraleConnexion();
 					$vue->afficheMenuAdherent();
 					require 'vues/ihm/nouvelle.php';
-					$idAdherent = $_POST['idAdherent'];
-					$nomAdherent = $_POST['nomAdherent'];
-					$prenomAdherent = $_POST['prenomAdherent'];
-					$ageAdherent = $_POST['ageAdherent'];
-					$sexeAdherent = $_POST['sexeAdherent'];
-					$loginAdherent = $_POST['loginAdherent'];
+					$idAdherent = htmlspecialchars($_POST['idAdherent']);
+					$nomAdherent = htmlspecialchars($_POST['nomAdherent']);
+					$prenomAdherent = htmlspecialchars($_POST['prenomAdherent']);
+					$ageAdherent = htmlspecialchars($_POST['ageAdherent']);
+					$sexeAdherent = htmlspecialchars($_POST['sexeAdherent']);
+					$loginAdherent = htmlspecialchars($_POST['loginAdherent']);
 					$this->tousLesAdherents->modifierUnAdherent($idAdherent,$nomAdherent,$prenomAdherent,$ageAdherent,$sexeAdherent,$loginAdherent);
 					$this->maBD->modifProfil($idAdherent,$nomAdherent,$prenomAdherent,$ageAdherent,$sexeAdherent,$loginAdherent);
 					break;
