@@ -52,7 +52,7 @@
 ********************************************************************************************/
 		public function affichePage($action,$vue,$role)
 		{
-			if (isset($_GET['action']) && isset($_GET['vue']))
+			if (isset($_GET['action']) && ($_GET['vue']))
 			{
 				$action = htmlspecialchars($_GET['action']);
 				$vue = htmlspecialchars($_GET['vue']);
@@ -496,39 +496,49 @@
 					$vue=new vueCentraleConnexion();
 					$vue->afficheMenuAdmin();
 					require 'vues/ihm/nouvelle.php';
-					// a faire car on ajoute toujours le meme pour faire des tests
-					$this->tousLesAdherents->ajouterUnAdherent($this->maBD->donneNumeroMaxAdherent(),'Essai','adherent',12,'F','essai','essai',$this->toutesLesEquipes->donneObjetEquipeDepuisNumero(3));
-					$this->maBD->insertAdherent('Essai','adherent',12,'F','essai','essai',3);
+					$vue = new vueCentraleAdherent();
+					$vue->saisirAdherent($this->toutesLesEquipes->lesEquipesAuFormatHTML());
 					break;
-				
-				
-					// case "ajouter":
-					// 	$vue=new vueCentraleConnexion();
-					// 	$vue->afficheMenuAdmin();
-					/// 	require 'vues/ihm/nouvelle.php';
-					// 	$vue = new vueCentraleEquipe();
-					// 	$vue->ajouterEquipe();		
-					// 	break;
-					// case 'SaisirEquipe':
-					// 	$vue=new vueCentraleConnexion();
-					// 	$vue->afficheMenuAdmin();
-					// 	require 'vues/ihm/nouvelle.php';
-					// 	$vue = new vueCentraleEquipe();
-					// 	$vue->saisirEquipe($this->tousLesEntraineurs->lesEntraineursAuFormatHTML());
-					// 	break;
-					// case 'enregistrer':
-					// 	$nomEquipe = htmlspecialchars($_POST['nomEquipe']);
-					// 	$nbrPlaceEquipe = htmlspecialchars($_POST['nbrPlaceEquipe']);
-					// 	$ageMinEquipe = htmlspecialchars($_POST['ageMinEquipe']);
-					// 	$ageMaxEquipe = htmlspecialchars($_POST['ageMaxEquipe']);
-					// 	$sexeEquipe = htmlspecialchars($_POST['sexeEquipe']);
-					// 	$idEntraineur = htmlspecialchars($_POST['idEntraineur']);
-					// 	$this->toutesLesEquipes->ajouterUneEquipe($this->maBD->donneNumeroMaxEquipe(),$nomEquipe,$nbrPlaceEquipe,$ageMinEquipe,$ageMaxEquipe,$sexeEquipe,$this->tousLesTitulaires->donneObjetTitulaireDepuisNumero($idEntraineur));
-					// 	$this->maBD->insertEquipe($nomEquipe,$nbrPlaceEquipe,$ageMinEquipe,$ageMaxEquipe,$sexeEquipe,$idEntraineur);
-					// 	$vue=new vueCentraleConnexion();
-					// 	$vue->afficheMenuAdmin();
-					// 	require 'vues/ihm/nouvelle.php';
-					// 	break;
+
+				case 'enregistrer':
+					$nomAdherent = htmlspecialchars($_POST['nomAdherent']);
+					$prenomAdherent = htmlspecialchars($_POST['prenomAdherent']);
+					$ageAdherent = htmlspecialchars($_POST['ageAdherent']);
+					$sexeAdherent = htmlspecialchars($_POST['sexeAdherent']);
+					$loginAdherent = htmlspecialchars($_POST['loginAdherent']);
+					$passwordAdherent = htmlspecialchars($_POST['passwordAdherent']);
+					$idEquipe = htmlspecialchars($_POST['idEquipe']);
+
+					if(isset($nomAdherent) and isset($prenomAdherent) and isset($ageAdherent)
+					and isset($sexeAdherent) and isset($loginAdherent) and isset($passwordAdherent)
+					and isset($idEquipe))
+					{
+						try
+						{
+							$this->tousLesAdherents->ajouterUnAdherent($this->maBD->donneNumeroMaxAdherent(),$nomAdherent,$prenomAdherent,$ageAdherent,$sexeAdherent,$loginAdherent,$passwordAdherent,$idEquipe);
+							$this->maBD->insertAdherent($nomAdherent,$prenomAdherent,$ageAdherent,$sexeAdherent,$loginAdherent,$passwordAdherent,$idEquipe);
+							$vue=new vueCentraleConnexion();
+							$vue->afficheMenuAdmin();
+							require 'vues/ihm/nouvelle.php';
+							echo('Création réussie');
+						}
+						catch(Exception $e)
+						{
+							echo($e);
+							$vue=new vueCentraleConnexion();
+							$vue->afficheMenuAdmin();
+							require 'vues/ihm/nouvelle.php';	
+						}
+						
+					}
+					else
+					{	
+						echo('Erreur lors de la création de l\'adhérent');
+						$vue=new vueCentraleConnexion();
+						$vue->afficheMenuAdmin();
+						require 'vues/ihm/nouvelle.php';
+					}
+					break;
 				
 				
 				
