@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `administrateur` (
   `nomAdmin` char(32) NOT NULL,
   `prenomAdmin` char(32) NOT NULL,
   `loginAdmin` char(20) NOT NULL,
-  `pwdAdmin` char(20) NOT NULL,
+  `pwdAdmin` varchar(200) NOT NULL,
   PRIMARY KEY (`idAdmin`)
  
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `adherent` (
   `ageAdherent` int(11) NOT NULL,
   `sexeAdherent` char(1) NOT NULL,
   `loginAdherent` char(20) NOT NULL,
-  `pwdAdherent` char(20) NOT NULL,
+  `pwdAdherent` varchar(200) NOT NULL,
   `idEquipe` int(11) NOT NULL,
   PRIMARY KEY (`idAdherent`) ,
   KEY `fk_adherent_equipe` (`idEquipe`)
@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `entraineur` (
   `idEntraineur` int(11) NOT NULL AUTO_INCREMENT,
   `nomEntraineur` char(32) NOT NULL,
   `loginEntraineur` char(20) NOT NULL,
-  `pwdEntraineur` char(20) NOT NULL,
+  `pwdEntraineur` varchar(200) NOT NULL,
   PRIMARY KEY (`idEntraineur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

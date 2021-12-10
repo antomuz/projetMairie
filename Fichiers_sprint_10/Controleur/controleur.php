@@ -88,11 +88,29 @@
 					$_SESSION['role'] = htmlspecialchars($_POST['role']);
 					$_SESSION['login'] = htmlspecialchars($_POST['login']);
 					$_SESSION['pwd']= htmlspecialchars($_POST['pwd']);
-					$vue = new vueCentraleConnexion();
-					$existe=$this->maBD->verifExistance($_SESSION['role'],$_SESSION['login'],$_SESSION['pwd']);
-					$vue->AfficherMenuContextuel($_SESSION['role'],$existe);
-					require 'vues/ihm/nouvelle.php';
+					$csrf=hash_hmac('sha256','Clé sécurité connexion.php',$_SESSION['key']);
+					if (isset($_SESSION['role']) and isset($_SESSION['login']) and isset($_SESSION['pwd']))
+					{
+						
+						if(hash_equals($csrf,$_POST['csrf']))
+						{
+							$vue = new vueCentraleConnexion();
+							$existe=$this->maBD->verifExistance($_SESSION['role'],$_SESSION['login'],$_SESSION['pwd']);
+							$vue->AfficherMenuContextuel($_SESSION['role'],$existe);
+							require 'vues/ihm/nouvelle.php';
+							$_SESSION['key']=bin2hex(random_bytes(32));
+						}
+						else
+						{
+							echo ('Attaque CSRF');
+						}
+					}
+					else
+					{
+						echo("Erreur de connexion");
+					}
 					break;
+
 				case "initialiserTypeNouvelle":
 					echo $ListeDesTypesNouvelles=$this->maBD->listeDesNouvellesFormatHTML();
 					break;
@@ -364,7 +382,7 @@
 			{
 				case "ajouter":
 					$vue=new vueCentraleConnexion();
-					$vue->afficheMenuAdmin();//J'ajoute une nouvelle équipe juste pour voir si cela fonctionne
+					$vue->afficheMenuAdmin();
 					require 'vues/ihm/nouvelle.php';
 					$vue = new vueCentraleEquipe();
 					$vue->ajouterEquipe();		
@@ -482,7 +500,44 @@
 					$this->tousLesAdherents->ajouterUnAdherent($this->maBD->donneNumeroMaxAdherent(),'Essai','adherent',12,'F','essai','essai',$this->toutesLesEquipes->donneObjetEquipeDepuisNumero(3));
 					$this->maBD->insertAdherent('Essai','adherent',12,'F','essai','essai',3);
 					break;
-				case "visualiser" :
+				
+				
+					// case "ajouter":
+					// 	$vue=new vueCentraleConnexion();
+					// 	$vue->afficheMenuAdmin();
+					/// 	require 'vues/ihm/nouvelle.php';
+					// 	$vue = new vueCentraleEquipe();
+					// 	$vue->ajouterEquipe();		
+					// 	break;
+					// case 'SaisirEquipe':
+					// 	$vue=new vueCentraleConnexion();
+					// 	$vue->afficheMenuAdmin();
+					// 	require 'vues/ihm/nouvelle.php';
+					// 	$vue = new vueCentraleEquipe();
+					// 	$vue->saisirEquipe($this->tousLesEntraineurs->lesEntraineursAuFormatHTML());
+					// 	break;
+					// case 'enregistrer':
+					// 	$nomEquipe = htmlspecialchars($_POST['nomEquipe']);
+					// 	$nbrPlaceEquipe = htmlspecialchars($_POST['nbrPlaceEquipe']);
+					// 	$ageMinEquipe = htmlspecialchars($_POST['ageMinEquipe']);
+					// 	$ageMaxEquipe = htmlspecialchars($_POST['ageMaxEquipe']);
+					// 	$sexeEquipe = htmlspecialchars($_POST['sexeEquipe']);
+					// 	$idEntraineur = htmlspecialchars($_POST['idEntraineur']);
+					// 	$this->toutesLesEquipes->ajouterUneEquipe($this->maBD->donneNumeroMaxEquipe(),$nomEquipe,$nbrPlaceEquipe,$ageMinEquipe,$ageMaxEquipe,$sexeEquipe,$this->tousLesTitulaires->donneObjetTitulaireDepuisNumero($idEntraineur));
+					// 	$this->maBD->insertEquipe($nomEquipe,$nbrPlaceEquipe,$ageMinEquipe,$ageMaxEquipe,$sexeEquipe,$idEntraineur);
+					// 	$vue=new vueCentraleConnexion();
+					// 	$vue->afficheMenuAdmin();
+					// 	require 'vues/ihm/nouvelle.php';
+					// 	break;
+				
+				
+				
+				
+				
+				
+				
+				
+					case "visualiser" :
 					$vue=new vueCentraleConnexion();
 					$vue->afficheMenuInternaute();
 					require 'vues/ihm/nouvelle.php';
