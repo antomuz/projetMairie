@@ -13,6 +13,7 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
       		</div>
+		<?php $csrf=hash_hmac('sha256','Clé sécurité connexion.php',$_SESSION['key']); ?>
 			<div class="modal-body">
 				<div class="container">
 					<form action=index.php?vue=Connexion&action=Verification method=POST align=center>
@@ -41,6 +42,7 @@
 						<div class="row" style="padding-top:1em">
 							<div class="col-sm">
 								<input type=password name=pwd value="Pwd"></input>
+								<input type="hidden" name="csrf" value="<?php echo $csrf; ?>">
 							</div>
 						</div>
 
