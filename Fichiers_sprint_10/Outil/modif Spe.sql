@@ -12,9 +12,12 @@ alter table equipe
 add foreign key(idSpe)
 references specialite(idSpe);
 
-alter table entraineur
-add column idSpe int;
+create table speEntraineur
+(
+	idSpe int not null,
+	idEntraineur int not null,
+	constraint PK_speEntraineur primary key (idSpe, idEntraineur),
+	constraint FK_speEntraineur_entraineur foreign key (idSpe) references entraineur (idSpe),
+	constraint FK_speEntraineur_specialite foreign key (idEntraineur) references specialite (idEntraineur)
+);
 
-alter table entraineur
-add foreign key(idSpe)
-references specialite(idSpe);
