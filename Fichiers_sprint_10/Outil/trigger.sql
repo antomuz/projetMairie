@@ -64,7 +64,7 @@ END |
 -- trigger pour la vérification de l'adéquation entre spécialité de l'entraineur et de l'équipe
 
 delimiter |
-create trigger verif_equipe_entraineur
+create trigger verif_spe_equipe_entraineur
 after insert on equipe
 for each row
 BEGIN
