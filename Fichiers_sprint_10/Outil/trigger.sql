@@ -31,7 +31,7 @@ BEGIN
 DECLARE $nbrPlace int DEFAULT 3;
 
                      
-if $nbrPlace < (selectcount(*)
+if $nbrPlace < (select count(*)
                 from equipe_adherent
                 where idAdherent = new.idAdherent)
 then
