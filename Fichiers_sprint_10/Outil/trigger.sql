@@ -45,8 +45,8 @@ end |
 -- trigger pour la verification du nombre d'equipe d'un entraineur (pas plus de 3)
 
 delimiter |
-create trigger verif_equipe_adherent
-after insert on equipe_adherent
+create trigger verif_equipe_entraineur
+after insert on equipe
 for each row
 BEGIN
 DECLARE $nbrEquipe int DEFAULT 3;
@@ -54,6 +54,25 @@ DECLARE $nbrEquipe int DEFAULT 3;
 if $nbrEquipe < (select COUNT(*)
                 from equipe
                 where idEntraineur = new.idEntraineur)
+then
+delete from equipe
+where idEquipe = new.idEquipe;
+end IF;
+END |
+
+
+-- trigger pour la vérification de l'adéquation entre spécialité de l'entraineur et de l'équipe
+
+delimiter |
+create trigger verif_equipe_entraineur
+after insert on equipe
+for each row
+BEGIN
+DECLARE testNb int default 0;
+if testNb = (SELECT count(*)
+from spe_entraineur
+where idEntraineur = new.idEntraineur
+and idSpe = new.idSpe)
 then
 delete from equipe
 where idEquipe = new.idEquipe;
