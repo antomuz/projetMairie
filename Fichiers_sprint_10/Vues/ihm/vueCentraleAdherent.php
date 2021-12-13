@@ -43,6 +43,51 @@
 			
 		}
 		
+		public function saisirAdherent($liste){
+			echo('
+			<form action=index.php?vue=Adherent&action=enregistrer method=POST align=center>
+			<legend>Caractéristiques de l\'adhérent :</legend>
+			<table class="table table-bordered table-sm table-striped">
+				<tr>
+					<td>Nom de l\'adhérent :</td>
+					<td scope><input type="text" name="nomAdherent" id="nomAdherent" required="true"> </td>
+					<td>Prénom de l\'adhérent :<td>
+					<td scope><input type="text" name="prenomAdherent" id="prenomAdherent" required="true"> </td>
+				</tr>
+				<tr>
+					<td>Âge :</td>
+					<td><input type="number" name="ageAdherent" id="ageAdherent" required=true></td>
+					<td>Sexe :</td>
+					<td>
+						<select name="sexeAdherent" id="sexeAdherent">
+							<option value="F">Femme</option>
+							<option value="H">Homme</option>
+						</select>
+					</td>
+				</tr>
+
+				<tr>
+					<td>');
+			echo($liste);
+			echo('
+					</td>
+				</tr>
+						
+				<tr>
+					<td>Login :</td>
+					<td scope><input type="text" name="loginAdherent" id="loginAdherent" required="true"> </td>
+					<td>Mot de passe :</td>
+					<td scope><input type="password" name="passwordAdherent" id="passwordAdherent" required="true"> </td>
+				</tr>
+
+				<tr>
+					<td><button type="submit" class="btn btn-primary">Valider</button></td>
+				</tr>
+			</table>
+			</form>');			
+		}
+
+
 		public function voyagerAdherent()
 		{		
 			echo '<iframe width=100% height=150% src="https:www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2885.319959224129!2d1.3158100143582203!3d43.683111158516006!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12aeaee6224c0f13%3A0x9f57b169fe3a7161!2sMairie!5e0!3m2!1sfr!2sfr!4v1626195896682!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>';
