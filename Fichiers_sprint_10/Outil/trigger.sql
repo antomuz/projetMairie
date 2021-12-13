@@ -1,4 +1,4 @@
-//trigger pour la vérification de place restante dans une equipe
+-- trigger pour la vérification de place restante dans une equipe
 
 delimiter |
 create trigger verifPlaceEquipe
@@ -21,4 +21,24 @@ end IF;
 end |
 
 
-//
+-- trigger pour la verification du nombre d'equipe d'un adherent (pas plus de 3)
+
+delimiter |
+create trigger verif_equipe_adherent
+after insert on equipe_adherent
+for each row
+BEGIN
+DECLARE $nbrPlace int DEFAULT 3;
+
+                     
+if $nbrPlace > (selectcount(*)
+                from equipe_adherent
+                where idAdherent = new.idAdherent)
+then
+delete from equipe_adherent
+where idEquipe = new.idEquipe
+and idAdherent = new.idAdherent;
+end IF;
+end |
+
+
