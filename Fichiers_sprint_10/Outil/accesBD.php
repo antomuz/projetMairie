@@ -410,6 +410,11 @@ class accesBD
 			case 'TITULAIRE':
 				$stringQuery.='titulaire';
 				break;
+
+			case 'SPECIALITE':
+				$stringQuery.='specialite';
+				break;
+				
 			default:
 				die('Pas une table valide');
 				break;

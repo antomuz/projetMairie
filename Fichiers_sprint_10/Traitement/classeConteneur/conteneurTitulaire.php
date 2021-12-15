@@ -78,7 +78,7 @@ class conteneurTitulaire
 		return $leBonTitulaire;
 		}	
 		
-		public function chercherExistanceIdTitulaire($unId)
+		public function chercherExistenceIdTitulaire($unId)
 		{
 		$trouve=false;
 		$iTitulaire = $this->lesTitulaires->getIterator();

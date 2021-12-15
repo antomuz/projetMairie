@@ -407,7 +407,8 @@
 					$vue->afficheMenuAdmin();
 					require 'vues/ihm/nouvelle.php';
 					break;
-				case "visualiser" :
+				
+					case "visualiser" :
 					$vue=new vueCentraleConnexion();
 					$vue->afficheMenuInternaute();
 					require 'vues/ihm/nouvelle.php';
@@ -415,7 +416,8 @@
 					$vue = new vueCentraleEquipe();
 					$vue->visualiserEquipe($message);
 					break;
-				case "choixFaitPourVisu":
+				
+					case "choixFaitPourVisu":
 					$vue=new vueCentraleConnexion();
 					$vue->afficheMenuInternaute();
 					require 'vues/ihm/nouvelle.php';
@@ -424,7 +426,8 @@
 					$vue = new vueCentraleEquipe();
 					$vue->choixFaitPourVisuEquipe($lEquipe->getNomEquipe(),$lEquipe->getNbrPlaceEquipe(),$lEquipe->getAgeMinEquipe(),$lEquipe->getAgeMaxEquipe(),$lEquipe->getSexeEquipe(),$choix,$this->tousLesTitulaires->lesTitulairesAuFormatHTML());	
 					break;
-				case "modifier" :
+				
+					case "modifier" :
 					$vue=new vueCentraleConnexion();
 					$vue->afficheMenuAdmin();
 					require 'vues/ihm/nouvelle.php';
@@ -451,10 +454,28 @@
 					$ageMinEquipe=htmlspecialchars($_GET['ageMinEquipe']);
 					$ageMaxEquipe=htmlspecialchars($_GET['ageMaxEquipe']);
 					$sexeEquipe=htmlspecialchars($_GET['sexeEquipe']);
+<<<<<<< Updated upstream
 					$idTitulaire = htmlspecialchars($_GET['idTitulaire']);
 					$leTitulaire = $this->tousLesTitulaires->donneObjetTitulaireDepuisNumero($idTitulaire);
 					$this->maBD->modifEquipe($idEquipe,$nomEquipe,$nbrPlaceEquipe,$ageMinEquipe,$ageMaxEquipe,$sexeEquipe,$idTitulaire);
 					$this->toutesLesEquipes->modifierUneEquipe($idEquipe, $nomEquipe, $nbrPlaceEquipe, $ageMinEquipe, $ageMaxEquipe, $sexeEquipe, $leTitulaire);
+=======
+					$idEntraineur = htmlspecialchars($_GET['idTitulaire']);
+					$idSpecialite = htmlspecialchars($_GET['idSpecialite']);
+					
+					if($tousLesTitulaires->chercherExistanceIdTitulaire($idEntraineur))
+					{
+						$vacaTitu = $tousLesTitulaires->donneObjetTitulaireDepuisNumero($idEntraineur);
+					}
+					else if($tousLesVacataires->chercherExistence)
+					{
+						$vacaTitu = $tousLesVacataires->donneObjetVacataireDepuisNumero($idEntraineur);
+					}
+					
+					$specialite = $toutesLesSpecialites->donneObjetSpecialiteDepuisNumero($idSpecialite);
+					$this->maBD->modifEquipe($idEquipe,$nomEquipe,$nbrPlaceEquipe,$ageMinEquipe,$ageMaxEquipe,$sexeEquipe,$idEntraineur,$idSpecialite);
+					$this->toutesLesEquipes->modifierUneEquipe($idEquipe, $nomEquipe, $nbrPlaceEquipe, $ageMinEquipe, $ageMaxEquipe, $sexeEquipe, $vacaTitu,$specialite);
+>>>>>>> Stashed changes
 					
 			}
 		}
@@ -466,14 +487,15 @@
 			$nbE=0;
 			while ($nbE<sizeof($resultatEquipe))
 			{
-				if ($this->tousLesVacataires->chercherExistanceIdVacataire($resultatEquipe[$nbE][6]))
+				if ($this->tousLesVacataires->chercherExistenceIdVacataire($resultatEquipe[$nbE][6]))
 				{
-						$this->toutesLesEquipes->ajouterUneEquipe($resultatEquipe[$nbE][0],$resultatEquipe[$nbE][1],$resultatEquipe[$nbE][2],$resultatEquipe[$nbE][3],$resultatEquipe[$nbE][4],$resultatEquipe[$nbE][5],$this->tousLesVacataires->donneObjetVacataireDepuisNumero($resultatEquipe[$nbE][6]));
+						$this->toutesLesEquipes->ajouterUneEquipe($resultatEquipe[$nbE][0],$resultatEquipe[$nbE][1],$resultatEquipe[$nbE][2],$resultatEquipe[$nbE][3],$resultatEquipe[$nbE][4],$resultatEquipe[$nbE][5],$this->tousLesVacataires->donneObjetVacataireDepuisNumero($resultatEquipe[$nbE][6]), $this->toutesLesSpecialites->donneObjetSpecialiteDepuisNumero($resultatEquipe[$nbE][7]));
 				}
 				else
 				{		
-					$this->toutesLesEquipes->ajouterUneEquipe($resultatEquipe[$nbE][0],$resultatEquipe[$nbE][1],$resultatEquipe[$nbE][2],$resultatEquipe[$nbE][3],$resultatEquipe[$nbE][4],				$resultatEquipe[$nbE][5],$this->tousLesTitulaires->donneObjetTitulaireDepuisNumero($resultatEquipe[$nbE][6]));
+					$this->toutesLesEquipes->ajouterUneEquipe($resultatEquipe[$nbE][0],$resultatEquipe[$nbE][1],$resultatEquipe[$nbE][2],$resultatEquipe[$nbE][3],$resultatEquipe[$nbE][4],$resultatEquipe[$nbE][5],$this->tousLesTitulaires->donneObjetTitulaireDepuisNumero($resultatEquipe[$nbE][6]),$this->toutesLesSpecialites->donneObjetSpecialiteDepuisNumero($resultatEquipe[$nbE][7]));
 				}
+				//implémenter gestion erreur
 				$nbE++;
 			}
 		
@@ -644,6 +666,21 @@
 				$nbA++;
 			}
 		}
+<<<<<<< Updated upstream
+=======
+
+//specialite 
+		public function chargeLesSpecialites()
+		{   $resultatSpecialite=$this->maBD->chargement('specialite');
+			$nbA=0;
+			while ($nbA<sizeof($resultatSpecialite))
+			{
+				$this->toutesLesSpecialites->ajouterUneSpecialite($resultatSpecialite[$nbA][0],$resultatSpecialite[$nbA][1]);
+				$nbA++;
+			}
+		}
+
+>>>>>>> Stashed changes
 	
 	}
 ?>

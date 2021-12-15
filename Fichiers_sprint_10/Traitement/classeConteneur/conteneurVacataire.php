@@ -78,7 +78,7 @@ class conteneurVacataire
 		return $leBonVacataire;
 		}	
 		
-		public function chercherExistanceIdVacataire($unId)
+		public function chercherExistenceIdVacataire($unId)
 		{
 		$trouve=false;
 		$iVacataire = $this->lesVacataires->getIterator();

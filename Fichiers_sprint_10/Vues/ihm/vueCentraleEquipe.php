@@ -43,8 +43,21 @@
 								<td><select name="sexeEquipe" id="sexeEquipe"><option value="F">Féminine</option><option value="H">Masculine</option></select></td>
 								<td>Entraineur</td>
 								<td>';
+<<<<<<< Updated upstream
 						echo $liste;
 						echo '<td>	
+=======
+						echo $listeEntraineurs;
+						echo '</td>	
+							</tr>
+
+							<tr>
+								<td>Specialité</td>
+								<td>';
+						
+						echo $listeSpecialites;
+						echo '
+>>>>>>> Stashed changes
 							</tr>
 						
 						
