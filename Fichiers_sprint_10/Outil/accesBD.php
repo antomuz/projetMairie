@@ -209,10 +209,10 @@ class accesBD
 		return $sonId;
 	}
 		
-	public function insertEquipe($unNomEquipe,$unNbrPlaceEquipe,$unAgeMinEquipe,$unAgeMaxEquipe,$unSexeEquipe,$unIdEntraineur)
+	public function insertEquipe($unNomEquipe,$unNbrPlaceEquipe,$unAgeMinEquipe,$unAgeMaxEquipe,$unSexeEquipe,$unIdEntraineur,$uneSpe)
 	{
 		$sonId = $this->donneProchainIdentifiant("EQUIPE","idEquipe");
-		$requete = $this->conn->prepare("INSERT INTO EQUIPE (idEquipe,nomEquipe,nbrPlaceEquipe,ageMinEquipe,ageMaxEquipe,sexeEquipe,idEntraineur) VALUES (?,?,?,?,?,?,?)");
+		$requete = $this->conn->prepare("INSERT INTO EQUIPE (idEquipe,nomEquipe,nbrPlaceEquipe,ageMinEquipe,ageMaxEquipe,sexeEquipe,idEntraineur,idSpe) VALUES (?,?,?,?,?,?,?,?)");
 		$requete->bindValue(1,$sonId);
 		$requete->bindValue(2,$unNomEquipe);
 		$requete->bindValue(3,$unNbrPlaceEquipe);
@@ -220,6 +220,7 @@ class accesBD
 		$requete->bindValue(5,$unAgeMaxEquipe);
 		$requete->bindValue(6,$unSexeEquipe);
 		$requete->bindValue(7,$unIdEntraineur);
+		$requete->bindValue(8,$uneSpe);
 		if(!$requete->execute())
 		{
 			die("Erreur dans insert Equipe : ".$requete->errorCode());
