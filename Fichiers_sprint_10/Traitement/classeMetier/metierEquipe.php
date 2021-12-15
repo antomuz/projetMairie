@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 Class metierEquipe
 	{
 	//ATTRIBUTS PRIVES-------------------------------------------------------------------------
@@ -9,11 +9,12 @@ Class metierEquipe
 	private $ageMaxEquipe; 
 	private $sexeEquipe; 
 	private $lEntraineur;
+	private $laSpe;
 	
 	
 	//CONSTRUCTEUR-----------------------------------------------------------------------------
 	
-	public function __construct($unIdEquipe, $unNomEquipe, $unNbrPlaceEquipe, $unAgeMinEquipe, $unAgeMaxEquipe, $unSexeEquipe, $unEntraineur)
+	public function __construct($unIdEquipe, $unNomEquipe, $unNbrPlaceEquipe, $unAgeMinEquipe, $unAgeMaxEquipe, $unSexeEquipe, $unEntraineur, $uneSpe)
 		{
 		$this->idEquipe = $unIdEquipe;
 		$this->nomEquipe = $unNomEquipe;
@@ -22,6 +23,7 @@ Class metierEquipe
 		$this->ageMaxEquipe = $unAgeMaxEquipe;
 		$this->sexeEquipe = $unSexeEquipe;
 		$this->lEntraineur = $unEntraineur;
+		$this->laSpe = $uneSpe;
 		}
 	
 	//ACCESSEURS-------------------------------------------------------------------------------
@@ -55,6 +57,10 @@ Class metierEquipe
 	{
 		return $this->lEntraineur;
 	}
+	public function getlaSpe()
+	{
+		return $this->laSpe;
+	}
 	
 	//SETTEUR------------------------------------------------------------
 	
@@ -84,14 +90,17 @@ Class metierEquipe
 		}
 	public function setLEntraineur($unEntraineur)
 	{
-		echo $this->lEntraineur->getNomEntraineur();
 		$this->lEntraineur = $unEntraineur;
 	}
+	public function setSpe($uneSpe)
+		{
+		$this->laSpe = $uneSpe;
+		}
 		
 	// méthode permettant d'afficher tous les attributs d'un seul coup
 	public function afficheEquipe()
 	{
-		return $liste=$this->getNomEquipe().' | '.$this->getNbrPlaceEquipe().' | '.$this->getAgeMinEquipe().'|'.$this->getAgeMaxEquipe().' |'.$this->getSexeEquipe().'|'.$this->getLEntraineur()->getNomEntraineur().'|';
+		return $liste=$this->getNomEquipe().' | '.$this->getNbrPlaceEquipe().' | '.$this->getAgeMinEquipe().'|'.$this->getAgeMaxEquipe().' |'.$this->getSexeEquipe().' | '.$this->getLEntraineur()->getNomEntraineur().' | '.$this->getlaSpe()->getNomSpe().' | ';
 					
 	}			    
 	
