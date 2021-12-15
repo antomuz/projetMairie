@@ -6,6 +6,7 @@
 		private $tousLesVacataires;
 		private $tousLesTitulaires;
 		private $tousLesEntraineurs;
+		private $toutesLesSpecialites;
 		private $maBD;
 		
 /*********************************************************************************************************************
@@ -20,6 +21,7 @@
 			$this->toutesLesEquipes = new conteneurEquipe();
 			$this->tousLesAdherents = new conteneurAdherent();
 			$this->tousLesEntraineurs = new conteneurEntraineur();
+			$this->toutesLesSpecialites = new conteneurSpecialite();
 			
 	
 			$this->chargeLesVacataires();
@@ -27,7 +29,7 @@
 			$this->chargeLesEquipes();
 			$this->chargeLesAdherents();
 			$this->chargeLesEntraineurs();
-			
+			$this->chargeLesSpecialites();
 			
 		}
 /*****************************************************************************************
@@ -392,7 +394,7 @@
 					$vue->afficheMenuAdmin();
 					require 'vues/ihm/nouvelle.php';
 					$vue = new vueCentraleEquipe();
-					$vue->saisirEquipe($this->tousLesEntraineurs->lesEntraineursAuFormatHTML());
+					$vue->saisirEquipe($this->tousLesEntraineurs->lesEntraineursAuFormatHTML(), $this->toutesLesSpecialites->lesSpecialitesAuFormatHTML());
 					break;
 				case 'enregistrer':
 					$nomEquipe = htmlspecialchars($_POST['nomEquipe']);
@@ -454,12 +456,6 @@
 					$ageMinEquipe=htmlspecialchars($_GET['ageMinEquipe']);
 					$ageMaxEquipe=htmlspecialchars($_GET['ageMaxEquipe']);
 					$sexeEquipe=htmlspecialchars($_GET['sexeEquipe']);
-<<<<<<< Updated upstream
-					$idTitulaire = htmlspecialchars($_GET['idTitulaire']);
-					$leTitulaire = $this->tousLesTitulaires->donneObjetTitulaireDepuisNumero($idTitulaire);
-					$this->maBD->modifEquipe($idEquipe,$nomEquipe,$nbrPlaceEquipe,$ageMinEquipe,$ageMaxEquipe,$sexeEquipe,$idTitulaire);
-					$this->toutesLesEquipes->modifierUneEquipe($idEquipe, $nomEquipe, $nbrPlaceEquipe, $ageMinEquipe, $ageMaxEquipe, $sexeEquipe, $leTitulaire);
-=======
 					$idEntraineur = htmlspecialchars($_GET['idTitulaire']);
 					$idSpecialite = htmlspecialchars($_GET['idSpecialite']);
 					
@@ -475,7 +471,6 @@
 					$specialite = $toutesLesSpecialites->donneObjetSpecialiteDepuisNumero($idSpecialite);
 					$this->maBD->modifEquipe($idEquipe,$nomEquipe,$nbrPlaceEquipe,$ageMinEquipe,$ageMaxEquipe,$sexeEquipe,$idEntraineur,$idSpecialite);
 					$this->toutesLesEquipes->modifierUneEquipe($idEquipe, $nomEquipe, $nbrPlaceEquipe, $ageMinEquipe, $ageMaxEquipe, $sexeEquipe, $vacaTitu,$specialite);
->>>>>>> Stashed changes
 					
 			}
 		}
@@ -666,8 +661,6 @@
 				$nbA++;
 			}
 		}
-<<<<<<< Updated upstream
-=======
 
 //specialite 
 		public function chargeLesSpecialites()
@@ -680,7 +673,6 @@
 			}
 		}
 
->>>>>>> Stashed changes
 	
 	}
 ?>

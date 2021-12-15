@@ -18,7 +18,7 @@
 
 		}
 		
-		public function saisirEquipe($liste){
+		public function saisirEquipe($listeEntraineurs,$listeSpecialites){
 			echo '
 			<form action=index.php?vue=Equipe&action=enregistrer method=POST align=center>
 				<legend>Caractéristiques de l\'équipe :</legend>
@@ -43,10 +43,6 @@
 								<td><select name="sexeEquipe" id="sexeEquipe"><option value="F">Féminine</option><option value="H">Masculine</option></select></td>
 								<td>Entraineur</td>
 								<td>';
-<<<<<<< Updated upstream
-						echo $liste;
-						echo '<td>	
-=======
 						echo $listeEntraineurs;
 						echo '</td>	
 							</tr>
@@ -57,7 +53,6 @@
 						
 						echo $listeSpecialites;
 						echo '
->>>>>>> Stashed changes
 							</tr>
 						
 						

@@ -2,7 +2,7 @@
 Class metierEquipe
 	{
 	//ATTRIBUTS PRIVES-------------------------------------------------------------------------
-	private $id‪Equipe; 
+	private $idEquipe; 
 	private $nomEquipe; 
 	private $nbrPlaceEquipe; 
 	private $ageMinEquipe; 
@@ -13,9 +13,9 @@ Class metierEquipe
 	
 	//CONSTRUCTEUR-----------------------------------------------------------------------------
 	
-	public function __construct($unId‪Equipe, $unNomEquipe, $unNbrPlaceEquipe, $unAgeMinEquipe, $unAgeMaxEquipe, $unSexeEquipe, $unEntraineur)
+	public function __construct($unIdEquipe, $unNomEquipe, $unNbrPlaceEquipe, $unAgeMinEquipe, $unAgeMaxEquipe, $unSexeEquipe, $unEntraineur)
 		{
-		$this->id‪Equipe = $unId‪Equipe;
+		$this->idEquipe = $unIdEquipe;
 		$this->nomEquipe = $unNomEquipe;
 		$this->nbrPlaceEquipe = $unNbrPlaceEquipe;
 		$this->ageMinEquipe = $unAgeMinEquipe;
@@ -27,7 +27,7 @@ Class metierEquipe
 	//ACCESSEURS-------------------------------------------------------------------------------
 	public function getIdEquipe()
 	{
-		return $this->id‪Equipe;
+		return $this->idEquipe;
 	}
 		
 		
@@ -58,9 +58,9 @@ Class metierEquipe
 	
 	//SETTEUR------------------------------------------------------------
 	
-	public function setId‪Equipe($unId‪Equipe)
+	public function setIdEquipe($unIdEquipe)
 		{
-		$this->id‪Equipe = $unId‪Equipe;
+		$this->idEquipe = $unIdEquipe;
 		}
 	public function setNomEquipe($unNomEquipe)
 		{
