@@ -679,6 +679,22 @@
 			}
 		}
 
+/************************************************************************************************
+              POUR LES ACTIONS CONCERNANT LES SPECIALITE
+					- ajouter une spécialité
+					- enregistrer une spécialité
+					- visualiser une spécialité
+					- modifier une spécialité
+*************************************************************************************************/
+		
+		function actionSpe($action,$role)
+		{
+			switch ($action)
+			{
+		
+			}
+		}
+
 //specialite 
 		public function chargeLesSpecialites()
 		{   $resultatSpecialite=$this->maBD->chargement('specialite');
