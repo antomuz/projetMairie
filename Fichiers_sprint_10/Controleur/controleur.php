@@ -445,7 +445,7 @@
 					$choix=htmlspecialchars($_GET['idEquipe']);
 					$lEquipe=$this->toutesLesEquipes->donneObjetEquipeDepuisNumero($choix);
 					$vue = new vueCentraleEquipe();
-					$vue->choixFaitPourModifEquipe($lEquipe->getNomEquipe(),$lEquipe->getNbrPlaceEquipe(),$lEquipe->getAgeMinEquipe(),$lEquipe->getAgeMaxEquipe(),$lEquipe->getSexeEquipe(),$choix,$this->tousLesTitulaires->lesTitulairesAuFormatHTML());	
+					$vue->choixFaitPourModifEquipe($lEquipe->getNomEquipe(),$lEquipe->getNbrPlaceEquipe(),$lEquipe->getAgeMinEquipe(),$lEquipe->getAgeMaxEquipe(),$lEquipe->getSexeEquipe(),$choix,$this->tousLesTitulaires->lesTitulairesAuFormatHTML(),$this->toutesLesSpecialites->lesSpecialitesAuFormatHTML());	
 					break;
 				case "EnregModif":
 					$vue=new vueCentraleConnexion();
@@ -460,16 +460,16 @@
 					$idEntraineur = htmlspecialchars($_GET['idTitulaire']);
 					$idSpecialite = htmlspecialchars($_GET['idSpecialite']);
 					
-					if($tousLesTitulaires->chercherExistanceIdTitulaire($idEntraineur))
+					if($this->tousLesTitulaires->chercherExistenceIdTitulaire($idEntraineur))
 					{
-						$vacaTitu = $tousLesTitulaires->donneObjetTitulaireDepuisNumero($idEntraineur);
+						$vacaTitu = $this->tousLesTitulaires->donneObjetTitulaireDepuisNumero($idEntraineur);
 					}
-					else if($tousLesVacataires->chercherExistence)
+					else if($this->tousLesVacataires->chercherExistenceIdVacataire($idEntraineur))
 					{
-						$vacaTitu = $tousLesVacataires->donneObjetVacataireDepuisNumero($idEntraineur);
+						$vacaTitu = $this->tousLesVacataires->donneObjetVacataireDepuisNumero($idEntraineur);
 					}
 					
-					$specialite = $toutesLesSpecialites->donneObjetSpecialiteDepuisNumero($idSpecialite);
+					$specialite = $this->toutesLesSpecialites->donneObjetSpecialiteDepuisNumero($idSpecialite);
 					$this->maBD->modifEquipe($idEquipe,$nomEquipe,$nbrPlaceEquipe,$ageMinEquipe,$ageMaxEquipe,$sexeEquipe,$idEntraineur,$idSpecialite);
 					$this->toutesLesEquipes->modifierUneEquipe($idEquipe, $nomEquipe, $nbrPlaceEquipe, $ageMinEquipe, $ageMaxEquipe, $sexeEquipe, $vacaTitu,$specialite);
 					

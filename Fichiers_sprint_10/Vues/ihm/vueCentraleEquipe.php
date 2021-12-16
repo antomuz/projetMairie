@@ -86,7 +86,7 @@
 		}
 
 		
-	public function choixFaitPourModifEquipe($nom, $nbrPlace, $ageMin, $ageMax, $sexe, $choix,$liste)
+	public function choixFaitPourModifEquipe($nom, $nbrPlace, $ageMin, $ageMax, $sexe, $choix,$liste,$Spe)
 	{
 		echo '<form action=index.php?vue=Equipe&action=EnregModif method = GET>
 						<input type=text name=nomEquipe value='.$nom.'></input>
@@ -95,8 +95,9 @@
 						<input type=integer name=ageMaxEquipe value='.$ageMax.'></input>
 						<input type=text name=sexeEquipe value='.$sexe.'></input>	';
 						echo $liste;
-						echo '<input type=hidden name=idEquipe value='.$choix.'></input>	
-						<input type=hidden name=vue value=Equipe></input>
+						echo '<input type=hidden name=idEquipe value='.$choix.'></input>';
+						echo $Spe;	
+						echo '<input type=hidden name=vue value=Equipe></input>
 						<input type=hidden name=action value=EnregModif></input>
 						<button type="submit" class="btn btn-primary">Valider</button>
 			 </form>';
