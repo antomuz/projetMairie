@@ -558,14 +558,7 @@
 					}
 					break;
 				
-				
-				
-				
-				
-				
-				
-				
-					case "visualiser" :
+				case "visualiser" :
 					$vue=new vueCentraleConnexion();
 					$vue->afficheMenuInternaute();
 					require 'vues/ihm/nouvelle.php';
@@ -578,8 +571,31 @@
 					$vue=new vueCentraleConnexion();
 					$vue->afficheMenuAdmin();
 					require 'vues/ihm/nouvelle.php';
+					$message= $this->tousLesAdherents->lesAdherentsAuFormatHTML();
 					$vue = new vueCentraleAdherent();
-					$vue->modifierAdherent();
+					$vue->modifierAdherent($message);
+					break;
+				case "choixFaitPourModif":
+					$vue=new vueCentraleConnexion();
+					$vue->afficheMenuAdmin();
+					require 'vues/ihm/nouvelle.php';
+					$choix=htmlspecialchars($_GET['idAdherent']);
+					$lAdherent=$this->tousLesAdherents->donneObjetAdherentDepuisNumero($choix);
+					$vue = new vueCentraleAdherent();
+					$vue->choixFaitPourModifAdherent($lAdherent->getNomAdherent(),$lAdherent->getPrenomAdherent(),$lAdherent->getAgeAdherent(),$lAdherent->getSexeAdherent(),$lAdherent->getLoginAdherent(),$choix);	
+					break;
+				case "EnregModif" : 
+					$vue= new vueCentraleConnexion();
+					$vue->afficheMenuAdmin();
+					require 'vues/ihm/nouvelle.php';
+					$idAdherent = htmlspecialchars($_POST['idAdherent']);
+					$nomAdherent = htmlspecialchars($_POST['nomAdherent']);
+					$prenomAdherent = htmlspecialchars($_POST['prenomAdherent']);
+					$ageAdherent = htmlspecialchars($_POST['ageAdherent']);
+					$sexeAdherent = htmlspecialchars($_POST['sexeAdherent']);
+					$loginAdherent = htmlspecialchars($_POST['loginAdherent']);
+					$this->tousLesAdherents->modifierUnAdherent($idAdherent,$nomAdherent,$prenomAdherent,$ageAdherent,$sexeAdherent,$loginAdherent);
+					$this->maBD->modifProfil($idAdherent,$nomAdherent,$prenomAdherent,$ageAdherent,$sexeAdherent,$loginAdherent);
 					break;
 				case "modifierSonProfil" :
 					$vue=new vueCentraleConnexion();

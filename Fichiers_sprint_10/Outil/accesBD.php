@@ -330,7 +330,7 @@ class accesBD
 	public function modifProfil($unIdAdherent,$unNomAdherent,$unPrenomAdherent,$unAgeAdherent,$unSexeAdherent,$unLoginAdherent)
 	{	
 	
-				$requete = $this->conn->prepare("UPDATE adherent SET  nomAdherent = ?, prenomAdherent = ?, ageAdherent = ?, sexeAdherent = ?, loginAdherent = ? where idAdherent = ?");
+			$requete = $this->conn->prepare("UPDATE adherent SET  nomAdherent = ?, prenomAdherent = ?, ageAdherent = ?, sexeAdherent = ?, loginAdherent = ? where idAdherent = ?");
 			$requete->bindValue(1,$unNomAdherent);
 			$requete->bindValue(2,$unPrenomAdherent);
 			$requete->bindValue(3,$unAgeAdherent);

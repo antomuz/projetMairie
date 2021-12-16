@@ -119,8 +119,27 @@
 			</table>";
 		}
 
-	public function modifierAdherent(){
+	public function modifierAdherent($message){
+		echo '<form action=index.php?vue=Adherent&action=choixFaitPourModif method = GET>';
+		echo $message; 
+		echo ' <input type=hidden name=vue value=Adherent></input>
+			   <input type=hidden name=action value=choixFaitPourModif></input>
+			   <button type="submit" class="btn btn-primary">Valider</button>
+		       </form>
+			 ';
+	}
 
+	public function choixFaitPourModifAdherent($nom, $prenom, $age, $sexe, $login, $choix)
+	{
+		echo '<form action=index.php?vue=Adherent&action=EnregModif method = POST>
+						<input type=text name=nomAdherent value='.$nom.'></input>
+						<input type=integer name=prenomAdherent value='.$prenom.'></input>
+						<input type=integer name=ageAdherent value='.$age.'></input>
+						<input type=integer name=sexeAdherent value='.$sexe.'></input>
+						<input type=text name=loginAdherent value='.$login.'></input>
+						<input type=hidden name=idAdherent value='.$choix.'></input>
+						<button type="submit" class="btn btn-primary">Valider</button>
+			 </form>';
 	}
 
 	public function modifierProfil($adherent){
