@@ -103,7 +103,7 @@
 			 </form>';
 	}
 
-	public function choixFaitPourVisuEquipe($nom, $nbrPlace, $ageMin, $ageMax, $sexe, $choix,$lEntraineur) 
+	public function choixFaitPourVisuEquipe($nom, $nbrPlace, $ageMin, $ageMax, $sexe, $Spe,$lEntraineur) 
 	{
 		echo '<br><table class="table table-striped table-bordered table-sm ">
 		 			<thead>
@@ -125,7 +125,7 @@
 		 					<td scope="col">'.$ageMax.'</th>
 		 					<td scope="col">'.$sexe.'</th>
 		 					<td scope="col">'.$lEntraineur.'</th>
-		 					<td scope="col">'.$choix.'</th>
+		 					<td scope="col">'.$Spe.'</th>
 		 				</tr>
 					</tbody>
 				</table>';

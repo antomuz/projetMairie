@@ -24,12 +24,12 @@
 			$this->toutesLesSpecialites = new conteneurSpecialite();
 			
 	
+			$this->chargeLesSpecialites();
 			$this->chargeLesVacataires();
 			$this->chargeLesTitulaires();
 			$this->chargeLesEquipes();
 			$this->chargeLesAdherents();
 			$this->chargeLesEntraineurs();
-			$this->chargeLesSpecialites();
 			
 		}
 /*****************************************************************************************
@@ -427,7 +427,7 @@
 					$choix=htmlspecialchars($_GET['idEquipe']);
 					$lEquipe=$this->toutesLesEquipes->donneObjetEquipeDepuisNumero($choix);
 					$vue = new vueCentraleEquipe();
-					$vue->choixFaitPourVisuEquipe($lEquipe->getNomEquipe(),$lEquipe->getNbrPlaceEquipe(),$lEquipe->getAgeMinEquipe(),$lEquipe->getAgeMaxEquipe(),$lEquipe->getSexeEquipe(),$choix,$lEquipe->getLEntraineur()->getNomEntraineur());	
+					$vue->choixFaitPourVisuEquipe($lEquipe->getNomEquipe(),$lEquipe->getNbrPlaceEquipe(),$lEquipe->getAgeMinEquipe(),$lEquipe->getAgeMaxEquipe(),$lEquipe->getSexeEquipe(),$lEquipe->getlaSpe()->getNomSpe(),$lEquipe->getLEntraineur()->getNomEntraineur());	
 					break;
 				
 					case "modifier" :
