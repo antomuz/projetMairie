@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : lun. 13 déc. 2021 à 13:21
+-- Généré le : lun. 03 jan. 2022 à 07:12
 -- Version du serveur : 8.0.25
 -- Version de PHP : 8.0.7
 
@@ -124,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `equipe` (
   PRIMARY KEY (`idEquipe`),
   KEY `fk_equipe_entraineur` (`idEntraineur`),
   KEY `fk_equipe_specialite` (`idSpe`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `equipe`
@@ -138,14 +138,15 @@ INSERT INTO `equipe` (`idEquipe`, `nomEquipe`, `nbrPlaceEquipe`, `ageMinEquipe`,
 (5, 'volley', 10, 5, 8, 'F', 1, 5),
 (6, 'athletisme', 10, 5, 8, 'F', 1, 6),
 (7, 'moto cross', 10, 5, 8, 'F', 1, 7),
-(8, 'judo2', 10, 5, 15, 'M', 2, 3);
+(8, 'judo2', 10, 5, 15, 'M', 2, 3),
+(9, 'my little pony', 10, 5, 10, 'F', 4, 4);
 
 --
 -- Déclencheurs `equipe`
 --
-DROP TRIGGER IF EXISTS `adequation_spe_entraineur_equipe`;
+DROP TRIGGER IF EXISTS `adequation_spe_entraineur_equipe_insert`;
 DELIMITER $$
-CREATE TRIGGER `adequation_spe_entraineur_equipe` AFTER INSERT ON `equipe` FOR EACH ROW BEGIN
+CREATE TRIGGER `adequation_spe_entraineur_equipe_insert` AFTER INSERT ON `equipe` FOR EACH ROW BEGIN
 DECLARE testNb int default 0;
 if testNb = (SELECT count(*)
 from spe_entraineur
@@ -154,6 +155,23 @@ and idSpe = new.idSpe)
 then
 delete from equipe
 where idEquipe = new.idEquipe;
+end IF;
+END
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `adequation_spe_entraineur_equipe_update`;
+DELIMITER $$
+CREATE TRIGGER `adequation_spe_entraineur_equipe_update` AFTER UPDATE ON `equipe` FOR EACH ROW BEGIN
+DECLARE testNb int default 0;
+if testNb = (SELECT count(*)
+from spe_entraineur
+where idEntraineur = new.idEntraineur
+and idSpe = new.idSpe)
+then
+UPDATE equipe
+set idSpe = old.idSpe, idEntraineur = old.idEntraineur
+where idSpe = new.idSpe
+and idEntraineur = new.idEntraineur;
 end IF;
 END
 $$
@@ -347,7 +365,8 @@ CREATE TABLE IF NOT EXISTS `spe_entraineur` (
 --
 
 INSERT INTO `spe_entraineur` (`idSpe`, `idEntraineur`) VALUES
-(3, 2);
+(3, 2),
+(4, 4);
 
 -- --------------------------------------------------------
 
