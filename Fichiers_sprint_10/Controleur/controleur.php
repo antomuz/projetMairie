@@ -588,14 +588,22 @@
 					$vue= new vueCentraleConnexion();
 					$vue->afficheMenuAdmin();
 					require 'vues/ihm/nouvelle.php';
-					$idAdherent = htmlspecialchars($_POST['idAdherent']);
-					$nomAdherent = htmlspecialchars($_POST['nomAdherent']);
-					$prenomAdherent = htmlspecialchars($_POST['prenomAdherent']);
-					$ageAdherent = htmlspecialchars($_POST['ageAdherent']);
-					$sexeAdherent = htmlspecialchars($_POST['sexeAdherent']);
-					$loginAdherent = htmlspecialchars($_POST['loginAdherent']);
-					$this->tousLesAdherents->modifierUnAdherent($idAdherent,$nomAdherent,$prenomAdherent,$ageAdherent,$sexeAdherent,$loginAdherent);
-					$this->maBD->modifProfil($idAdherent,$nomAdherent,$prenomAdherent,$ageAdherent,$sexeAdherent,$loginAdherent);
+					//$result = htmlspecialchars($_POST['Valider']);
+					if (isset($_POST['Valider'])){
+						$idAdherent = htmlspecialchars($_POST['idAdherent']);
+						$nomAdherent = htmlspecialchars($_POST['nomAdherent']);
+						$prenomAdherent = htmlspecialchars($_POST['prenomAdherent']);
+						$ageAdherent = htmlspecialchars($_POST['ageAdherent']);
+						$sexeAdherent = htmlspecialchars($_POST['sexeAdherent']);
+						$loginAdherent = htmlspecialchars($_POST['loginAdherent']);
+						$this->tousLesAdherents->modifierUnAdherent($idAdherent,$nomAdherent,$prenomAdherent,$ageAdherent,$sexeAdherent,$loginAdherent);
+						$this->maBD->modifProfil($idAdherent,$nomAdherent,$prenomAdherent,$ageAdherent,$sexeAdherent,$loginAdherent);
+					};
+					if (isset($_POST['resMDP'])){
+						$idAdherent = htmlspecialchars($_POST['idAdherent']);
+						$this->tousLesAdherents->resMDP($idAdherent);
+						$this->maBD->resMDP($idAdherent);
+					};
 					break;
 				case "modifierSonProfil" :
 					$vue=new vueCentraleConnexion();

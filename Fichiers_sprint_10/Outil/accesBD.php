@@ -348,13 +348,13 @@ class accesBD
 	}
 	
 	/***********************************************************************************************
-	méthode qui va permettre de modifier le MDP.
+	méthode qui va permettre de modifier ou reset le MDP.
 	***********************************************************************************************/
 	public function modifMDP($adherent, $MDP)
 	{	
 	
 			$requete = $this->conn->prepare("UPDATE adherent SET pwdAdherent = ? where idAdherent = ?");
-			$requete->bindValue(1,$MDP);
+			$requete->bindValue(1,md5($MDP));
 			$requete->bindValue(2,$adherent->getIdAdherent());
 			
 		
@@ -365,6 +365,23 @@ class accesBD
 			die("Erreur dans modif Equipe : ".$requete->errorCode());
 		}
 		return $adherent->getIdAdherent();	
+	}
+
+	public function resMDP($unIdAdherent) {
+		
+	
+		$requete = $this->conn->prepare("UPDATE adherent SET pwdAdherent = ? where idAdherent = ?");
+		$requete->bindValue(1,md5('P@ssword'));
+		$requete->bindValue(2,$unIdAdherent);
+		
+	
+		echo "La modification est effectuée.";
+	
+	if(!$requete->execute())
+	{
+		die("Erreur dans modif Equipe : ".$requete->errorCode());
+	}
+	return $unIdAdherent;	
 	}
 	
 	/***********************************************************************************************

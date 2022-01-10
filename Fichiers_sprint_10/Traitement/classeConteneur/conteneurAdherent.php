@@ -91,6 +91,16 @@ Class conteneurAdherent
 		}
 	}
 
+	public function resMDP($unIdAdherent) {
+		foreach ($this->lesAdherents as $unAdherent)
+		{
+			if ($unAdherent->getIdAdherent() == $unIdAdherent)
+			{
+				$unAdherent->resetMDP();
+			}
+		}
+	}
+
 	public function modifierMDP($adherent, $MDP){
 
 		foreach ($this->lesAdherents as $unAdherent)
