@@ -13,14 +13,14 @@ class conteneurEquipe
 		}
 	
 	//les méthodes habituellement indispensables
-	public function ajouterUneEquipe($unIdEquipe, $unNomEquipe, $unNbrPlaceEquipe, $unAgeMinEquipe, $unAgeMaxEquipe, $unSexeEquipe, $unEntraineur)
+	public function ajouterUneEquipe($unIdEquipe, $unNomEquipe, $unNbrPlaceEquipe, $unAgeMinEquipe, $unAgeMaxEquipe, $unSexeEquipe, $unEntraineur,$uneSpe)
 	{
-		$uneEquipe = new metierEquipe($unIdEquipe, $unNomEquipe, $unNbrPlaceEquipe, $unAgeMinEquipe, $unAgeMaxEquipe, $unSexeEquipe,$unEntraineur);
+		$uneEquipe = new metierEquipe($unIdEquipe, $unNomEquipe, $unNbrPlaceEquipe, $unAgeMinEquipe, $unAgeMaxEquipe, $unSexeEquipe,$unEntraineur,$uneSpe);
 		$this->lesEquipes->append($uneEquipe);
 			
 	}
 	
-	public function modifierUneEquipe($unIdEquipe, $unNomEquipe, $unNbrPlaceEquipe, $unAgeMinEquipe, $unAgeMaxEquipe, $unSexeEquipe, $unEntraineur)
+	public function modifierUneEquipe($unIdEquipe, $unNomEquipe, $unNbrPlaceEquipe, $unAgeMinEquipe, $unAgeMaxEquipe, $unSexeEquipe, $unEntraineur,$uneSpe)
 	{
 			
 		foreach ($this->lesEquipes as $uneEquipe)
@@ -33,6 +33,7 @@ class conteneurEquipe
 				$uneEquipe->setAgeMaxEquipe = $unAgeMaxEquipe;
 				$uneEquipe->setSexeEquipe = $unSexeEquipe;
 				$uneEquipe->setLEntraineur = $unEntraineur;
+				$uneEquipe->setLaSpe = $uneSpe;
 			}
 		}
 	}

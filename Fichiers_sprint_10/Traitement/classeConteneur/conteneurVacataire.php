@@ -29,7 +29,7 @@ class conteneurVacataire
 		{
 		$liste = '';
 		foreach ($this->lesVacataires as $unVacataire)
-			{	$liste = $liste.$unVacataire->afficheVacataire();
+			{	$liste = $liste. $unVacataire->afficheVacataire();
 			}
 		return $liste;
 		}
@@ -78,7 +78,7 @@ class conteneurVacataire
 		return $leBonVacataire;
 		}	
 		
-		public function chercherExistanceIdVacataire($unId)
+		public function chercherExistenceIdVacataire($unId)
 		{
 		$trouve=false;
 		$iVacataire = $this->lesVacataires->getIterator();

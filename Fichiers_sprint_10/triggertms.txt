@@ -1,0 +1,12 @@
+CREATE TRIGGER `limite_nb_equipe_entraineur` AFTER UPDATE ON `equipe`
+ FOR EACH ROW BEGIN
+DECLARE nbEquipe int DEFAULT 0;
+set nbEquipe = (SELECT COUNT(*)
+                 FROM equipe
+                 where idEntraineur = new.idEntraineur);
+                     
+if nbEquipe > 3
+then
+UPDATE equipe SET idEntraineur = 'indéfini' WHERE idEquipe = new.idEquipe;
+end IF;
+end

@@ -41,8 +41,8 @@ Class metierTitulaire extends metierEntraineur
 		$liste=parent::afficheEntraineur();
 		$liste=$liste.$this->getDateEmbauche().'|';
 		return $liste;
-	}			    
-	
+
+	}			 
 	}
 	
 ?>
