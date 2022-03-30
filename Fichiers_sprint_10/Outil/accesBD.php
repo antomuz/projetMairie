@@ -209,10 +209,10 @@ class accesBD
 		return $sonId;
 	}
 		
-	public function insertEquipe($unNomEquipe,$unNbrPlaceEquipe,$unAgeMinEquipe,$unAgeMaxEquipe,$unSexeEquipe,$unIdEntraineur)
+	public function insertEquipe($unNomEquipe,$unNbrPlaceEquipe,$unAgeMinEquipe,$unAgeMaxEquipe,$unSexeEquipe,$unIdEntraineur,$uneSpe)
 	{
 		$sonId = $this->donneProchainIdentifiant("EQUIPE","idEquipe");
-		$requete = $this->conn->prepare("INSERT INTO EQUIPE (idEquipe,nomEquipe,nbrPlaceEquipe,ageMinEquipe,ageMaxEquipe,sexeEquipe,idEntraineur) VALUES (?,?,?,?,?,?,?)");
+		$requete = $this->conn->prepare("INSERT INTO EQUIPE (idEquipe,nomEquipe,nbrPlaceEquipe,ageMinEquipe,ageMaxEquipe,sexeEquipe,idEntraineur,idSpe) VALUES (?,?,?,?,?,?,?,?)");
 		$requete->bindValue(1,$sonId);
 		$requete->bindValue(2,$unNomEquipe);
 		$requete->bindValue(3,$unNbrPlaceEquipe);
@@ -220,6 +220,7 @@ class accesBD
 		$requete->bindValue(5,$unAgeMaxEquipe);
 		$requete->bindValue(6,$unSexeEquipe);
 		$requete->bindValue(7,$unIdEntraineur);
+		$requete->bindValue(8,$uneSpe);
 		if(!$requete->execute())
 		{
 			die("Erreur dans insert Equipe : ".$requete->errorCode());
@@ -329,7 +330,7 @@ class accesBD
 	public function modifProfil($unIdAdherent,$unNomAdherent,$unPrenomAdherent,$unAgeAdherent,$unSexeAdherent,$unLoginAdherent)
 	{	
 	
-				$requete = $this->conn->prepare("UPDATE adherent SET  nomAdherent = ?, prenomAdherent = ?, ageAdherent = ?, sexeAdherent = ?, loginAdherent = ? where idAdherent = ?");
+			$requete = $this->conn->prepare("UPDATE adherent SET  nomAdherent = ?, prenomAdherent = ?, ageAdherent = ?, sexeAdherent = ?, loginAdherent = ? where idAdherent = ?");
 			$requete->bindValue(1,$unNomAdherent);
 			$requete->bindValue(2,$unPrenomAdherent);
 			$requete->bindValue(3,$unAgeAdherent);
@@ -347,13 +348,13 @@ class accesBD
 	}
 	
 	/***********************************************************************************************
-	méthode qui va permettre de modifier le MDP.
+	méthode qui va permettre de modifier ou reset le MDP.
 	***********************************************************************************************/
 	public function modifMDP($adherent, $MDP)
 	{	
 	
 			$requete = $this->conn->prepare("UPDATE adherent SET pwdAdherent = ? where idAdherent = ?");
-			$requete->bindValue(1,$MDP);
+			$requete->bindValue(1,md5($MDP));
 			$requete->bindValue(2,$adherent->getIdAdherent());
 			
 		
@@ -364,6 +365,23 @@ class accesBD
 			die("Erreur dans modif Equipe : ".$requete->errorCode());
 		}
 		return $adherent->getIdAdherent();	
+	}
+
+	public function resMDP($unIdAdherent) {
+		
+	
+		$requete = $this->conn->prepare("UPDATE adherent SET pwdAdherent = ? where idAdherent = ?");
+		$requete->bindValue(1,md5('P@ssword'));
+		$requete->bindValue(2,$unIdAdherent);
+		
+	
+		echo "La modification est effectuée.";
+	
+	if(!$requete->execute())
+	{
+		die("Erreur dans modif Equipe : ".$requete->errorCode());
+	}
+	return $unIdAdherent;	
 	}
 	
 	/***********************************************************************************************
@@ -410,6 +428,11 @@ class accesBD
 			case 'TITULAIRE':
 				$stringQuery.='titulaire';
 				break;
+
+			case 'SPECIALITE':
+				$stringQuery.='specialite';
+				break;
+				
 			default:
 				die('Pas une table valide');
 				break;

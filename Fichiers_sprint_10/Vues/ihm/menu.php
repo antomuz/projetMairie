@@ -26,6 +26,15 @@
 	</ul>
 </div>
 <div class="dropdown col">
+	<button class="btn bg-transparent dropdown-toogle" type="button" id="menuSpe" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+		Menu Sport
+		<span class="caret"></span>
+	</button>
+	<ul class="dropdown-menu" aria-labelledby="menuSpe">
+		<li><a class="dropdown-item" href = 'index.php?vue=Connexion&action=visualiser'>Visualiser les sports</a></li>
+	</ul>
+</div>
+<div class="dropdown col"> 
 	<button class="btn bg-transparent dropdown-toogle" type="button" id="contact" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 		Contact 
 		<span class="caret"></span>

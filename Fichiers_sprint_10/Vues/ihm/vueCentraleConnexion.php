@@ -63,6 +63,15 @@
 				</ul>
 			</div>
 			<div class="dropdown col">
+				<button class="btn bg-transparent dropdown-toogle" type="button" id="menuSpe" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+					Menu Sport
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" aria-labelledby="menuSpe">
+					<li><a class="dropdown-item" href=index.php?vue=Connexion&action=visualiser>Visualiser les sports</a></li>
+				</ul>
+			</div>
+			<div class="dropdown col">
 				<button class="btn bg-transparent dropdown-toogle" type="button" id="contact" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 					Contact 
 					<span class="caret"></span>
@@ -159,6 +168,16 @@
 				<ul class="dropdown-menu" aria-labelledby="menuEntraineur">
 					<li><a class="dropdown-item" href=index.php?vue=Entraineur&action=ajouter>Ajouter un Entraineur</a></li>
 					<li><a class="dropdown-item" href=index.php?vue=Entraineur&action=typeEntraineurModifier>Modifier un entraineur</a></li>
+				</ul>
+			</div>
+			<div class="dropdown col">
+				<button class="btn bg-transparent dropdown-toogle" type="button" id="menuSpe" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Menu Spécialité
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" aria-labelledby="menuSpe">
+					<li><a class="dropdown-item" href=index.php?vue=Specialite&action=ajouter>Ajouter une spécialité</a></li>
+					<li><a class="dropdown-item" href=index.php?vue=Specialite&action=modifier>Modifier une spécialité</a></li>
 				</ul>
 			</div>
 			<div class="dropdown col">

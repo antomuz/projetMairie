@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 Class metierAdherent
 	{
@@ -97,9 +97,13 @@ Class metierAdherent
 	}
 		
 	// méthode permettant d'afficher tous les attributs d'un seul coup
+	public function resetMDP(){
+		$this->pwdAdherent=md5('P@ssword');
+	}
+
 	public function afficheAdherent()
 	{
-		$liste=$this->getNomAdherent().' | '.$this->getPrenomAdherent().' | '.$this->getAgeAdherent().' | '.$this->getSexeAdherent().' | '.$this->getLEquipeDeLAdherent()->getNomEquipe().' | '.$this->getLEquipeDeLAdherent()->getLEntraineur()->getNomEntraineur().' | ';
+		$liste=$this->getNomAdherent().' | '.$this->getPrenomAdherent().' | '.$this->getAgeAdherent().' | '.$this->getSexeAdherent().' | ';
 		return $liste;
 	}	
 

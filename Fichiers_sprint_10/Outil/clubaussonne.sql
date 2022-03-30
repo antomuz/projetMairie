@@ -2,6 +2,7 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
+
 -- Hôte : 127.0.0.1:3306
 -- Généré le : lun. 03 jan. 2022 à 07:12
 -- Version du serveur : 8.0.25
@@ -18,33 +19,33 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `clubaussonne`
+-- Database: `clubaussonne`
 --
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `adherent`
+-- Table structure for table `adherent`
 --
 
 DROP TABLE IF EXISTS `adherent`;
 CREATE TABLE IF NOT EXISTS `adherent` (
-  `idAdherent` int NOT NULL AUTO_INCREMENT,
+  `idAdherent` int(11) NOT NULL AUTO_INCREMENT,
   `nomAdherent` char(32) NOT NULL,
   `prenomAdherent` char(32) NOT NULL,
-  `ageAdherent` int NOT NULL,
+  `ageAdherent` int(11) NOT NULL,
   `sexeAdherent` char(1) NOT NULL,
   `loginAdherent` char(20) NOT NULL,
   `pwdAdherent` varchar(200) NOT NULL,
   PRIMARY KEY (`idAdherent`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `adherent`
+-- Dumping data for table `adherent`
 --
 
 INSERT INTO `adherent` (`idAdherent`, `nomAdherent`, `prenomAdherent`, `ageAdherent`, `sexeAdherent`, `loginAdherent`, `pwdAdherent`) VALUES
-(1, 'Dupont', 'Pierre', 8, 'F', 'pDupont', '26d3649a8402892cbd78263f576cda23'),
+(1, 'Duponts', 'Pierreau', 8, 'F', 'pDupont', '382e0360e4eb7b70034fbaa69bec5786'),
 (2, 'Dubois', 'Vincent', 10, 'M', 'vDubois', 'b6c7790658f2cabc77cfb445f3530cf4'),
 (3, 'Durant', 'Jacques', 6, 'M', 'jDurant', '01e8e31b6f11b0872c662c306b3e87c9'),
 (4, 'Fleur', 'Sophie', 7, 'F', 'sFleur', '520a72f041586acdeb770d35388ce6c4'),
@@ -54,17 +55,18 @@ INSERT INTO `adherent` (`idAdherent`, `nomAdherent`, `prenomAdherent`, `ageAdher
 (8, 'powder', 'jinx', 7, 'F', 'jinxed', 'a13e586e218c15a6b4539efc69a5c5b7'),
 (9, 'neko', 'kuro', 5, 'M', 'kuroneko', '8c44c726c667b712e292e8432cb34caa'),
 (10, 'clyde', 'jekyll', 7, 'M', 'clykyll', 'fbb35966823901b1632d42d006bae83c'),
-(11, 'undefined', 'steve', 11, 'M', 'steve', 'd69403e2673e611d4cbd3fad6fd1788e');
+(11, 'undefined', 'steve', 11, 'M', 'steve', 'd69403e2673e611d4cbd3fad6fd1788e'),
+(12, 'test12', 'test12', 12, 'M', 'test12', '60474c9c10d7142b7508ce7a50acf414');
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `administrateur`
+-- Table structure for table `administrateur`
 --
 
 DROP TABLE IF EXISTS `administrateur`;
 CREATE TABLE IF NOT EXISTS `administrateur` (
-  `idAdmin` int NOT NULL AUTO_INCREMENT,
+  `idAdmin` int(11) NOT NULL AUTO_INCREMENT,
   `nomAdmin` char(32) NOT NULL,
   `prenomAdmin` char(32) NOT NULL,
   `loginAdmin` char(20) NOT NULL,
@@ -73,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `administrateur` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `administrateur`
+-- Dumping data for table `administrateur`
 --
 
 INSERT INTO `administrateur` (`idAdmin`, `nomAdmin`, `prenomAdmin`, `loginAdmin`, `pwdAdmin`) VALUES
@@ -83,12 +85,12 @@ INSERT INTO `administrateur` (`idAdmin`, `nomAdmin`, `prenomAdmin`, `loginAdmin`
 -- --------------------------------------------------------
 
 --
--- Structure de la table `entraineur`
+-- Table structure for table `entraineur`
 --
 
 DROP TABLE IF EXISTS `entraineur`;
 CREATE TABLE IF NOT EXISTS `entraineur` (
-  `idEntraineur` int NOT NULL AUTO_INCREMENT,
+  `idEntraineur` int(11) NOT NULL AUTO_INCREMENT,
   `nomEntraineur` char(32) NOT NULL,
   `loginEntraineur` char(20) NOT NULL,
   `pwdEntraineur` varchar(255) DEFAULT NULL,
@@ -96,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `entraineur` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `entraineur`
+-- Dumping data for table `entraineur`
 --
 
 INSERT INTO `entraineur` (`idEntraineur`, `nomEntraineur`, `loginEntraineur`, `pwdEntraineur`) VALUES
@@ -108,85 +110,97 @@ INSERT INTO `entraineur` (`idEntraineur`, `nomEntraineur`, `loginEntraineur`, `p
 -- --------------------------------------------------------
 
 --
--- Structure de la table `equipe`
+-- Table structure for table `equipe`
 --
 
 DROP TABLE IF EXISTS `equipe`;
 CREATE TABLE IF NOT EXISTS `equipe` (
-  `idEquipe` int NOT NULL AUTO_INCREMENT,
+  `idEquipe` int(11) NOT NULL AUTO_INCREMENT,
   `nomEquipe` char(32) NOT NULL,
-  `nbrPlaceEquipe` int NOT NULL,
-  `ageMinEquipe` int NOT NULL,
-  `ageMaxEquipe` int NOT NULL,
+  `nbrPlaceEquipe` int(11) NOT NULL,
+  `ageMinEquipe` int(11) NOT NULL,
+  `ageMaxEquipe` int(11) NOT NULL,
   `sexeEquipe` char(1) NOT NULL,
-  `idEntraineur` int NOT NULL,
-  `idSpe` int NOT NULL,
+  `idEntraineur` int(11) NOT NULL,
+  `idSpe` int(11) NOT NULL,
   PRIMARY KEY (`idEquipe`),
   KEY `fk_equipe_entraineur` (`idEntraineur`),
   KEY `fk_equipe_specialite` (`idSpe`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `equipe`
+-- Dumping data for table `equipe`
 --
 
 INSERT INTO `equipe` (`idEquipe`, `nomEquipe`, `nbrPlaceEquipe`, `ageMinEquipe`, `ageMaxEquipe`, `sexeEquipe`, `idEntraineur`, `idSpe`) VALUES
-(1, 'natation', 10, 5, 8, 'F', 3, 1),
-(2, 'foot', 20, 10, 12, 'F', 2, 2),
-(3, 'judo', 10, 5, 8, 'F', 1, 3),
-(4, 'equitation', 10, 5, 8, 'F', 1, 4),
-(5, 'volley', 10, 5, 8, 'F', 1, 5),
-(6, 'athletisme', 10, 5, 8, 'F', 1, 6),
-(7, 'moto cross', 10, 5, 8, 'F', 1, 7),
-(8, 'judo2', 10, 5, 15, 'M', 2, 3),
-(9, 'my little pony', 10, 5, 10, 'F', 4, 4);
+(1, 'natation1', 10, 5, 8, 'F', 3, 1),
+(2, 'foot1', 20, 10, 12, 'F', 2, 2),
+(3, 'judo1', 10, 5, 8, 'F', 3, 3),
+(4, 'equitation1', 10, 5, 8, 'F', 2, 3),
+(5, 'volley1', 10, 5, 8, 'F', 1, 5),
+(6, 'athletisme1', 10, 5, 8, 'F', 1, 6),
+(7, 'moto cross1', 10, 5, 8, 'F', 1, 7),
+(8, 'judo2', 10, 5, 15, 'M', 2, 3);
 
 --
--- Déclencheurs `equipe`
+-- Triggers `equipe`
 --
 DROP TRIGGER IF EXISTS `adequation_spe_entraineur_equipe_insert`;
 DELIMITER $$
-CREATE TRIGGER `adequation_spe_entraineur_equipe_insert` AFTER INSERT ON `equipe` FOR EACH ROW BEGIN
+CREATE TRIGGER `adequation_spe_entraineur_equipe_insert` BEFORE INSERT ON `equipe` FOR EACH ROW BEGIN
 DECLARE testNb int default 0;
 if testNb = (SELECT count(*)
 from spe_entraineur
 where idEntraineur = new.idEntraineur
 and idSpe = new.idSpe)
 then
-delete from equipe
-where idEquipe = new.idEquipe;
+SIGNAL SQLSTATE '45000'
+SET MESSAGE_TEXT = 'entraineur pas spécialisé pour cette équipe';
 end IF;
 END
 $$
 DELIMITER ;
 DROP TRIGGER IF EXISTS `adequation_spe_entraineur_equipe_update`;
 DELIMITER $$
-CREATE TRIGGER `adequation_spe_entraineur_equipe_update` AFTER UPDATE ON `equipe` FOR EACH ROW BEGIN
+CREATE TRIGGER `adequation_spe_entraineur_equipe_update` BEFORE UPDATE ON `equipe` FOR EACH ROW BEGIN
 DECLARE testNb int default 0;
 if testNb = (SELECT count(*)
 from spe_entraineur
 where idEntraineur = new.idEntraineur
 and idSpe = new.idSpe)
 then
-UPDATE equipe
-set idSpe = old.idSpe, idEntraineur = old.idEntraineur
-where idSpe = new.idSpe
-and idEntraineur = new.idEntraineur;
+SIGNAL SQLSTATE '45000'
+SET MESSAGE_TEXT = 'entraineur pas spécialisé pour cette équipe';
 end IF;
 END
 $$
 DELIMITER ;
-DROP TRIGGER IF EXISTS `check_equipes_entraineur`;
+DROP TRIGGER IF EXISTS `check_equipes_entraineur_insert`;
 DELIMITER $$
-CREATE TRIGGER `check_equipes_entraineur` AFTER INSERT ON `equipe` FOR EACH ROW BEGIN
+CREATE TRIGGER `check_equipes_entraineur_insert` BEFORE INSERT ON `equipe` FOR EACH ROW BEGIN
 DECLARE $nbrEquipe int DEFAULT 3;
 
-if $nbrEquipe < (select COUNT(*)
+if $nbrEquipe <= (select COUNT(*)
                 from equipe
                 where idEntraineur = new.idEntraineur)
 then
-delete from equipe
-where idEquipe = new.idEquipe;
+SIGNAL SQLSTATE '45000'
+SET MESSAGE_TEXT = 'cet entraineur a déja son max équipes';
+end IF;
+END
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `check_equipes_entraineur_update`;
+DELIMITER $$
+CREATE TRIGGER `check_equipes_entraineur_update` BEFORE UPDATE ON `equipe` FOR EACH ROW BEGIN
+DECLARE $nbrEquipe int DEFAULT 3;
+
+if $nbrEquipe <= (select COUNT(*)
+                from equipe
+                where idEntraineur = new.idEntraineur)
+then
+SIGNAL SQLSTATE '45000'
+SET MESSAGE_TEXT = 'equipes max atteintes';
 end IF;
 END
 $$
@@ -195,20 +209,20 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Structure de la table `equipe_adherent`
+-- Table structure for table `equipe_adherent`
 --
 
 DROP TABLE IF EXISTS `equipe_adherent`;
 CREATE TABLE IF NOT EXISTS `equipe_adherent` (
-  `idAdherent` int NOT NULL,
-  `idEquipe` int NOT NULL,
+  `idAdherent` int(11) NOT NULL,
+  `idEquipe` int(11) NOT NULL,
   PRIMARY KEY (`idAdherent`,`idEquipe`),
   KEY `fk_adherent_equipe_adherent` (`idAdherent`),
   KEY `fk_equipe_equipe_adherent` (`idEquipe`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `equipe_adherent`
+-- Dumping data for table `equipe_adherent`
 --
 
 INSERT INTO `equipe_adherent` (`idAdherent`, `idEquipe`) VALUES
@@ -226,39 +240,37 @@ INSERT INTO `equipe_adherent` (`idAdherent`, `idEquipe`) VALUES
 (10, 1);
 
 --
--- Déclencheurs `equipe_adherent`
+-- Triggers `equipe_adherent`
 --
 DROP TRIGGER IF EXISTS `check_equipes_adherent`;
 DELIMITER $$
-CREATE TRIGGER `check_equipes_adherent` AFTER INSERT ON `equipe_adherent` FOR EACH ROW BEGIN
+CREATE TRIGGER `check_equipes_adherent` BEFORE INSERT ON `equipe_adherent` FOR EACH ROW BEGIN
 DECLARE $nbrPlace int DEFAULT 3;
 
-if $nbrPlace < (select COUNT(*)
+if $nbrPlace <= (select COUNT(*)
                 from equipe_adherent
                 where idAdherent = new.idAdherent)
 then
-delete from equipe_adherent
-where idEquipe = new.idEquipe
-and idAdherent = new.idAdherent;
+SIGNAL SQLSTATE '45000'
+SET MESSAGE_TEXT = 'ne peut pas rejoindre une équipe de plus';
 end IF;
 end
 $$
 DELIMITER ;
 DROP TRIGGER IF EXISTS `verifPlaceEquipe`;
 DELIMITER $$
-CREATE TRIGGER `verifPlaceEquipe` AFTER INSERT ON `equipe_adherent` FOR EACH ROW BEGIN
+CREATE TRIGGER `verifPlaceEquipe` BEFORE INSERT ON `equipe_adherent` FOR EACH ROW BEGIN
 DECLARE $nbrPlace int DEFAULT 0;
 set $nbrPlace = (SELECT COUNT(*)
                  FROM equipe_adherent
                  where idEquipe = new.idEquipe);
-                     
+set $nbrPlace = $nbrPlace + 1;                     
 if $nbrPlace > (select nbrPlaceEquipe
                 from equipe
                 where idEquipe = new.idEquipe)
 then
-delete from equipe_adherent
-where idEquipe = new.idEquipe
-and idAdherent = new.idAdherent;
+SIGNAL SQLSTATE '45000'
+SET MESSAGE_TEXT = 'plus de place';
 end IF;
 end
 $$
@@ -267,19 +279,19 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Structure de la table `message`
+-- Table structure for table `message`
 --
 
 DROP TABLE IF EXISTS `message`;
 CREATE TABLE IF NOT EXISTS `message` (
-  `idMessage` int NOT NULL AUTO_INCREMENT,
+  `idMessage` int(11) NOT NULL AUTO_INCREMENT,
   `emailContact` char(40) NOT NULL,
   `messageContact` char(200) NOT NULL,
   PRIMARY KEY (`idMessage`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `message`
+-- Dumping data for table `message`
 --
 
 INSERT INTO `message` (`idMessage`, `emailContact`, `messageContact`) VALUES
@@ -292,21 +304,21 @@ INSERT INTO `message` (`idMessage`, `emailContact`, `messageContact`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `nouvelle`
+-- Table structure for table `nouvelle`
 --
 
 DROP TABLE IF EXISTS `nouvelle`;
 CREATE TABLE IF NOT EXISTS `nouvelle` (
-  `idNouvelle` int NOT NULL,
+  `idNouvelle` int(11) NOT NULL,
   `dateParutionNouvelle` date NOT NULL,
   `descriptionNouvelle` char(150) NOT NULL,
-  `idTypeNouvelle` int NOT NULL,
+  `idTypeNouvelle` int(11) NOT NULL,
   PRIMARY KEY (`idNouvelle`),
   KEY `fk_nouvelle_typeNouvelle` (`idTypeNouvelle`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `nouvelle`
+-- Dumping data for table `nouvelle`
 --
 
 INSERT INTO `nouvelle` (`idNouvelle`, `dateParutionNouvelle`, `descriptionNouvelle`, `idTypeNouvelle`) VALUES
@@ -322,18 +334,18 @@ INSERT INTO `nouvelle` (`idNouvelle`, `dateParutionNouvelle`, `descriptionNouvel
 -- --------------------------------------------------------
 
 --
--- Structure de la table `specialite`
+-- Table structure for table `specialite`
 --
 
 DROP TABLE IF EXISTS `specialite`;
 CREATE TABLE IF NOT EXISTS `specialite` (
-  `idSpe` int NOT NULL AUTO_INCREMENT,
+  `idSpe` int(11) NOT NULL AUTO_INCREMENT,
   `nomSpe` char(32) NOT NULL,
   PRIMARY KEY (`idSpe`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `specialite`
+-- Dumping data for table `specialite`
 --
 
 INSERT INTO `specialite` (`idSpe`, `nomSpe`) VALUES
@@ -348,19 +360,20 @@ INSERT INTO `specialite` (`idSpe`, `nomSpe`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `spe_entraineur`
+-- Table structure for table `spe_entraineur`
 --
 
 DROP TABLE IF EXISTS `spe_entraineur`;
 CREATE TABLE IF NOT EXISTS `spe_entraineur` (
-  `idSpe` int NOT NULL,
-  `idEntraineur` int NOT NULL,
+  `idSpe` int(11) NOT NULL,
+  `idEntraineur` int(11) NOT NULL,
   PRIMARY KEY (`idSpe`,`idEntraineur`),
   KEY `fk_specialite_spe_entraineur` (`idSpe`),
   KEY `fk_entraineur_spe_entraineur` (`idEntraineur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+
 -- Déchargement des données de la table `spe_entraineur`
 --
 
@@ -371,18 +384,18 @@ INSERT INTO `spe_entraineur` (`idSpe`, `idEntraineur`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `titulaire`
+-- Table structure for table `titulaire`
 --
 
 DROP TABLE IF EXISTS `titulaire`;
 CREATE TABLE IF NOT EXISTS `titulaire` (
-  `idEntraineur` int NOT NULL,
+  `idEntraineur` int(11) NOT NULL,
   `dateEmbauche` date NOT NULL,
   PRIMARY KEY (`idEntraineur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `titulaire`
+-- Dumping data for table `titulaire`
 --
 
 INSERT INTO `titulaire` (`idEntraineur`, `dateEmbauche`) VALUES
@@ -393,18 +406,18 @@ INSERT INTO `titulaire` (`idEntraineur`, `dateEmbauche`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `typenouvelle`
+-- Table structure for table `typenouvelle`
 --
 
 DROP TABLE IF EXISTS `typenouvelle`;
 CREATE TABLE IF NOT EXISTS `typenouvelle` (
-  `idTypeNouvelle` int NOT NULL,
+  `idTypeNouvelle` int(11) NOT NULL,
   `libelleTypeNouvelle` char(32) NOT NULL,
   PRIMARY KEY (`idTypeNouvelle`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `typenouvelle`
+-- Dumping data for table `typenouvelle`
 --
 
 INSERT INTO `typenouvelle` (`idTypeNouvelle`, `libelleTypeNouvelle`) VALUES
@@ -416,56 +429,56 @@ INSERT INTO `typenouvelle` (`idTypeNouvelle`, `libelleTypeNouvelle`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `vacataire`
+-- Table structure for table `vacataire`
 --
 
 DROP TABLE IF EXISTS `vacataire`;
 CREATE TABLE IF NOT EXISTS `vacataire` (
-  `idEntraineur` int NOT NULL,
+  `idEntraineur` int(11) NOT NULL,
   `telephoneVacataire` char(14) NOT NULL,
   PRIMARY KEY (`idEntraineur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `vacataire`
+-- Dumping data for table `vacataire`
 --
 
 INSERT INTO `vacataire` (`idEntraineur`, `telephoneVacataire`) VALUES
 (2, '06.25.45.12.15');
 
 --
--- Contraintes pour les tables déchargées
+-- Constraints for dumped tables
 --
 
 --
--- Contraintes pour la table `equipe`
+-- Constraints for table `equipe`
 --
 ALTER TABLE `equipe`
   ADD CONSTRAINT `fk_equipe_entraineur` FOREIGN KEY (`idEntraineur`) REFERENCES `entraineur` (`idEntraineur`),
   ADD CONSTRAINT `fk_equipe_specialite` FOREIGN KEY (`idSpe`) REFERENCES `specialite` (`idSpe`);
 
 --
--- Contraintes pour la table `equipe_adherent`
+-- Constraints for table `equipe_adherent`
 --
 ALTER TABLE `equipe_adherent`
   ADD CONSTRAINT `fk_adherent_equipe_adherent` FOREIGN KEY (`idAdherent`) REFERENCES `adherent` (`idAdherent`),
   ADD CONSTRAINT `fk_equipe_equipe_adherent` FOREIGN KEY (`idEquipe`) REFERENCES `equipe` (`idEquipe`);
 
 --
--- Contraintes pour la table `spe_entraineur`
+-- Constraints for table `spe_entraineur`
 --
 ALTER TABLE `spe_entraineur`
   ADD CONSTRAINT `fk_entraineur_spe_entraineur` FOREIGN KEY (`idEntraineur`) REFERENCES `entraineur` (`idEntraineur`),
   ADD CONSTRAINT `fk_specialite_spe_entraineur` FOREIGN KEY (`idSpe`) REFERENCES `specialite` (`idSpe`);
 
 --
--- Contraintes pour la table `titulaire`
+-- Constraints for table `titulaire`
 --
 ALTER TABLE `titulaire`
   ADD CONSTRAINT `fk_titulaire_entraineur` FOREIGN KEY (`idEntraineur`) REFERENCES `entraineur` (`idEntraineur`);
 
 --
--- Contraintes pour la table `vacataire`
+-- Constraints for table `vacataire`
 --
 ALTER TABLE `vacataire`
   ADD CONSTRAINT `fk_vacataire_entraineur` FOREIGN KEY (`idEntraineur`) REFERENCES `entraineur` (`idEntraineur`);

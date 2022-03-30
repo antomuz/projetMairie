@@ -18,7 +18,7 @@
 
 		}
 		
-		public function saisirEquipe($liste){
+		public function saisirEquipe($listeEntraineurs,$listeSpecialites){
 			echo '
 			<form action=index.php?vue=Equipe&action=enregistrer method=POST align=center>
 				<legend>Caractéristiques de l\'équipe :</legend>
@@ -43,8 +43,16 @@
 								<td><select name="sexeEquipe" id="sexeEquipe"><option value="F">Féminine</option><option value="H">Masculine</option></select></td>
 								<td>Entraineur</td>
 								<td>';
-						echo $liste;
-						echo '<td>	
+						echo $listeEntraineurs;
+						echo '</td>	
+							</tr>
+
+							<tr>
+								<td>Specialité</td>
+								<td>';
+						
+						echo $listeSpecialites;
+						echo '
 							</tr>
 						
 						
@@ -78,7 +86,7 @@
 		}
 
 		
-	public function choixFaitPourModifEquipe($nom, $nbrPlace, $ageMin, $ageMax, $sexe, $choix,$liste)
+	public function choixFaitPourModifEquipe($nom, $nbrPlace, $ageMin, $ageMax, $sexe, $choix,$liste,$Spe)
 	{
 		echo '<form action=index.php?vue=Equipe&action=EnregModif method = GET>
 						<input type=text name=nomEquipe value='.$nom.'></input>
@@ -87,25 +95,26 @@
 						<input type=integer name=ageMaxEquipe value='.$ageMax.'></input>
 						<input type=text name=sexeEquipe value='.$sexe.'></input>	';
 						echo $liste;
-						echo '<input type=hidden name=idEquipe value='.$choix.'></input>	
-						<input type=hidden name=vue value=Equipe></input>
+						echo '<input type=hidden name=idEquipe value='.$choix.'></input>';
+						echo $Spe;	
+						echo '<input type=hidden name=vue value=Equipe></input>
 						<input type=hidden name=action value=EnregModif></input>
 						<button type="submit" class="btn btn-primary">Valider</button>
 			 </form>';
 	}
 
-	public function choixFaitPourVisuEquipe($nom, $nbrPlace, $ageMin, $ageMax, $sexe, $choix,$listeEquipe) 
+	public function choixFaitPourVisuEquipe($nom, $nbrPlace, $ageMin, $ageMax, $sexe, $Spe,$lEntraineur) 
 	{
 		echo '<br><table class="table table-striped table-bordered table-sm ">
 		 			<thead>
 		 				<tr>
 							<th scope="col">Nom</th>
-							<th scope="col">Age Max</th>
+							<th scope="col">places</th>
 							<th scope="col">Age Min</th>
+							<th scope="col">Age Max</th>
 							<th scope="col">Sexe</th>
-							<th scope="col">Nbr de pers Max</th>
 							<th scope="col">Entraineur</th>
-														
+							<th scope="col">Spécialité</th>
 						</tr>
 		 			</thead>
 		 			<tbody>
@@ -115,7 +124,8 @@
 		 					<td scope="col">'.$ageMin.' Min</th>
 		 					<td scope="col">'.$ageMax.'</th>
 		 					<td scope="col">'.$sexe.'</th>
-		 					<td scope="col">'.$choix.'</th>
+		 					<td scope="col">'.$lEntraineur.'</th>
+		 					<td scope="col">'.$Spe.'</th>
 		 				</tr>
 					</tbody>
 				</table>';
