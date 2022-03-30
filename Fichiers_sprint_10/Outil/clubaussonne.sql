@@ -259,7 +259,7 @@ $$
 DELIMITER ;
 DROP TRIGGER IF EXISTS `verifPlaceEquipe`;
 DELIMITER $$
-CREATE TRIGGER `verifPlaceEquipe` BEFORE INSERT ON `equipe_adherent` FOR EACH ROW BEGIN
+CREATE TRIGGER `verifPlaceEquipe` AFTER INSERT ON `equipe_adherent` FOR EACH ROW BEGIN
 DECLARE $nbrPlace int DEFAULT 0;
 set $nbrPlace = (SELECT COUNT(*)
                  FROM equipe_adherent

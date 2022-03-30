@@ -33,6 +33,8 @@ class conteneurTitulaire
 		return $liste;
 		}
 		
+
+		
 	public function lesTitulairesAuFormatHTML()
 		{
 		$liste = "<SELECT name = 'idTitulaire'>";

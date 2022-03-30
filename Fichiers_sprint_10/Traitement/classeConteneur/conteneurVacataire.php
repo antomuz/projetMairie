@@ -29,7 +29,7 @@ class conteneurVacataire
 		{
 		$liste = '';
 		foreach ($this->lesVacataires as $unVacataire)
-			{	$liste = $liste.$unVacataire->afficheVacataire();
+			{	$liste = $liste. $unVacataire->afficheVacataire();
 			}
 		return $liste;
 		}

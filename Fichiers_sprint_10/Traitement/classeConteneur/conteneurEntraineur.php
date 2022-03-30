@@ -34,6 +34,8 @@ class conteneurEntraineur
 		
 		return $liste;
 		}
+
+	
 		
 	public function lesEntraineursAuFormatHTML()
 		{
@@ -62,7 +64,27 @@ class conteneurEntraineur
 				$iEntraineur->next();
 			}
 		return $leBonEntraineur;
-		}	
+		}
+	
+	public function donneObjetEntraineurDepuisLogin($loginEntraineur)
+	{
+	$trouve=false;
+	$leBonEntraineur=null;
+	$iEntraineur = $this->lesEntraineurs->getIterator();
+	while ((!$trouve)&&($iEntraineur->valid()))
+		{
+		if ($iEntraineur->current()->getLoginEntraineur()==$loginEntraineur)
+			{
+			$trouve=true;
+			$leBonEntraineur = $iEntraineur->current();
+			}
+		else
+			$iEntraineur->next();
+		}
+	return $leBonEntraineur;
+	}
+
+
 			
 	}
 ?> 

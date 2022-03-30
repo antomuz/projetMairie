@@ -1,4 +1,7 @@
 <?php
+//cette attaque curl a été résolue par l'implémentation des cookies de sessions qui changent à chaque fois,
+//de cette manière, si on a le même cookie plusieurs fois de suite on sait que c'est une attaque et on peut la bloquer.
+
 $objetRequete = curl_init();
 curl_setopt($objetRequete, CURLOPT_URL,'http://localhost/Fichier_sprint/Fichiers_sprint_10/index.php?vue=Connexion&action=Verification');
 curl_setopt($objetRequete, CURLOPT_RETURNTRANSFER, true);

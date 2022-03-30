@@ -77,6 +77,17 @@ class conteneurSpecialite
 			}
 		return $laBonneSpecialite;
 		}	
-			
+	
+	public function lesSpecialitesAuFormatHTMLsmarter($nbSpes)
+		{
+			$liste = "";
+			foreach ($this->lesSpecialites as $uneSpecialite)
+				{
+				$liste = $liste."<OPTION value='".$uneSpecialite->getIdSpe()."'>".$uneSpecialite->getNomSpe()."</OPTION>";
+				}
+			return $liste;
+		}	
+		
 	}
+	
 ?> 

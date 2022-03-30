@@ -140,7 +140,7 @@
 						<input type=hidden name=idAdherent value='.$choix.'></input>
 						<input type="submit" class="btn btn-primary" name="Valider" value="Valider"></input>
 						<br>
-						<input type="submit" name="resMDP" value="resMDP"class="btn btn-primary"/>
+						<input type="submit" name="resMDP" value="resMDP"class="btn btn-primary
 			 </form>';
 	}
 
