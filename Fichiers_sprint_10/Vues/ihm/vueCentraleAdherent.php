@@ -138,7 +138,9 @@
 						<input type=integer name=sexeAdherent value='.$sexe.'></input>
 						<input type=text name=loginAdherent value='.$login.'></input>
 						<input type=hidden name=idAdherent value='.$choix.'></input>
-						<button type="submit" class="btn btn-primary">Valider</button>
+						<input type="submit" class="btn btn-primary" name="Valider" value="Valider"></input>
+						<br>
+						<input type="submit" name="resMDP" value="resMDP"class="btn btn-primary
 			 </form>';
 	}
 

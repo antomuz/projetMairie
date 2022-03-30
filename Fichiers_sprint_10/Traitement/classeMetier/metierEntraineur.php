@@ -90,8 +90,6 @@ class metierEntraineur
 		$this->lesSpecialites = new arrayObject();
 	}
 
-
-
 	// méthode permettant d'afficher tous les attributs d'un seul coup
 	public function afficheEntraineur()
 	{

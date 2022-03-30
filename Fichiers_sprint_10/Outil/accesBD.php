@@ -195,7 +195,8 @@ class accesBD
 		$requete->bindValue(6, $unSexeEquipe);
 		$requete->bindValue(7, $unIdEntraineur);
 		$requete->bindValue(8, $uneSpe);
-		if (!$requete->execute()) {
+		if (!$requete->execute()) 
+    {
 			die("Erreur dans insert Equipe : " . $requete->errorCode());
 		}
 		return $sonId;
@@ -295,25 +296,6 @@ class accesBD
 		return $IdEntraineur;
 	}
 
-	public function modifProfil($unIdAdherent, $unNomAdherent, $unPrenomAdherent, $unAgeAdherent, $unSexeAdherent, $unLoginAdherent)
-	{
-
-		$requete = $this->conn->prepare("UPDATE adherent SET  nomAdherent = ?, prenomAdherent = ?, ageAdherent = ?, sexeAdherent = ?, loginAdherent = ? where idAdherent = ?");
-		$requete->bindValue(1, $unNomAdherent);
-		$requete->bindValue(2, $unPrenomAdherent);
-		$requete->bindValue(3, $unAgeAdherent);
-		$requete->bindValue(4, $unSexeAdherent);
-		$requete->bindValue(5, $unLoginAdherent);
-		$requete->bindValue(6, $unIdAdherent);
-
-		echo "La modification est effectuée.";
-
-		if (!$requete->execute()) {
-			die("Erreur dans modif Equipe : " . $requete->errorCode());
-		}
-		return $unIdAdherent;
-	}
-
 	/***********************************************************************************************
 	méthode qui va permettre de supprimer et ajouter des spécialités pour les adhérents
 	 ***********************************************************************************************/
@@ -329,6 +311,25 @@ class accesBD
 
 		if (!$requete->execute()) {
 			die("Erreur dans delSpeEntraineur : " . $requete->errorCode());
+    }
+  }
+	
+	public function modifProfil($unIdAdherent,$unNomAdherent,$unPrenomAdherent,$unAgeAdherent,$unSexeAdherent,$unLoginAdherent)
+	{	
+	
+			$requete = $this->conn->prepare("UPDATE adherent SET  nomAdherent = ?, prenomAdherent = ?, ageAdherent = ?, sexeAdherent = ?, loginAdherent = ? where idAdherent = ?");
+			$requete->bindValue(1,$unNomAdherent);
+			$requete->bindValue(2,$unPrenomAdherent);
+			$requete->bindValue(3,$unAgeAdherent);
+			$requete->bindValue(4,$unSexeAdherent);
+			$requete->bindValue(5,$unLoginAdherent);
+			$requete->bindValue(6,$unIdAdherent);
+		
+			echo "La modification est effectuée.";
+		
+		if(!$requete->execute())
+		{
+			die("Erreur dans modif Equipe : ".$requete->errorCode());
 		}
 		return $idEntraineur;
 	}
@@ -366,24 +367,43 @@ class accesBD
 	}
 
 	/***********************************************************************************************
-	méthode qui va permettre de modifier le MDP.
-	 ***********************************************************************************************/
+	méthode qui va permettre de modifier ou reset le MDP.
+	***********************************************************************************************/
 	public function modifMDP($adherent, $MDP)
-	{
-
-		$requete = $this->conn->prepare("UPDATE adherent SET pwdAdherent = ? where idAdherent = ?");
-		$requete->bindValue(1, $MDP);
-		$requete->bindValue(2, $adherent->getIdAdherent());
-
-
-		echo "La modification est effectuée.";
-
-		if (!$requete->execute()) {
-			die("Erreur dans modif Equipe : " . $requete->errorCode());
+	{	
+	
+			$requete = $this->conn->prepare("UPDATE adherent SET pwdAdherent = ? where idAdherent = ?");
+			$requete->bindValue(1,md5($MDP));
+			$requete->bindValue(2,$adherent->getIdAdherent());
+			
+		
+			echo "La modification est effectuée.";
+		
+		if(!$requete->execute())
+		{
+			die("Erreur dans modif Equipe : ".$requete->errorCode());
 		}
 		return $adherent->getIdAdherent();
 	}
 
+
+	public function resMDP($unIdAdherent) {
+		
+	
+		$requete = $this->conn->prepare("UPDATE adherent SET pwdAdherent = ? where idAdherent = ?");
+		$requete->bindValue(1,md5('P@ssword'));
+		$requete->bindValue(2,$unIdAdherent);
+		
+	
+		echo "La modification est effectuée.";
+	
+	  if(!$requete->execute())
+	  {
+		  die("Erreur dans modif Equipe : ".$requete->errorCode());
+	  }
+	  return $unIdAdherent;	
+	}
+	
 	/***********************************************************************************************
 	C'est la fonction qui permet de charger les tables et de les mettre dans un tableau 2 dimensions. La petite fontions specialCase permet juste de psser des minuscules aux majuscules pour les noms des tables de la base de données
 	 ************************************************************************************************/

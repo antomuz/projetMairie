@@ -38,7 +38,7 @@ Class metierSpecialite
 	// méthode permettant d'afficher tous les attributs d'un seul coup
 	public function afficheSpe()
 	{
-		$liste=$this->idSpe.' | '.$this->nomSpe.' | ';
+		$liste=$this->getIdSpe().' | '.$this->getNomSpe().' | ';
 		return $liste;
 	}
 	}
