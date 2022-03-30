@@ -2,10 +2,11 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Jan 16, 2022 at 09:09 PM
--- Server version: 5.7.36
--- PHP Version: 7.4.26
+
+-- Hôte : 127.0.0.1:3306
+-- Généré le : lun. 03 jan. 2022 à 07:12
+-- Version du serveur : 8.0.25
+-- Version de PHP : 8.0.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -372,11 +373,13 @@ CREATE TABLE IF NOT EXISTS `spe_entraineur` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `spe_entraineur`
+
+-- Déchargement des données de la table `spe_entraineur`
 --
 
 INSERT INTO `spe_entraineur` (`idSpe`, `idEntraineur`) VALUES
-(3, 3);
+(3, 2),
+(4, 4);
 
 -- --------------------------------------------------------
 
