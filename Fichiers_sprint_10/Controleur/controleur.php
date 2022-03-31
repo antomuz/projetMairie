@@ -70,6 +70,9 @@
 				case "Adherent":
 					$this->actionAdherent($action, $role);
 					break;
+				case "Specialite":
+					$this->actionSpe($action, $role);
+					break;
 				case "Connexion":
 					$this->actionConnexion($action, $role);
 					break;
@@ -690,31 +693,33 @@
 					isset($nomAdherent) and isset($prenomAdherent) and isset($ageAdherent)
 					and isset($sexeAdherent) and isset($loginAdherent) and isset($passwordAdherent)
 					and isset($idEquipe)
-				) {
-					try 
-          {
-						$this->tousLesAdherents->ajouterUnAdherent($this->maBD->donneNumeroMaxAdherent(), $nomAdherent, $prenomAdherent, $ageAdherent, $sexeAdherent, $loginAdherent, $passwordAdherent, $idEquipe);
-						$this->maBD->insertAdherent($nomAdherent, $prenomAdherent, $ageAdherent, $sexeAdherent, $loginAdherent, $passwordAdherent, $idEquipe);
-						$vue = new vueCentraleConnexion();
-						$vue->afficheMenuAdmin();
-						require 'vues/ihm/nouvelle.php';
-						echo ('Création réussie');
+					) 
+					{
+						try 
+         				{
+							$this->tousLesAdherents->ajouterUnAdherent($this->maBD->donneNumeroMaxAdherent(), $nomAdherent, $prenomAdherent, $ageAdherent, $sexeAdherent, $loginAdherent, $passwordAdherent, $idEquipe);
+							$this->maBD->insertAdherent($nomAdherent, $prenomAdherent, $ageAdherent, $sexeAdherent, $loginAdherent, $passwordAdherent, $idEquipe);
+							$vue = new vueCentraleConnexion();
+							$vue->afficheMenuAdmin();
+							require 'vues/ihm/nouvelle.php';
+							echo ('Création réussie');
+						} 
+          				catch (Exception $e) 
+          				{
+							echo ($e);
+							$vue = new vueCentraleConnexion();
+							$vue->afficheMenuAdmin();
+							require 'vues/ihm/nouvelle.php';
+				  		}
 					} 
-          catch (Exception $e) 
-          {
-						echo ($e);
-						$vue = new vueCentraleConnexion();
-						$vue->afficheMenuAdmin();
-						require 'vues/ihm/nouvelle.php';
-				  } 
-          else 
-          {
-            echo ('Erreur lors de la création de l\'adhérent');
-					  $vue = new vueCentraleConnexion();
-					  $vue->afficheMenuAdmin();
-					  require 'vues/ihm/nouvelle.php';
-				  }
-				  break;
+          			else 
+          			{
+            			echo ('Erreur lors de la création de l\'adhérent');
+					  	$vue = new vueCentraleConnexion();
+					 	$vue->afficheMenuAdmin();
+					  	require 'vues/ihm/nouvelle.php';
+				  	}
+				  	break;
 				
 				case "visualiser" :
 					$vue=new vueCentraleConnexion();
@@ -851,6 +856,14 @@
 	function actionSpe($action, $role)
 	{
 		switch ($action) {
+			case "visualiser" :
+				$vue=new vueCentraleConnexion();
+				$vue->afficheMenuInternaute();
+				require 'vues/ihm/nouvelle.php';
+				$message = $this->toutesLesSpecialites->listeDesSpecialites();
+				$vue = new vueCentraleSpecialite();
+				$vue->visualiserSpecialite($message);
+				break;
 		}
 	}
 
