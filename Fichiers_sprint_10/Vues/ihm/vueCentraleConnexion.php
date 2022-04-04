@@ -64,7 +64,7 @@ class vueCentraleConnexion
 					<span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu" aria-labelledby="menuSpe">
-					<li><a class="dropdown-item" href=index.php?vue=Connexion&action=visualiser>Visualiser les sports</a></li>
+					<li><a class="dropdown-item" href=index.php?vue=Specialite&action=visualiser>Visualiser les sports</a></li>
 				</ul>
 			</div>
 			<div class="dropdown col">

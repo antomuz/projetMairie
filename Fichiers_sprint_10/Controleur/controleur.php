@@ -59,7 +59,7 @@
 		if (isset($_GET['action']) && ($_GET['vue'])) {
 			$action = htmlspecialchars($_GET['action']);
 			$vue = htmlspecialchars($_GET['vue']);
-
+			
 			switch ($vue) {
 				case "Entraineur":
 					$this->actionEntraineur($action, $role);
