@@ -37,5 +37,13 @@
 		 	echo '</table>';
 			
 		}
+
+		public function saisirSpe () {
+			echo '<form action=index.php?vue=Specialite&action=enregistrer method=POST align=center>
+				  <legend>Nom de la spécialité :</legend>
+				  <input type="text" name="nomSpe" id="nomSpe" required="true">
+				  <button type="submit" class="btn btn-primary">Valider</button>
+				  </form>';
+		}
     }
 ?>

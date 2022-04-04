@@ -864,6 +864,23 @@
 				$vue = new vueCentraleSpecialite();
 				$vue->visualiserSpecialite($message);
 				break;
+
+			case "ajouter":
+				$vue = new vueCentraleConnexion();
+				$vue->afficheMenuAdmin();
+				require 'vues/ihm/nouvelle.php';
+				$vue = new vueCentraleSpecialite();
+				$vue->saisirSpe();
+				break;
+
+			case 'enregistrer':
+				$nomSpe = htmlspecialchars($_POST['nomSpe']);
+				$this->toutesLesSpecialites->ajouterUneSpecialite($this->maBD->donneNumeroMaxSpecialite(),$nomSpe);
+				$this->maBD->insertSpecialite($nomSpe);
+				$vue=new vueCentraleConnexion();
+				$vue->afficheMenuAdmin();
+				require 'vues/ihm/nouvelle.php';
+				break;
 		}
 	}
 
