@@ -24,7 +24,7 @@ class conteneurSpecialite
 			
 		foreach ($this->lesSpecialites as $uneSpecialite)
 		{
-			if ($uneSpecialite->getIdSpecialite() == $unIdSpecialite)
+			if ($uneSpecialite->getIdSpe() == $unIdSpecialite)
 			{
 				$uneSpecialite->nomSpecialite = $unNomSpecialite;
 			}
@@ -50,7 +50,7 @@ class conteneurSpecialite
 		
 	public function lesSpecialitesAuFormatHTML()
 		{
-		$liste = "<SELECT name = 'idSpecialite'>";
+		$liste = "<SELECT name = 'idSpe'>";
 		foreach ($this->lesSpecialites as $uneSpecialite)
 			{
 			$liste = $liste."<OPTION value='".$uneSpecialite->getIdSpe()."'>".$uneSpecialite->getNomSpe()."</OPTION>";

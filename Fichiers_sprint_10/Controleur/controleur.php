@@ -881,6 +881,35 @@
 				$vue->afficheMenuAdmin();
 				require 'vues/ihm/nouvelle.php';
 				break;
+
+			case "modifier" :
+				$vue=new vueCentraleConnexion();
+				$vue->afficheMenuAdmin();
+				require 'vues/ihm/nouvelle.php';
+				$message= $this->toutesLesSpecialites->lesSpecialitesAuFormatHTML();
+				$vue = new vueCentraleSpecialite();
+				$vue->modifierSpecialite($message);
+				break;
+
+			case "choixFaitPourModif":
+				$vue=new vueCentraleConnexion();
+				$vue->afficheMenuAdmin();
+				require 'vues/ihm/nouvelle.php';
+				$choix=htmlspecialchars($_GET['idSpe']);
+				$laSpe=$this->toutesLesSpecialites->donneObjetSpecialiteDepuisNumero($choix);
+				$vue = new vueCentraleSpecialite();
+				$vue->choixFaitPourModifSpe($laSpe->getNomSpe(),$choix);	
+				break;
+
+			case "EnregModif" : 
+				$vue= new vueCentraleConnexion();
+				$vue->afficheMenuAdmin();
+				require 'vues/ihm/nouvelle.php';
+					$idSpe = htmlspecialchars($_POST['idSpe']);
+					$nomSpe = htmlspecialchars($_POST['nomSpe']);
+					$this->toutesLesSpecialites->modifierUneSpecialite($idSpe,$nomSpe);
+					$this->maBD->modifSpecialite($idSpe,$nomSpe);
+				break;
 		}
 	}
 

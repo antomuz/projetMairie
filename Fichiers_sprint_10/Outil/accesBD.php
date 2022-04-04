@@ -309,6 +309,22 @@ class accesBD
 		return $IdEntraineur;
 	}
 
+	public function modifSpecialite($IdSpe, $unNomSpe) 
+	{
+		$requete = $this->conn->prepare("UPDATE specialite SET nomSpe = ? where idSpe = ?");
+
+		$requete->bindValue(1, $unNomSpe);
+		$requete->bindValue(2, $IdSpe);
+
+		if (!$requete->execute()) {
+			die("Erreur dans modif Entraineur : " . $requete->errorCode());
+		}
+		
+		echo "La modification est effectuée.";
+
+		return $IdSpe;
+	}
+
 	/***********************************************************************************************
 	méthode qui va permettre de supprimer et ajouter des spécialités pour les adhérents
 	 ***********************************************************************************************/
