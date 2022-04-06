@@ -393,7 +393,7 @@
 
 				$unEntraineur = $this->tousLesEntraineurs->donneObjetEntraineurDepuisLogin($_SESSION['login']);
 				$nbSpes = 3; // nombre de spés qu'un entraineur peut avoir. 
-				$listeSpes = $this->toutesLesSpecialites->lesSpecialitesAuFormatHTMLsmarter($nbSpes);
+				$listeSpes = $this->toutesLesSpecialites->lesSpecialitesAuFormatHTMLsmarter();
 				$vue->modifierSpeEntraineur($listeSpes, $nbSpes);
 				break;
 
@@ -609,7 +609,7 @@
 					$choix=htmlspecialchars($_GET['idEquipe']);
 					$lEquipe=$this->toutesLesEquipes->donneObjetEquipeDepuisNumero($choix);
 					$vue = new vueCentraleEquipe();
-					$vue->choixFaitPourModifEquipe($lEquipe->getNomEquipe(),$lEquipe->getNbrPlaceEquipe(),$lEquipe->getAgeMinEquipe(),$lEquipe->getAgeMaxEquipe(),$lEquipe->getSexeEquipe(),$choix,$this->tousLesTitulaires->lesTitulairesAuFormatHTML(),$this->toutesLesSpecialites->lesSpecialitesAuFormatHTML());	
+					$vue->choixFaitPourModifEquipe($lEquipe->getNomEquipe(),$lEquipe->getNbrPlaceEquipe(),$lEquipe->getAgeMinEquipe(),$lEquipe->getAgeMaxEquipe(),$lEquipe->getSexeEquipe(),$choix,$this->tousLesEntraineurs->lesEntraineursAuFormatHTMLPourModif($lEquipe->getlEntraineur()),$this->toutesLesSpecialites->lesSpecialitesAuFormatHTMLPourModif($lEquipe->getlaSpe()));	
 					break;
 				case "EnregModif":
 					$vue=new vueCentraleConnexion();

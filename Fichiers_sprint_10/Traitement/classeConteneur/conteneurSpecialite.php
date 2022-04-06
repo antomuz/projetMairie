@@ -57,7 +57,26 @@ class conteneurSpecialite
 			}
 		$liste = $liste."</SELECT>";
 		return $liste;
-		}		
+		}	
+		
+	public function lesSpecialitesAuFormatHTMLPourModif($uneSpe) 
+	{
+		$liste = "<SELECT name = 'idSpe'>";
+		foreach ($this->lesSpecialites as $uneSpecialite)
+			{
+				if ($uneSpecialite->getIdSpe() == $uneSpe->getIdSpe()) 
+				{
+					$liste = $liste."<OPTION value='".$uneSpecialite->getIdSpe()."' selected>".$uneSpecialite->getNomSpe()."</OPTION>";
+				}
+				else 
+				{
+					$liste = $liste."<OPTION value='".$uneSpecialite->getIdSpe()."'>".$uneSpecialite->getNomSpe()."</OPTION>";
+				}
+			
+			}
+		$liste = $liste."</SELECT>";
+		return $liste;
+	}
 	
 	public function donneObjetSpecialiteDepuisNumero($unIdSpe)
 		{
@@ -78,7 +97,7 @@ class conteneurSpecialite
 		return $laBonneSpecialite;
 		}	
 	
-	public function lesSpecialitesAuFormatHTMLsmarter($nbSpes)
+	public function lesSpecialitesAuFormatHTMLsmarter()
 		{
 			$liste = "";
 			foreach ($this->lesSpecialites as $uneSpecialite)

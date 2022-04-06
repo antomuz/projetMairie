@@ -46,7 +46,25 @@ class conteneurEntraineur
 			}
 		$liste = $liste."</SELECT>";
 		return $liste;
-		}		
+		}	
+		
+	public function lesEntraineursAuFormatHTMLPourModif($Entraineur_cible) 
+	{
+		$liste = "<SELECT name = 'idTitulaire'>";
+		foreach ($this->lesEntraineurs as $unEntraineur)
+			{
+				if($unEntraineur->getIdEntraineur() == $Entraineur_cible->getIdEntraineur()) 
+				{
+					$liste = $liste."<OPTION value='".$unEntraineur->getIdEntraineur()."' selected>".$unEntraineur->getNomEntraineur()."</OPTION>";
+				}
+				else 
+				{
+					$liste = $liste."<OPTION value='".$unEntraineur->getIdEntraineur()."'>".$unEntraineur->getNomEntraineur()."</OPTION>";
+				}
+			}
+		$liste = $liste."</SELECT>";
+		return $liste;
+	}
 	
 	public function donneObjetEntraineurDepuisNumero($unIdEntraineur)
 		{
