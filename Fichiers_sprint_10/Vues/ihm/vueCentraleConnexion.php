@@ -64,7 +64,7 @@ class vueCentraleConnexion
 					<span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu" aria-labelledby="menuSpe">
-					<li><a class="dropdown-item" href=index.php?vue=Specialite&action=visualiser>Visualiser les sports</a></li>
+					<li><a class="dropdown-item" href=index.php?vue=Connexion&action=visualiser>Visualiser les sports</a></li>
 				</ul>
 			</div>
 			<div class="dropdown col">
@@ -127,7 +127,7 @@ class vueCentraleConnexion
 				<ul class="dropdown-menu" aria-labelledby="menuEntraineur">
 					<li><a class="dropdown-item" href=index.php?vue=Entraineur&action=modifierSonProfil>Modifier son profil</a></li>
 					<li><a class="dropdown-item" href=index.php?vue=Entraineur&action=modifierSesSpecialites>Modifier ses spécialités</a></li>
-					<li><a class="dropdown-item" href=index.php?vue=Entraineur&action=modifierSonMDP>Modifier son mot de passe</a></li>
+					<li><a class="dropdown-item" href=index.php?vue=Entraineur&action=changerMDP>Modifier son mot de passe</a></li>
 					<li><a class="dropdown-item" href=index.php?vue=Entraineur&action=voirSesSpes>Voir ses spécialités</a></li>
 
 				</ul>

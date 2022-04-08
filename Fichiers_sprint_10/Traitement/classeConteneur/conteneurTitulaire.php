@@ -45,24 +45,6 @@ class conteneurTitulaire
 		$liste = $liste."</SELECT>";
 		return $liste;
 		}	
-
-	public function lesTitulairesAuFormatHTMLPourModif($unEntraineur) 
-	{
-		$liste = "<SELECT name = 'idTitulaire'>";
-		foreach ($this->lesTitulaires as $unTitulaire)
-			{
-				if($unTitulaire->getIdTitulaire() == $unEntraineur->getIdEntraineur()) 
-				{
-					$liste = $liste."<OPTION value='".$unTitulaire->getIdTitulaire()."' selected>".$unTitulaire->getNomTitulaire()."</OPTION>";
-				}
-				else 
-				{
-					$liste = $liste."<OPTION value='".$unTitulaire->getIdTitulaire()."'>".$unTitulaire->getNomTitulaire()."</OPTION>";
-				}
-			}
-		$liste = $liste."</SELECT>";
-		return $liste;
-	}
 		
 	public function modifierUnTitulaire($unIdTitulaire, $unNomEntraineur, $unLoginEntraineur, $unPwdEntraineur, $uneDateEmbauche)
 		{

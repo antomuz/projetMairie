@@ -195,8 +195,7 @@ class accesBD
 		$requete->bindValue(6, $unSexeEquipe);
 		$requete->bindValue(7, $unIdEntraineur);
 		$requete->bindValue(8, $uneSpe);
-		if (!$requete->execute()) 
-    {
+		if (!$requete->execute()) {
 			die("Erreur dans insert Equipe : " . $requete->errorCode());
 		}
 		return $sonId;
@@ -221,19 +220,6 @@ class accesBD
 		}
 		return $sonId;
 	}
-
-	public function insertSpecialite($unNomSpe) 
-	{
-		$sonId = $this->donneProchainIdentifiant("SPECIALITE", "idSpe");
-		$requete = $this->conn->prepare("INSERT INTO SPECIALITE (idSPe,nomSpe) VALUES (?,?)");
-		$requete->bindValue(1, $sonId);
-		$requete->bindValue(2, $unNomSpe);
-		if (!$requete->execute()) {
-			die("Erreur dans insert specialite : " . $requete->errorCode());
-		}
-		return $sonId;
-	}
-	
 
 	/***********************************************************************************************
 	méthode qui va permettre de modifier les éléments d'une équipe.
@@ -309,22 +295,6 @@ class accesBD
 		return $IdEntraineur;
 	}
 
-	public function modifSpecialite($IdSpe, $unNomSpe) 
-	{
-		$requete = $this->conn->prepare("UPDATE specialite SET nomSpe = ? where idSpe = ?");
-
-		$requete->bindValue(1, $unNomSpe);
-		$requete->bindValue(2, $IdSpe);
-
-		if (!$requete->execute()) {
-			die("Erreur dans modif Entraineur : " . $requete->errorCode());
-		}
-		
-		echo "La modification est effectuée.";
-
-		return $IdSpe;
-	}
-
 	/***********************************************************************************************
 	méthode qui va permettre de supprimer et ajouter des spécialités pour les adhérents
 	 ***********************************************************************************************/
@@ -340,25 +310,24 @@ class accesBD
 
 		if (!$requete->execute()) {
 			die("Erreur dans delSpeEntraineur : " . $requete->errorCode());
-    }
-  }
-	
-	public function modifProfil($unIdAdherent,$unNomAdherent,$unPrenomAdherent,$unAgeAdherent,$unSexeAdherent,$unLoginAdherent)
-	{	
-	
-			$requete = $this->conn->prepare("UPDATE adherent SET  nomAdherent = ?, prenomAdherent = ?, ageAdherent = ?, sexeAdherent = ?, loginAdherent = ? where idAdherent = ?");
-			$requete->bindValue(1,$unNomAdherent);
-			$requete->bindValue(2,$unPrenomAdherent);
-			$requete->bindValue(3,$unAgeAdherent);
-			$requete->bindValue(4,$unSexeAdherent);
-			$requete->bindValue(5,$unLoginAdherent);
-			$requete->bindValue(6,$unIdAdherent);
-		
-			echo "La modification est effectuée.";
-		
-		if(!$requete->execute())
-		{
-			die("Erreur dans modif Equipe : ".$requete->errorCode());
+		}
+	}
+
+	public function modifProfil($unIdAdherent, $unNomAdherent, $unPrenomAdherent, $unAgeAdherent, $unSexeAdherent, $unLoginAdherent)
+	{
+
+		$requete = $this->conn->prepare("UPDATE adherent SET  nomAdherent = ?, prenomAdherent = ?, ageAdherent = ?, sexeAdherent = ?, loginAdherent = ? where idAdherent = ?");
+		$requete->bindValue(1, $unNomAdherent);
+		$requete->bindValue(2, $unPrenomAdherent);
+		$requete->bindValue(3, $unAgeAdherent);
+		$requete->bindValue(4, $unSexeAdherent);
+		$requete->bindValue(5, $unLoginAdherent);
+		$requete->bindValue(6, $unIdAdherent);
+
+		echo "La modification est effectuée.";
+
+		if (!$requete->execute()) {
+			die("Erreur dans modif Equipe : " . $requete->errorCode());
 		}
 		return $unIdAdherent;
 	}
@@ -390,49 +359,67 @@ class accesBD
 		echo "Insertion effectuée.";
 
 		if (!$requete->execute()) {
-			die("Erreur dans addSpeEntraineur : " . $requete->errorCode());
+			die($idEntraineur . " Erreur dans addSpeEntraineur : " . $requete->errorCode());
 		}
 		return $idEntraineur;
 	}
 
 	/***********************************************************************************************
 	méthode qui va permettre de modifier ou reset le MDP.
-	***********************************************************************************************/
+	 ***********************************************************************************************/
 	public function modifMDP($adherent, $MDP)
-	{	
-	
-			$requete = $this->conn->prepare("UPDATE adherent SET pwdAdherent = ? where idAdherent = ?");
-			$requete->bindValue(1,md5($MDP));
-			$requete->bindValue(2,$adherent->getIdAdherent());
-			
-		
-			echo "La modification est effectuée.";
-		
-		if(!$requete->execute())
-		{
-			die("Erreur dans modif Equipe : ".$requete->errorCode());
+	{
+
+		$requete = $this->conn->prepare("UPDATE adherent SET pwdAdherent = ? where idAdherent = ?");
+		$requete->bindValue(1, md5($MDP));
+		$requete->bindValue(2, $adherent->getIdAdherent());
+
+
+		echo "La modification est effectuée.";
+
+		if (!$requete->execute()) {
+			die("Erreur dans modif Equipe : " . $requete->errorCode());
 		}
 		return $adherent->getIdAdherent();
 	}
 
 
-	public function resMDP($unIdAdherent) {
-		
-	
+	public function resMDP($unIdAdherent)
+	{
+
+
 		$requete = $this->conn->prepare("UPDATE adherent SET pwdAdherent = ? where idAdherent = ?");
-		$requete->bindValue(1,md5('P@ssword'));
-		$requete->bindValue(2,$unIdAdherent);
-		
-	
+		$requete->bindValue(1, md5('P@ssword'));
+		$requete->bindValue(2, $unIdAdherent);
+
+
 		echo "La modification est effectuée.";
-	
-	  if(!$requete->execute())
-	  {
-		  die("Erreur dans modif Equipe : ".$requete->errorCode());
-	  }
-	  return $unIdAdherent;	
+
+		if (!$requete->execute()) {
+			die("Erreur dans la modification du mot de passe : " . $requete->errorCode());
+		}
+		return $unIdAdherent;
 	}
-	
+
+	public function modifMDP_entraineur($entraineur, $MDP)
+	{
+		// Oui, on aurait pu modifier modifMDP pour qu'elle inclue tout les tables
+		// mais le faire de façon propre sans que ce soit une porte ouverte à toutes les injections
+		// prendra trop de temps pour ce qu'il nous reste à faire
+
+		$requete = $this->conn->prepare("UPDATE entraineur SET pwdEntraineur = ? where idEntraineur = ?");
+		$requete->bindValue(1, md5($MDP));
+		$requete->bindValue(2, $entraineur->getIdEntraineur());
+
+
+		echo "La modification est effectuée.";
+
+		if (!$requete->execute()) {
+			die("Erreur dans la modification du mot de passe : " . $requete->errorCode());
+		}
+		return $entraineur->getIdEntraineur();
+	}
+
 	/***********************************************************************************************
 	C'est la fonction qui permet de charger les tables et de les mettre dans un tableau 2 dimensions. La petite fontions specialCase permet juste de psser des minuscules aux majuscules pour les noms des tables de la base de données
 	 ************************************************************************************************/
@@ -548,21 +535,6 @@ class accesBD
 	public function donneNumeroMaxAdherent()
 	{
 		$stringQuery = "SELECT * FROM adherent";
-		$requete = $this->conn->prepare($stringQuery);
-		if ($requete->execute()) {
-			$nb = 0;
-			while ($row = $requete->fetch(PDO::FETCH_NUM)) {
-				$nb + 1;
-			}
-			return $nb + 1;
-		} else {
-			die('Erreur sur l identifiant de l adherent : ' + $requete->errorCode());
-		}
-	}
-
-	public function donneNumeroMaxSpecialite()
-	{
-		$stringQuery = "SELECT * FROM specialite";
 		$requete = $this->conn->prepare($stringQuery);
 		if ($requete->execute()) {
 			$nb = 0;
