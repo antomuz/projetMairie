@@ -97,16 +97,16 @@ class conteneurSpecialite
 		return $laBonneSpecialite;
 		}	
 	
-	public function lesSpecialitesAuFormatHTMLsmarter()
+		public function lesSpecialitesAuFormatHTMLsmarter()
 		{
 			$liste = "";
+			$liste = $liste."<OPTION value=0>Indéfini</OPTION>";
 			foreach ($this->lesSpecialites as $uneSpecialite)
 				{
 				$liste = $liste."<OPTION value='".$uneSpecialite->getIdSpe()."'>".$uneSpecialite->getNomSpe()."</OPTION>";
 				}
 			return $liste;
 		}	
-		
 	}
 	
 ?> 

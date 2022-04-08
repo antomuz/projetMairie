@@ -102,7 +102,14 @@ class conteneurEntraineur
 	return $leBonEntraineur;
 	}
 
-
-			
+	public function modifierMDP($entraineur, $MDP)
+	{
+		foreach ($this->lesEntraineurs as $unEntraineur) {
+			if ($unEntraineur->getIdEntraineur() == $entraineur->getIdEntraineur()) {
+				$unEntraineur->setPWDEntraineur($MDP);
+			}
+		}
+	}
+		
 	}
 ?> 

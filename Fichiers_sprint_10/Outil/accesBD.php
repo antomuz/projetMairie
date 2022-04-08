@@ -432,6 +432,25 @@ class accesBD
 	  }
 	  return $unIdAdherent;	
 	}
+
+	public function modifMDP_entraineur($entraineur, $MDP)
+	{
+		// Oui, on aurait pu modifier modifMDP pour qu'elle inclue tout les tables
+		// mais le faire de façon propre sans que ce soit une porte ouverte à toutes les injections
+		// prendra trop de temps pour ce qu'il nous reste à faire
+
+		$requete = $this->conn->prepare("UPDATE entraineur SET pwdEntraineur = ? where idEntraineur = ?");
+		$requete->bindValue(1, md5($MDP));
+		$requete->bindValue(2, $entraineur->getIdEntraineur());
+
+
+		echo "La modification est effectuée.";
+
+		if (!$requete->execute()) {
+			die("Erreur dans la modification du mot de passe : " . $requete->errorCode());
+		}
+		return $entraineur->getIdEntraineur();
+	}
 	
 	/***********************************************************************************************
 	C'est la fonction qui permet de charger les tables et de les mettre dans un tableau 2 dimensions. La petite fontions specialCase permet juste de psser des minuscules aux majuscules pour les noms des tables de la base de données
