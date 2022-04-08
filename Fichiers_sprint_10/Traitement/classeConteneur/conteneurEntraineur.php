@@ -2,107 +2,86 @@
 
 
 class conteneurEntraineur
-	{
+{
 	//attribut de type arrayObjet, mais on est en php donc on ne met pas les types
 	private $lesEntraineurs;
-	
+
 	//le constructeur créer un tableau vide
 	public function __construct()
-		{
+	{
 		$this->lesEntraineurs = new arrayObject();
-		}
-	
+	}
+
 	//les méthodes habituellement indispensables
 	public function ajouterUnEntraineur($unIdEntraineur, $unNomEntraineur, $unLoginEntraineur, $unPwdEntraineur)
 	{
 		$unEntraineur = new metierEntraineur($unIdEntraineur, $unNomEntraineur, $unLoginEntraineur, $unPwdEntraineur);
 		$this->lesEntraineurs->append($unEntraineur);
-			
 	}
-	
+
 	public function nbEntraineur()
-		{
+	{
 		return $this->lesEntraineurs->count();
-		}	
-		
+	}
+
 	public function listeDesEntraineurs()
-		{
+	{
 		$liste = '';
-		foreach ($this->lesEntraineurs as $unEntraineur)
-			{	$liste = $liste.$unEntraineur->afficheEntraineur().'|';
-			}
-		
-		return $liste;
+		foreach ($this->lesEntraineurs as $unEntraineur) {
+			$liste = $liste . $unEntraineur->afficheEntraineur() . '|';
 		}
 
-	
-		
-	public function lesEntraineursAuFormatHTML()
-		{
-		$liste = "<SELECT name = 'idEntraineur'>";
-		foreach ($this->lesEntraineurs as $unEntraineur)
-			{
-			$liste = $liste."<OPTION value='".$unEntraineur->getIdEntraineur()."'>".$unEntraineur->getNomEntraineur()."</OPTION>";
-			}
-		$liste = $liste."</SELECT>";
-		return $liste;
-		}	
-		
-	public function lesEntraineursAuFormatHTMLPourModif($Entraineur_cible) 
-	{
-		$liste = "<SELECT name = 'idTitulaire'>";
-		foreach ($this->lesEntraineurs as $unEntraineur)
-			{
-				if($unEntraineur->getIdEntraineur() == $Entraineur_cible->getIdEntraineur()) 
-				{
-					$liste = $liste."<OPTION value='".$unEntraineur->getIdEntraineur()."' selected>".$unEntraineur->getNomEntraineur()."</OPTION>";
-				}
-				else 
-				{
-					$liste = $liste."<OPTION value='".$unEntraineur->getIdEntraineur()."'>".$unEntraineur->getNomEntraineur()."</OPTION>";
-				}
-			}
-		$liste = $liste."</SELECT>";
 		return $liste;
 	}
-	
-	public function donneObjetEntraineurDepuisNumero($unIdEntraineur)
-		{
-		$trouve=false;
-		$leBonEntraineur=null;
-		$iEntraineur = $this->lesEntraineurs->getIterator();
-		while ((!$trouve)&&($iEntraineur->valid()))
-			{
-			if ($iEntraineur->current()->getIdEntraineur()==$unIdEntraineur)
-				{
-				$trouve=true;
-				$leBonEntraineur = $iEntraineur->current();
-				}
-			else
-				$iEntraineur->next();
-			}
-		return $leBonEntraineur;
+
+
+
+	public function lesEntraineursAuFormatHTML()
+	{
+		$liste = "<SELECT name = 'idEntraineur'>";
+		foreach ($this->lesEntraineurs as $unEntraineur) {
+			$liste = $liste . "<OPTION value='" . $unEntraineur->getIdEntraineur() . "'>" . $unEntraineur->getNomEntraineur() . "</OPTION>";
 		}
-	
+		$liste = $liste . "</SELECT>";
+		return $liste;
+	}
+
+	public function donneObjetEntraineurDepuisNumero($unIdEntraineur)
+	{
+		$trouve = false;
+		$leBonEntraineur = null;
+		$iEntraineur = $this->lesEntraineurs->getIterator();
+		while ((!$trouve) && ($iEntraineur->valid())) {
+			if ($iEntraineur->current()->getIdEntraineur() == $unIdEntraineur) {
+				$trouve = true;
+				$leBonEntraineur = $iEntraineur->current();
+			} else
+				$iEntraineur->next();
+		}
+		return $leBonEntraineur;
+	}
+
 	public function donneObjetEntraineurDepuisLogin($loginEntraineur)
 	{
-	$trouve=false;
-	$leBonEntraineur=null;
-	$iEntraineur = $this->lesEntraineurs->getIterator();
-	while ((!$trouve)&&($iEntraineur->valid()))
-		{
-		if ($iEntraineur->current()->getLoginEntraineur()==$loginEntraineur)
-			{
-			$trouve=true;
-			$leBonEntraineur = $iEntraineur->current();
-			}
-		else
-			$iEntraineur->next();
+		$trouve = false;
+		$leBonEntraineur = null;
+		$iEntraineur = $this->lesEntraineurs->getIterator();
+		while ((!$trouve) && ($iEntraineur->valid())) {
+			if ($iEntraineur->current()->getLoginEntraineur() == $loginEntraineur) {
+				$trouve = true;
+				$leBonEntraineur = $iEntraineur->current();
+			} else
+				$iEntraineur->next();
 		}
-	return $leBonEntraineur;
+		return $leBonEntraineur;
 	}
 
-
-			
+	public function modifierMDP($entraineur, $MDP)
+	{
+		foreach ($this->lesEntraineurs as $unEntraineur) {
+			if ($unEntraineur->getIdEntraineur() == $entraineur->getIdEntraineur()) {
+				$unEntraineur->setPWDEntraineur($MDP);
+			}
+		}
 	}
-?> 
+}
