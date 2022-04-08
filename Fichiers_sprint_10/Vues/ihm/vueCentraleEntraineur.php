@@ -10,28 +10,35 @@
 		{
 			echo '<form action=index.php?vue=Entraineur&action=SaisirEntraineur method=POST align=center>
 							<fieldset>
-								<legend>L\'entraineur est un : </legend>
-								<input type="radio" name="typeEntraineur" value="Vacataire" id="vacataire">
-								<label for="vacataire">Vacataire</label> <br/>
-								<input type="radio" name="typeEntraineur" value="Titulaire" id="titulaire">
-								<label for="titulaire">Titulaire</label> <br/>
-								<button type="submit" class="btn btn-primary">Valider</button>
-							</fieldset>	
-						  </form>';
-		}
-
-		public function typeEntraineur()
-		{
-			echo '<form action=index.php?vue=Entraineur&action=modifier method=POST align=center>
-						<fieldset>
 							<legend>L\'entraineur est un : </legend>
 							<input type="radio" name="typeEntraineur" value="Vacataire" id="vacataire">
 							<label for="vacataire">Vacataire</label> <br/>
+
 							<input type="radio" name="typeEntraineur" value="Titulaire" id="titulaire">
 							<label for="titulaire">Titulaire</label> <br/>
+
+							
+							
 							<button type="submit" class="btn btn-primary">Valider</button>
-						</fieldset>	
-					</form>';
+							</fieldset>	
+						  </form>';
+		}
+		public function typeEntraineur()
+		{
+			echo '<form action=index.php?vue=Entraineur&action=modifier method=POST align=center>
+							<fieldset>
+							<legend>L\'entraineur est un : </legend>
+							<input type="radio" name="typeEntraineur" value="Vacataire" id="vacataire">
+							<label for="vacataire">Vacataire</label> <br/>
+
+							<input type="radio" name="typeEntraineur" value="Titulaire" id="titulaire">
+							<label for="titulaire">Titulaire</label> <br/>
+
+							
+							
+							<button type="submit" class="btn btn-primary">Valider</button>
+							</fieldset>	
+						  </form>';
 		}
 
 		public function modifierEntraineur($message, $typeEntraineur)
@@ -42,7 +49,8 @@
 				   <input type=hidden name=action value=choixFaitPourModif></input>
 				   <input type=hidden name=typeEntraineur value=' . $typeEntraineur . '>
 				   <button type="submit" class="btn btn-primary">Valider</button>
-				  </form>';
+				  </form>
+			';
 		}
 
 		public function modifierSpeEntraineur($liste_specialites, $nbSpes)
@@ -58,51 +66,31 @@
 				  </form>';
 		}
 
-		public function choixFaitPourModifTitulaire($idEntraineur, $nom, $date, $login, $pswd, $choix, $lesSpesEntraineur, $listeSpesHTML, $nbSpes = 3)
+		public function choixFaitPourModifTitulaire($nom, $date, $login, $pswd, $choix, $typeEntraineur)
 		{
 			echo '<form action=index.php?vue=Equipe&action=EnregModif method = GET>
 						<input type=text name=nomEntraineur value=' . $nom . '></input>
-						<input type=text name=dateEmbauche value=' . $date . '></input>
+						<input type=text name=dateEmbEntraineur value=' . $date . '></input>
 						<input type=text name=loginEntraineur value=' . $login . '></input>
 						<input type=password name=pwdEntraineur value=' . $pswd . '></input>';
-			for ($i = 0; $i < $nbSpes; $i++) {
-				echo ' 		<label for="spe-selection">Choisissez une spécialité : </label>			
-							<select name="spe' . $i . '" id="spe-selection">';
-				if (isset($lesSpesEntraineur[$i])) {
-					echo '<option value="' . $lesSpesEntraineur[$i]->getIdSpe() . '">' . $lesSpesEntraineur[$i]->getNomSpe() . '</option>';
-				}
-				echo ($listeSpesHTML);
-				echo '</select></br>';
-			}
 			echo '<input type=hidden name=idEntraineur value=' . $choix . '></input>	
 						<input type=hidden name=vue value=Entraineur></input>
-						<input type=hidden name=idEntraineur value=' . $idEntraineur . '></input>
 						<input type=hidden name=action value=EnregModif></input>
-						<input type=hidden name=nbSpes value=' . $nbSpes . '>
+						<input type=hidden name=typeEntraineur value=' . $typeEntraineur . '>
 						<button type="submit" class="btn btn-primary">Valider</button>
 			 </form>';
 		}
-		public function choixFaitPourModifVacataire($idEntraineur, $nom, $tel, $login, $pswd, $choix, $lesSpesEntraineur, $listeSpesHTML, $nbSpes = 3)
+		public function choixFaitPourModifVacataire($nom, $tel, $login, $pswd, $choix, $typeEntraineur)
 		{
 			echo '<form action=index.php?vue=Equipe&action=EnregModif method = GET>
 						<input type=text name=nomEntraineur value=' . $nom . '></input>
 						<input type=text name=telephoneVacataire value=' . $tel . '></input>
 						<input type=text name=loginEntraineur value=' . $login . '></input>
 						<input type=password name=pwdEntraineur value=' . $pswd . '></input>';
-			for ($i = 0; $i < $nbSpes; $i++) {
-				echo ' 		<label for="spe-selection">Choisissez une spécialité : </label>			
-										<select name="spe' . $i . '">';
-				if (isset($lesSpesEntraineur[$i])) {
-					echo '<option value="' . $lesSpesEntraineur[$i]->getIdSpe() . '">' . $lesSpesEntraineur[$i]->getNomSpe() . '</option>';
-				}
-				echo ($listeSpesHTML);
-				echo '</select></br>';
-			}
 			echo '<input type=hidden name=idEntraineur value=' . $choix . '></input>	
 						<input type=hidden name=vue value=Entraineur></input>
 						<input type=hidden name=action value=EnregModif></input>
-						<input type=hidden name=id value=' . $idEntraineur . '></input>
-						<input type=hidden name=nbSpes value=' . $nbSpes . '>
+						<input type=hidden name=typeEntraineur value=' . $typeEntraineur . '>
 						<button type="submit" class="btn btn-primary">Valider</button>
 			 </form>';
 		}
@@ -143,7 +131,9 @@
 		public function saisirEntraineur()
 		{
 			$typeEntraineur = htmlspecialchars($_POST['typeEntraineur']);
+
 			echo '<form action=index.php?vue=Entraineur&action=enregistrer method=POST>';
+
 			switch ($typeEntraineur) {
 				case 'Vacataire':
 					echo '<legend>Information du Vacataire</legend>
@@ -223,7 +213,6 @@
 			}
 		}
 
-
 		public function voirSesSpes($spe)
 		{
 			echo ("Vous avez les spécialités suivantes : ");
@@ -232,7 +221,7 @@
 			}
 		}
 
-		public function modifierProfilEntraineur($statut, $profil, $listeSpesHTML, $nbSpes = 3) //param titulaire + infos du profil
+		public function modifierProfilEntraineur($statut, $profil) //param titulaire + infos du profil
 		{
 			//echo ($profil);
 			$profil = explode('|', $profil);
@@ -258,6 +247,7 @@
 						<td>Login</td>
 						<td>
 						<input type=text name=loginEntraineur id=loginEntraineur value=' . $profil[2] . ' required=true>
+						
 						</td>
 						</tr>
 					</table>
@@ -285,50 +275,15 @@
 								<td>Login</td>
 								<td><input type=text name=loginEntraineur id=loginEntraineur value=' . $profil[2] . ' required=true></td>
 							</tr>
-						</table>';
-					for ($i = 1; $i <= $nbSpes; $i++) {
-						echo '<label for="spe-selection">Choisissez une spécialité</label>
-													<select name="spe' . $i . '" id="spe' . $i . '">';
-						if (isset($spe[$i])) {
-							echo '<option value="' . $spe[$i] . '">Choisissez une spécialité</option>';
-						} else {
-							echo '<option value="0">Indéfinie</option>';
-						}
-						echo ($listeSpesHTML);
-					}
-					echo '</select>
+						</table>
 						<input type=hidden name=statut value="vacataire">
-						<input type=hidden name=idEntraineur value=' . $profil[0] . '>
+					<input type=hidden name=idEntraineur value=' . $profil[0] . '>
 						<button type="submit" class="btn btn-primary">Valider</button>
 					</form>';
 					break;
-
 				default:
 					echo ('erreur !');
 					break;
 			}
-		}
-
-		public function changerMDP($erreur = false)
-		{
-			if ($erreur) {
-				echo "<p style='color:red'>Le mot de passe ne respecte pas les règles de construction de mot de passe !</p>";
-			}
-			echo "<form action=index.php?vue=Entraineur&action=verifMDP method=POST align=center>
-			<table style='margin-top:1em'>
-			<tr>
-			<td>Veuillez saisir le nouveau mot de passe :</td>
-			<td><input type='password' name='MDP' value='' required='true'></td>
-			<td><button style='margin-left:1em' type='submit' class='btn btn-primary'>Valider</button>
-			</tr>
-			</table>
-			<h5 style='text-align:left;font-size:1em;margin-top:1em;'>Le mot de passe doit contenir :</h5>
-			<ul style='text-align:left;font-size:0.95em'>
-			<li>Au moins 12 caractères</li>
-			<li>Au moins 1 lettre minuscule</li>
-			<li>Au moins 1 lettre majuscule</li>
-			<li>Au moins 1 chiffre</li>
-			<li>Au moins 1 caractère spécial</li>
-			</ul>";
 		}
 	}

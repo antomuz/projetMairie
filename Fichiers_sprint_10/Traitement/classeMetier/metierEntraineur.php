@@ -53,7 +53,7 @@ class metierEntraineur
 	{
 		$this->loginEntraineur = $unLoginEntraineur;
 	}
-	public function setPWDEntraineur($unPwdEntraineur)
+	public function setPwdEquipe($unPwdEntraineur)
 	{
 		$this->pwdEntraineur = $unPwdEntraineur;
 	}
