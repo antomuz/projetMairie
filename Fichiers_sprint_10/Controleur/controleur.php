@@ -184,8 +184,9 @@
 				$vue->afficheMenuAdmin();
 				require 'vues/ihm/nouvelle.php';
 				$typeEntraineur = htmlspecialchars($_POST['typeEntraineur']);
-				$vue = new vueCentraleEntraineur();
-				$vue->saisirEntraineur();
+				$vue = new vueCentraleEntraineur();				
+				$lesSpes = $this->toutesLesSpecialites->lesSpecialitesAuFormatHTML();
+				$vue->saisirEntraineur($lesSpes);
 				break;
 
 			case 'enregistrer':
@@ -401,12 +402,10 @@
 				$vue = new vueCentraleConnexion();
 				$vue->afficheMenuEntraineur();
 				require 'vues/ihm/nouvelle.php';
-				echo 'test';
 				$nbSpes = htmlspecialchars($_POST['nbSpes']);
 				$lesSpes = array();
 				for ($i = 1; $i <= $nbSpes; $i++) {
-					if (isset($_POST["spe$i"])) {
-						echo $i;
+					if (isset($_POST["spe$i"]) and $_POST["spe$i"] != 0) {
 						array_push($lesSpes, htmlspecialchars($_POST["spe$i"]));
 					}
 				}
