@@ -222,6 +222,19 @@ class accesBD
 		return $sonId;
 	}
 
+	public function insertSpecialite($unNomSpe) 
+	{
+		$sonId = $this->donneProchainIdentifiant("SPECIALITE", "idSpe");
+		$requete = $this->conn->prepare("INSERT INTO SPECIALITE (idSPe,nomSpe) VALUES (?,?)");
+		$requete->bindValue(1, $sonId);
+		$requete->bindValue(2, $unNomSpe);
+		if (!$requete->execute()) {
+			die("Erreur dans insert specialite : " . $requete->errorCode());
+		}
+		return $sonId;
+	}
+	
+
 	/***********************************************************************************************
 	méthode qui va permettre de modifier les éléments d'une équipe.
 	 ***********************************************************************************************/
@@ -296,6 +309,22 @@ class accesBD
 		return $IdEntraineur;
 	}
 
+	public function modifSpecialite($IdSpe, $unNomSpe) 
+	{
+		$requete = $this->conn->prepare("UPDATE specialite SET nomSpe = ? where idSpe = ?");
+
+		$requete->bindValue(1, $unNomSpe);
+		$requete->bindValue(2, $IdSpe);
+
+		if (!$requete->execute()) {
+			die("Erreur dans modif Entraineur : " . $requete->errorCode());
+		}
+		
+		echo "La modification est effectuée.";
+
+		return $IdSpe;
+	}
+
 	/***********************************************************************************************
 	méthode qui va permettre de supprimer et ajouter des spécialités pour les adhérents
 	 ***********************************************************************************************/
@@ -331,7 +360,7 @@ class accesBD
 		{
 			die("Erreur dans modif Equipe : ".$requete->errorCode());
 		}
-		return $idEntraineur;
+		return $unIdAdherent;
 	}
 
 	/*Supprime toutes les spécialités pour un entraineur */
@@ -519,6 +548,21 @@ class accesBD
 	public function donneNumeroMaxAdherent()
 	{
 		$stringQuery = "SELECT * FROM adherent";
+		$requete = $this->conn->prepare($stringQuery);
+		if ($requete->execute()) {
+			$nb = 0;
+			while ($row = $requete->fetch(PDO::FETCH_NUM)) {
+				$nb + 1;
+			}
+			return $nb + 1;
+		} else {
+			die('Erreur sur l identifiant de l adherent : ' + $requete->errorCode());
+		}
+	}
+
+	public function donneNumeroMaxSpecialite()
+	{
+		$stringQuery = "SELECT * FROM specialite";
 		$requete = $this->conn->prepare($stringQuery);
 		if ($requete->execute()) {
 			$nb = 0;

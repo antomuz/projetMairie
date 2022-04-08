@@ -146,7 +146,7 @@
 
 	public function modifierProfil($adherent){
 		//incorpore ça idiot <form action=index.php?vue=Entraineur&action=SaisirEntraineur method=POST align=center>
-
+		echo $adherent->getSexeAdherent();
 		echo "PLACEHOLDER POUR LA PHOTO
 			<form action=index.php?vue=Adherent&action=EnregistrerProfil method=POST align=center>
 			<table>
@@ -164,11 +164,16 @@
 			</tr>
 			<tr>
 			<td>Sexe</td>
-			<td><select name='sexeAdherent' required='true'>
-			<option value=".$adherent->getSexeAdherent().">
-			<option value='F'>Femme</option>
-			<option value='H'>Homme</option>
-			</select>
+			<td><select name='sexeAdherent' required='true'>";
+			if ($adherent->getSexeAdherent() == "F") {
+				echo "<option value='F' selected>Femme</option>
+				<option value='H'>Homme</option>";
+			}
+			else {
+				echo "<option value='F'>Femme</option>
+				<option value='H' selected>Homme</option>";
+			}
+			echo "</select>
 			</td>
 			</tr>
 			<tr>

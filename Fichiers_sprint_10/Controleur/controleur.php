@@ -393,7 +393,7 @@
 
 				$unEntraineur = $this->tousLesEntraineurs->donneObjetEntraineurDepuisLogin($_SESSION['login']);
 				$nbSpes = 3; // nombre de spés qu'un entraineur peut avoir. 
-				$listeSpes = $this->toutesLesSpecialites->lesSpecialitesAuFormatHTMLsmarter($nbSpes);
+				$listeSpes = $this->toutesLesSpecialites->lesSpecialitesAuFormatHTMLsmarter();
 				$vue->modifierSpeEntraineur($listeSpes, $nbSpes);
 				break;
 
@@ -609,7 +609,7 @@
 					$choix=htmlspecialchars($_GET['idEquipe']);
 					$lEquipe=$this->toutesLesEquipes->donneObjetEquipeDepuisNumero($choix);
 					$vue = new vueCentraleEquipe();
-					$vue->choixFaitPourModifEquipe($lEquipe->getNomEquipe(),$lEquipe->getNbrPlaceEquipe(),$lEquipe->getAgeMinEquipe(),$lEquipe->getAgeMaxEquipe(),$lEquipe->getSexeEquipe(),$choix,$this->tousLesTitulaires->lesTitulairesAuFormatHTML(),$this->toutesLesSpecialites->lesSpecialitesAuFormatHTML());	
+					$vue->choixFaitPourModifEquipe($lEquipe->getNomEquipe(),$lEquipe->getNbrPlaceEquipe(),$lEquipe->getAgeMinEquipe(),$lEquipe->getAgeMaxEquipe(),$lEquipe->getSexeEquipe(),$choix,$this->tousLesEntraineurs->lesEntraineursAuFormatHTMLPourModif($lEquipe->getlEntraineur()),$this->toutesLesSpecialites->lesSpecialitesAuFormatHTMLPourModif($lEquipe->getlaSpe()));	
 					break;
 				case "EnregModif":
 					$vue=new vueCentraleConnexion();
@@ -863,6 +863,52 @@
 				$message = $this->toutesLesSpecialites->listeDesSpecialites();
 				$vue = new vueCentraleSpecialite();
 				$vue->visualiserSpecialite($message);
+				break;
+
+			case "ajouter":
+				$vue = new vueCentraleConnexion();
+				$vue->afficheMenuAdmin();
+				require 'vues/ihm/nouvelle.php';
+				$vue = new vueCentraleSpecialite();
+				$vue->saisirSpe();
+				break;
+
+			case 'enregistrer':
+				$nomSpe = htmlspecialchars($_POST['nomSpe']);
+				$this->toutesLesSpecialites->ajouterUneSpecialite($this->maBD->donneNumeroMaxSpecialite(),$nomSpe);
+				$this->maBD->insertSpecialite($nomSpe);
+				$vue=new vueCentraleConnexion();
+				$vue->afficheMenuAdmin();
+				require 'vues/ihm/nouvelle.php';
+				break;
+
+			case "modifier" :
+				$vue=new vueCentraleConnexion();
+				$vue->afficheMenuAdmin();
+				require 'vues/ihm/nouvelle.php';
+				$message= $this->toutesLesSpecialites->lesSpecialitesAuFormatHTML();
+				$vue = new vueCentraleSpecialite();
+				$vue->modifierSpecialite($message);
+				break;
+
+			case "choixFaitPourModif":
+				$vue=new vueCentraleConnexion();
+				$vue->afficheMenuAdmin();
+				require 'vues/ihm/nouvelle.php';
+				$choix=htmlspecialchars($_GET['idSpe']);
+				$laSpe=$this->toutesLesSpecialites->donneObjetSpecialiteDepuisNumero($choix);
+				$vue = new vueCentraleSpecialite();
+				$vue->choixFaitPourModifSpe($laSpe->getNomSpe(),$choix);	
+				break;
+
+			case "EnregModif" : 
+				$vue= new vueCentraleConnexion();
+				$vue->afficheMenuAdmin();
+				require 'vues/ihm/nouvelle.php';
+					$idSpe = htmlspecialchars($_POST['idSpe']);
+					$nomSpe = htmlspecialchars($_POST['nomSpe']);
+					$this->toutesLesSpecialites->modifierUneSpecialite($idSpe,$nomSpe);
+					$this->maBD->modifSpecialite($idSpe,$nomSpe);
 				break;
 		}
 	}
