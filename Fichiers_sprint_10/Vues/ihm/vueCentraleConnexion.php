@@ -127,7 +127,7 @@ class vueCentraleConnexion
 				<ul class="dropdown-menu" aria-labelledby="menuEntraineur">
 					<li><a class="dropdown-item" href=index.php?vue=Entraineur&action=modifierSonProfil>Modifier son profil</a></li>
 					<li><a class="dropdown-item" href=index.php?vue=Entraineur&action=modifierSesSpecialites>Modifier ses spécialités</a></li>
-					<li><a class="dropdown-item" href=index.php?vue=Entraineur&action=modifierSonMDP>Modifier son mot de passe</a></li>
+					<li><a class="dropdown-item" href=index.php?vue=Entraineur&action=changerMDP>Modifier son mot de passe</a></li>
 					<li><a class="dropdown-item" href=index.php?vue=Entraineur&action=voirSesSpes>Voir ses spécialités</a></li>
 
 				</ul>
