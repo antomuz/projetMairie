@@ -259,18 +259,19 @@ $$
 DELIMITER ;
 DROP TRIGGER IF EXISTS `verifPlaceEquipe`;
 DELIMITER $$
-CREATE TRIGGER `verifPlaceEquipe` AFTER INSERT ON `equipe_adherent` FOR EACH ROW BEGIN
-DECLARE $nbrPlace int DEFAULT 0;
-set $nbrPlace = (SELECT COUNT(*)
+CREATE TRIGGER `verifPlaceEquipe` BEFORE INSERT ON `equipe_adherent`
+ FOR EACH ROW BEGIN
+DECLARE nbrPlace int DEFAULT 0;
+set nbrPlace = (SELECT COUNT(*)
                  FROM equipe_adherent
                  where idEquipe = new.idEquipe);
-set $nbrPlace = $nbrPlace + 1;                     
-if $nbrPlace > (select nbrPlaceEquipe
+                     
+if nbrPlace > (select nbrPlaceEquipe
                 from equipe
                 where idEquipe = new.idEquipe)
 then
 SIGNAL SQLSTATE '45000'
-SET MESSAGE_TEXT = 'plus de place';
+SET MESSAGE_TEXT = 'Pas de place disponible';
 end IF;
 end
 $$
